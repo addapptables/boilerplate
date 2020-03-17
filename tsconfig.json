@@ -14,12 +14,13 @@
     "noUnusedParameters": true,
     "paths": {
       "@craftsjs/*": [
-        "src/@craftsjs/*"
+        "lib/@craftsjs/*"
       ]
     }
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "lib/**/*.ts"
   ],
   "exclude": [
     "node_modules",

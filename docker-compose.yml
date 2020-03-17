@@ -1,27 +1,16 @@
 version: "3.1"
-
 services:
-    test:
-        build:
-            context: ./.
-            dockerfile: ./test/Dockerfile
+    postgresql:
+        image: postgres:alpine
+        ports:
+            - 5432:5432
         environment:
-            - DB_TYPE=postgres
-            - DB_URL=postgresql://root:password@0.0.0.0
-            - DB_NAME=test
-            - ROOT_ADDRESS=http://localhost:3000
-            - CLIENT_ADDRESS=http://localhost:4200
-            - TENANCY_NAME_PLACE_HOLDER_IN_URL={TENANCY_NAME}
-            - SECRET_SESSION=craftsjs
-            - DEFAULT_PASSWORD=123qwe
-        depends_on:
-            - postgresql
-
-   postgresql:
-       image: postgres:alpine
-       ports:
-           - 5432:5432
-       environment:
-           POSTGRES_USER: root
-           POSTGRES_PASSWORD: password
-           POSTGRES_DB: sae
+            POSTGRES_USER: root
+            POSTGRES_PASSWORD: password
+            POSTGRES_DB: sae
+    redis:
+        image: 'bitnami/redis:latest'
+        environment:
+            - ALLOW_EMPTY_PASSWORD=yes
+        ports:
+            - 6379:6379

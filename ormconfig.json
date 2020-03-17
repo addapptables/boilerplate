@@ -4,11 +4,12 @@
   "port": 5432,
   "username": "root",
   "password": "password",
-  "database": "test",
+  "database": "boilerplate",
   "synchronize": true,
   "logging": false,
   "entities": [
-    "src/**/entities/*.entity.ts"
+    "src/**/entities/*.entity.ts",
+    "lib/**/entities/*.entity.ts"
   ],
   "migrations": [
     "db/migration/**/*.ts"

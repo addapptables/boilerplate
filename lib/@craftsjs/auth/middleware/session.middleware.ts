@@ -1,9 +1,9 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
-import { TenantCacheContributor, TenantHeaderContributor, TenantCookieContributor, TenantSubdomainContributor } from '../../tenants';
+import { TenantCacheContributor, TenantHeaderContributor, TenantCookieContributor, TenantSubdomainContributor } from '../../tenant';
 import { SessionService } from '../services/session.service';
 import { Request } from 'express';
 import { JwtService } from '@nestjs/jwt';
-import { TenantDomainService } from '@craftsjs/tenants/domain/services/tenant.service';
+import { TenantDomainService } from '@craftsjs/tenant/domain/services/tenant.service';
 
 @Injectable()
 export class SessionMiddleware implements NestMiddleware {
@@ -21,8 +21,6 @@ export class SessionMiddleware implements NestMiddleware {
     req.body.currentUserId = this.sessionService.user?.id;
     req.query.tenantId = this.sessionService.tenantId;
     req.query.currentUserId = this.sessionService.user?.id;
-    req.params.tenantId = this.sessionService.tenantId as any;
-    req.params.currentUserId = this.sessionService.user?.id as any;
     next();
   }
 

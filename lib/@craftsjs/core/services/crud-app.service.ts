@@ -13,8 +13,9 @@ export abstract class CrudAppService<T extends CraftsRepository<any>> {
     return this.repository.save(input);
   }
 
-  update(input: EntityDto): Promise<any> {
-    return this.repository.update(input.id, input as any);
+  async update(input: EntityDto): Promise<any> {
+    await this.repository.update(input.id, input as any);
+    return input;
   }
 
   get(input: EntityDto) {

@@ -1,8 +1,9 @@
 import { Column, ManyToOne, OneToMany, Entity } from 'typeorm';
+import { Expose } from 'class-transformer';
 import { FullAuditedEntity, IMayHaveTenant } from '../../../../core';
 import { MAX_NAME_LENGTH } from '../../../../config';
-import { UserOrganizationUnit } from '../../../../user/infrastructure/database/entities/user-organization-unit.entity';
-import { Expose } from 'class-transformer';
+import { OrganizationUnitUser } from './organization-unit-user.entity';
+import { OrganizationUnitRole } from './organization-unit-role.entity';
 
 const MAX_DEPTH = 16;
 const CODE_UNIT_LENGTH = 5;
@@ -32,7 +33,10 @@ export class OrganizationUnit extends FullAuditedEntity implements IMayHaveTenan
   @OneToMany(() => OrganizationUnit, organizationUnit => organizationUnit.parent)
   children: OrganizationUnit[];
 
-  @OneToMany(() => UserOrganizationUnit, userOrganizationUnit => userOrganizationUnit.organizationUnit)
-  userOrganizationUnits: UserOrganizationUnit[];
+  @OneToMany(() => OrganizationUnitUser, organizationUnitUsers => organizationUnitUsers.organizationUnit)
+  organizationUnitUsers: OrganizationUnitUser[];
+
+  @OneToMany(() => OrganizationUnitRole, organizationUnitRole => organizationUnitRole.role)
+  organizationUnitRoles: OrganizationUnitRole[];
 
 }

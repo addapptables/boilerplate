@@ -1,12 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { mergeAndRemoveEmpty } from '@craftsjs/utils';
+import { AlreadyExists } from '@craftsjs/core';
 import { CrudAppService } from '@craftsjs/core/services/crud-app.service';
 import { FindOneDto } from '@craftsjs/core/dto/find-one.dto';
 import { OrganizationUnitRepository } from '../../infrastructure/database/repositories/organization-unit.repository';
 import { OrganizationUnit } from '../../infrastructure/database/entities/organization-unit.entity';
-import { AlreadyExists } from '@craftsjs/core';
 import { OrganizationUnitCodeService } from './organization-unit-code.service';
+import { OrganizationUnitRole } from '../../infrastructure/database/entities/organization-unit-role.entity';
+import { OrganizationUnitRoleRepository } from '../../infrastructure/database/repositories/organization-unit-role.repository';
+import { RoleRepository } from '../../../role/infrastructure/database/repositories/role.repository';
 
 @Injectable()
 export class OrganizationUnitDomainService extends CrudAppService<OrganizationUnitRepository> {
@@ -14,6 +17,10 @@ export class OrganizationUnitDomainService extends CrudAppService<OrganizationUn
   constructor(
     @InjectRepository(OrganizationUnitRepository)
     private readonly organizationUnitRepository: OrganizationUnitRepository,
+    @InjectRepository(OrganizationUnitRoleRepository)
+    private readonly organizationUnitRoleRepository: OrganizationUnitRoleRepository,
+    @InjectRepository(RoleRepository)
+    private readonly roleRepository: RoleRepository,
     private readonly organizationUnitCodeService: OrganizationUnitCodeService,
   ) {
     super(organizationUnitRepository);
@@ -47,6 +54,34 @@ export class OrganizationUnitDomainService extends CrudAppService<OrganizationUn
     return this.organizationUnitRepository.findOne({
       where: query,
     });
+  }
+
+  addRolesToOrganizationUnit(input: OrganizationUnitRole[]) {
+    return this.organizationUnitRoleRepository.save(input);
+  }
+
+  deleteOrganizationUnitRole(organizationUnitRoleId: number) {
+    return this.organizationUnitRoleRepository.createQueryBuilder()
+      .where('id = :id', { id: organizationUnitRoleId })
+      .delete()
+      .execute()
+  }
+
+  async getRolesAssociate(organizationUnitId: number) {
+    const organizationUnitRoles = await this.organizationUnitRoleRepository.find({ where: { organizationUnitId }, relations: ['role'] });
+    return organizationUnitRoles.map(y => y.role);
+  }
+
+  getRoles(organizationUnitId: number, tenantId: number) {
+    const subQuery = this.organizationUnitRoleRepository.createQueryBuilder('organizationUnitRole')
+      .where('organizationUnitRole.organizationUnitId = :organizationUnitId')
+      .select('organizationUnitRole.roleId');
+
+    return this.roleRepository.createQueryBuilder('role')
+      .where('role.tenantId = :tenantId', { tenantId })
+      .andWhere(`NOT EXISTS(${subQuery.andWhere('organizationUnitRole.roleId=role.id').getQuery()})`)
+      .setParameter('organizationUnitId', organizationUnitId)
+      .getMany();
   }
 
 }

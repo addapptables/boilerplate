@@ -1,7 +1,6 @@
-import { ICommandDto } from '@addapptables/microservice';
 import { Expose } from 'class-transformer';
 
-export class CommandDto implements ICommandDto {
+export class CommandDto {
 
   @Expose()
   id: number;

@@ -1,10 +1,10 @@
 import { Column, Entity, OneToMany, TableInheritance } from 'typeorm';
+import { Expose } from 'class-transformer';
 import { FullAuditedEntity, IMayHaveTenant } from '../../../../core';
 import { MAX_NAME_LENGTH, MAX_EMAIL_LENGTH, MAX_PASSWORD_LENGTH, MAX_CODE_LENGTH, MAX_PHONE_NUMBER_LENGTH } from '../../../../config';
 import { UserRole } from './user-role.entity';
 import { UserPermission } from './user-permission.entity';
-import { UserOrganizationUnit } from './user-organization-unit.entity';
-import { Expose } from 'class-transformer';
+import { OrganizationUnitUser } from '../../../../organization/infrastructure/database/entities/organization-unit-user.entity';
 
 @Entity('users')
 @TableInheritance({ column: { type: 'varchar', name: 'type' } })
@@ -65,7 +65,7 @@ export class User extends FullAuditedEntity implements IMayHaveTenant {
   @OneToMany(() => UserPermission, permission => permission.user)
   permissions!: UserPermission[];
 
-  @OneToMany(() => UserOrganizationUnit, userOrganizationUnit => userOrganizationUnit.user)
-  userOrganizationUnits!: UserOrganizationUnit[];
+  @OneToMany(() => OrganizationUnitUser, userOrganizationUnit => userOrganizationUnit.user)
+  organizationUnitUsers!: OrganizationUnitUser[];
 
 }

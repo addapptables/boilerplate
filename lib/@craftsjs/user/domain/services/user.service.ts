@@ -3,12 +3,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as R from 'ramda';
 import { mergeAndRemoveEmpty } from '../../../utils';
 import { AlreadyExists, PaginatedDto, PaginatedResultDto } from '../../../core';
-import { GetUserDto } from '../../application';
 import { CrudAppService } from '../../../core/services/crud-app.service';
 import { User } from '../../infrastructure/database/entities/user.entity';
 import { UserRepository } from '../../infrastructure/database/repositories/user.repository';
 import { Connection } from 'typeorm';
 import { UserRole } from '@craftsjs/user/infrastructure/database/entities';
+import { FindOneUserDto } from '@craftsjs/user/application/dtos/find-one-user.dto';
 
 @Injectable()
 export class UserDomainService extends CrudAppService<UserRepository> {
@@ -51,20 +51,20 @@ export class UserDomainService extends CrudAppService<UserRepository> {
   }
 
   private async validateUserName(user: User) {
-    const existsUserName = await this.findOneByQuery({ userName: user.userName, tenantId: user.tenantId } as GetUserDto);
+    const existsUserName = await this.findOneByQuery({ userName: user.userName, tenantId: user.tenantId });
     if (existsUserName) {
       throw new AlreadyExists('user.existsUserName');
     }
   }
 
   private async validateEmail(user: User) {
-    const existsEmailAddress = await this.findOneByQuery({ emailAddress: user.emailAddress, tenantId: user.tenantId } as GetUserDto);
+    const existsEmailAddress = await this.findOneByQuery({ emailAddress: user.emailAddress, tenantId: user.tenantId });
     if (existsEmailAddress) {
       throw new AlreadyExists('user.existsEmailAddress');
     }
   }
 
-  findOneByQuery(userQuery: GetUserDto) {
+  findOneByQuery(userQuery: FindOneUserDto) {
     const query = mergeAndRemoveEmpty(userQuery)({});
     return this.userRepository.findOne({
       where: query,

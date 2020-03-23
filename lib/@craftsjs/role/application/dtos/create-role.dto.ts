@@ -1,4 +1,4 @@
-import { IsDefined, Length, IsArray } from 'class-validator';
+import { IsDefined, Length, IsArray, IsNumber } from 'class-validator';
 import { MAX_NAME_LENGTH } from '@craftsjs/config';
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
@@ -15,6 +15,7 @@ export class CreateRoleDto extends CommandDto {
   @ApiProperty({ type: 'array', items: { type: 'number' } })
   @Expose()
   @IsDefined()
+  @IsNumber({ allowNaN: false, allowInfinity: false }, { each: true })
   @IsArray()
   permissions: number[];
 

@@ -20,6 +20,6 @@ export class PermissionGuard implements CanActivate {
     if (!user) {
       return false;
     }
-    return await this.authService.ValidatePermissions(user.id, permissions);
+    return await this.authService.validatePermissions(user.id, permissions);
   }
 }

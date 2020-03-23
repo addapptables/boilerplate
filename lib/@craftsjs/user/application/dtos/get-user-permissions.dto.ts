@@ -5,5 +5,5 @@ import { QueryDto } from '../../../core/dto/query.dto';
 export class GetUserPermissionsDto extends QueryDto {
   @ApiProperty()
   @Expose()
-  id?: number;
+  id: number;
 }

@@ -4,12 +4,12 @@ import { UserService } from '../services/user.service';
 import { AuthenticatedGuard } from '@craftsjs/auth/guard/authentication.guard';
 import { CreateUserDto } from '../../dtos/create-user.dto';
 import { FindOneDto } from '@craftsjs/core/dto/find-one.dto';
-import { mapper } from '@craftsjs/utils/mapper.util';
 import { GetUserDto } from '../../dtos/get-user.dto';
 import { UpdateUserDto } from '../../dtos/update-user.dto';
 import { Permissions } from '../../../../auth/decorators/permission.decorator';
 import { CREATE_USER, GET_USER, UPDATE_USER, DELETE_USER } from '@craftsjs/user/permission';
 import { UserDto } from '../../dtos';
+import { FindOneUserDto } from '../../dtos/find-one-user.dto';
 
 @ApiBearerAuth()
 @ApiTags('users')
@@ -30,8 +30,8 @@ export class UserController {
   @ApiResponse({ type: UserDto })
   @UseGuards(AuthenticatedGuard)
   @Permissions(GET_USER)
-  find(@Param() input: FindOneDto) {
-    return this.userService.find(mapper(GetUserDto, input));
+  find(@Param() input: FindOneUserDto) {
+    return this.userService.find(input);
   }
 
   @Get()
@@ -47,7 +47,7 @@ export class UserController {
   @UseGuards(AuthenticatedGuard)
   @Permissions(UPDATE_USER)
   update(@Body() updateUserDto: UpdateUserDto) {
-    return this.userService.Update(updateUserDto);
+    return this.userService.update(updateUserDto);
   }
 
   @Delete(':id')

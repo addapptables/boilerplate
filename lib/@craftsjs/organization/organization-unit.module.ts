@@ -10,11 +10,19 @@ import { OrganizationUnitController } from './application/api/controllers/organi
 import { OrganizationUnitService } from './application/api/services/organization-unit.service';
 import { FindOneOrganizationUnitHandler } from './domain/handlers/find-one-organization-unit.handler';
 import { OrganizationUnitCodeService } from './domain/services/organization-unit-code.service';
+import { OrganizationUnitUser } from './infrastructure/database/entities/organization-unit-user.entity';
+import { AddRolesToOrganizationUnitHandler } from './domain/handlers/add-roles-to-organization-unit.handler';
+import { OrganizationUnitRoleRepository } from './infrastructure/database/repositories/organization-unit-role.repository';
+import { RoleModule } from '../role/role.module';
+import { GetRolesOrganizationUnitHandler } from './domain/handlers/get-role-organization-unit.handler';
+import { DeleteOrganizationUnitRoleHandler } from './domain/handlers/delete-organization-unit-role.handler';
+import { GetRolesAssociateToOrganizationUnitHandler } from './domain/handlers/get-role-associate-to-organization-unit.handler';
 
 @Module({
   controllers: [OrganizationUnitController],
   imports: [
-    TypeOrmModule.forFeature([OrganizationUnitRepository]),
+    TypeOrmModule.forFeature([OrganizationUnitRepository, OrganizationUnitUser, OrganizationUnitRoleRepository]),
+    RoleModule
   ],
   providers: [
     OrganizationUnitDomainService,
@@ -25,6 +33,10 @@ import { OrganizationUnitCodeService } from './domain/services/organization-unit
     DeleteOrganizationUnitHandler,
     FindOneOrganizationUnitHandler,
     OrganizationUnitCodeService,
+    AddRolesToOrganizationUnitHandler,
+    GetRolesOrganizationUnitHandler,
+    DeleteOrganizationUnitRoleHandler,
+    GetRolesAssociateToOrganizationUnitHandler
   ],
   exports: [
     OrganizationUnitService,

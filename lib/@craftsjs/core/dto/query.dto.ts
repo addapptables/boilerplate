@@ -1,7 +1,6 @@
-import { IQueryDto } from '@addapptables/microservice';
 import { Expose } from 'class-transformer';
 
-export class QueryDto implements IQueryDto {
+export class QueryDto {
 
   @Expose()
   tenantId?: number;

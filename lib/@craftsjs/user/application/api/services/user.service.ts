@@ -13,6 +13,7 @@ import { UpdateUserDto } from '../../dtos/update-user.dto';
 import { UpdateUserCommand } from '../../commands/update-user.command';
 import { DeleteUserCommand } from '../../commands/delete-user.command';
 import { FindOneDto } from '../../../../core/dto/find-one.dto';
+import { FindOneUserDto } from '../../dtos/find-one-user.dto';
 
 @Injectable()
 export class UserService {
@@ -29,7 +30,7 @@ export class UserService {
     return mapper(UserDto, transferData.data);
   }
 
-  async find(input: GetUserDto) {
+  async find(input: FindOneUserDto) {
     const transferData = await this.broker.start()
       .add(new FindOneUserQuery(input))
       .end<User>();
@@ -50,7 +51,7 @@ export class UserService {
     return { total: transferData.data.total, data: users };
   }
 
-  async Update(input: UpdateUserDto) {
+  async update(input: UpdateUserDto) {
     const transferData = await this.broker.start()
       .add(new UpdateUserCommand(input))
       .end<User>();

@@ -16,7 +16,7 @@ import { SecurityModule } from '@craftsjs/security';
 import { UserModule } from '@craftsjs/user/user.module';
 import { PermissionGuard } from './guard/permission.guard';
 import { SessionMiddleware } from './middleware/session.middleware';
-import { TenantModule } from '../tenants/tenant.module';
+import { TenantModule } from '../tenant/tenant.module';
 
 @Global()
 @Module({

@@ -1,4 +1,4 @@
-import { Length, IsEmail, IsBoolean, IsDefined, IsArray } from 'class-validator';
+import { Length, IsEmail, IsBoolean, IsDefined, IsArray, IsUUID } from 'class-validator';
 import { MAX_NAME_LENGTH, MAX_EMAIL_LENGTH } from '../../../config';
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
@@ -41,9 +41,10 @@ export class CreateUserDto extends CommandDto {
   isActive?: boolean;
 
   @Expose()
-  @ApiProperty({ type: 'array', items: { type: 'number' } })
+  @ApiProperty({ type: 'array', items: { type: 'string' } })
   @IsDefined()
   @IsArray()
-  roles: number[];
+  @IsUUID('4', { each: true })
+  roles: string[];
 
 }

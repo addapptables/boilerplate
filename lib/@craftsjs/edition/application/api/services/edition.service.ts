@@ -14,6 +14,7 @@ import { CommandDto } from '@craftsjs/core/dto/command.dto';
 import { DeleteEditionCommand } from '../../commands/delete-edition.command';
 import { FindOneEditionQuery } from '../../queries/find-one-edition.query';
 import { FindOneDto } from '@craftsjs/core';
+import * as uuid from 'uuid/v4';
 
 @Injectable()
 export class EditionService {
@@ -21,6 +22,7 @@ export class EditionService {
   constructor(private readonly broker: Broker) { }
 
   async insert(input: CreateEditionDto) {
+    input.id = uuid();
     const transferData = await this.broker.start()
       .add(new CreateEditionCommand(input))
       .end<Edition>();

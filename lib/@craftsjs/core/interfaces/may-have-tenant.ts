@@ -1,4 +1,4 @@
 
 export interface IMayHaveTenant {
-  tenantId?: number;
+  tenantId?: string;
 }

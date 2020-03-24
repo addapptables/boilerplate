@@ -9,6 +9,7 @@ import { UserController } from '../../../../../../lib/@craftsjs/user/application
 import { createMockBrokerWithTransferData } from '../../../../../mock/broker.mock';
 import { AuthenticatedGuard } from '../../../../../../lib/@craftsjs/auth/guard/authentication.guard';
 import { UserService } from '../../../../../../lib/@craftsjs/user/application/api/services/user.service';
+import * as uuid from 'uuid/v4';
 
 describe('UserController', () => {
 
@@ -82,7 +83,7 @@ describe('UserController', () => {
   describe('update', () => {
     it(`should return updated user`, () => {
       const user = {
-        id: 1232568,
+        id: uuid(),
         name: 'test',
         emailAddress: 'test@test.com',
         userName: 'test',
@@ -105,7 +106,7 @@ describe('UserController', () => {
   describe('find', () => {
     it('should return a user', async () => {
       const user = {
-        id: 1232568,
+        id: uuid(),
         name: 'test',
         emailAddress: 'test@test.com',
         userName: 'test',
@@ -114,7 +115,7 @@ describe('UserController', () => {
       };
       sandbox.stub((controller as any).userService, 'find').returns(Promise.resolve(user));
       return request(server)
-        .get('/users/1232568')
+        .get('/users/' + user.id)
         .expect(200)
         .expect((response) => {
           const result = response.body;
@@ -127,7 +128,7 @@ describe('UserController', () => {
   describe('findAll', () => {
     it('should return all users', async () => {
       const user = {
-        id: 1232568,
+        id: uuid(),
         name: 'test',
         emailAddress: 'test@test.com',
         userName: 'test',
@@ -152,7 +153,7 @@ describe('UserController', () => {
     it('should return removed user id', async () => {
       sandbox.stub((controller as any).userService, 'remove').returns(Promise.resolve(1));
       return request(server)
-        .delete('/users/1')
+        .delete('/users/' + uuid())
         .expect(200)
         .expect((response) => {
           const result = response.body;

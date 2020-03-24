@@ -10,7 +10,7 @@ export class TenantSubdomainContributor implements ITenantResolve {
     private readonly tenantService: TenantDomainService,
   ) { }
 
-  async resolveTenant(request: Request): Promise<number> {
+  async resolveTenant(request: Request): Promise<string> {
     const fullUrl = request.protocol + '://' + request.hostname;
     const subdomain = SubdomainTenancyNameFinder
       .getCurrentTenancyNameOrNull(process.env.ROOT_ADDRESS, process.env.TENANCY_NAME_PLACE_HOLDER_IN_URL, fullUrl);

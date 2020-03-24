@@ -5,6 +5,7 @@ import { CreateUserCommand } from '../../application/commands/create-user.comman
 import { User } from '../../infrastructure/database/entities/user.entity';
 import { SecurityService } from '../../../security';
 import { UserRole } from '@craftsjs/user/infrastructure/database/entities';
+import * as uuid from 'uuid/v4';
 
 @CommandHandler(CreateUserCommand)
 export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
@@ -20,6 +21,7 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
     user.isStatic = false;
     user.roles = event.data.roles.map(role => {
       const userRole = new UserRole();
+      userRole.id = uuid();
       userRole.creationTime = new Date();
       userRole.roleId = role;
       return userRole;

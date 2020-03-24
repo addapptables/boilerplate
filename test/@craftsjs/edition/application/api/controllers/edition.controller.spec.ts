@@ -8,6 +8,7 @@ import { EditionService } from '../../../../../../lib/@craftsjs/edition';
 import { EditionController } from '../../../../../../lib/@craftsjs/edition/application/api/controllers/edition.controller';
 import { createMockBrokerWithTransferData } from '../../../../../mock/broker.mock';
 import { AuthenticatedGuard } from '../../../../../../lib/@craftsjs/auth/guard/authentication.guard';
+import * as uuid from 'uuid/v4';
 
 describe('EditionController', () => {
 
@@ -68,7 +69,7 @@ describe('EditionController', () => {
       return request(server)
         .put('/editions')
         .send({
-          id: 123456,
+          id: uuid(),
           isFree: true,
           name: 'testFreeEdition',
         })
@@ -84,13 +85,14 @@ describe('EditionController', () => {
 
   describe('find', () => {
     it('should return an edition', async () => {
+      const id = uuid();
       return request(server)
-        .get('/editions/12345689')
+        .get('/editions/' + id)
         .expect(200)
         .expect((response) => {
           const edition = response.body;
           expect(edition).to.be.not.undefined;
-          expect(edition.id).to.be.equal(12345689);
+          expect(edition.id).to.be.equal(id);
         });
     });
   })
@@ -111,8 +113,9 @@ describe('EditionController', () => {
 
   describe('remove', () => {
     it('should return removed id edition', async () => {
+      const id = uuid();
       return request(server)
-        .delete('/editions/1')
+        .delete('/editions/' + id)
         .expect(200)
         .expect((response) => {
           const edition = response.body;

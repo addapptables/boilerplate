@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { Broker } from '@addapptables/microservice';
 import { RoleService } from '../../../../../../lib/@craftsjs/role/application/api/services/role.service';
 import { createMockBrokerWithTransferData } from '../../../../../mock/broker.mock';
+import * as uuid from 'uuid/v4';
 
 describe('RoleService', () => {
   let service: RoleService;
@@ -58,13 +59,14 @@ describe('RoleService', () => {
   describe('update', () => {
 
     it('should return updated role', async () => {
+      const id = uuid();
       const role = await service.Update({
-        id: 123456,
+        id,
         name: 'test',
         permissions: []
       });
       expect(role).to.be.not.undefined;
-      expect(role.id).to.be.equal(123456);
+      expect(role.id).to.be.equal(id);
       expect(role.name).to.be.equal('test');
     });
 
@@ -84,9 +86,10 @@ describe('RoleService', () => {
   describe('find', () => {
 
     it('should return a role', async () => {
-      const result = await service.find({ id: 12345689 });
+      const id = uuid();
+      const result = await service.find({ id });
       expect(result).to.be.not.undefined;
-      expect(result.id).to.be.equal(12345689);
+      expect(result.id).to.be.equal(id);
     });
 
     it('should return an error', async () => {

@@ -14,6 +14,7 @@ import { UpdateUserCommand } from '../../commands/update-user.command';
 import { DeleteUserCommand } from '../../commands/delete-user.command';
 import { FindOneDto } from '../../../../core/dto/find-one.dto';
 import { FindOneUserDto } from '../../dtos/find-one-user.dto';
+import * as uuid from 'uuid/v4';
 
 @Injectable()
 export class UserService {
@@ -21,6 +22,7 @@ export class UserService {
   constructor(private readonly broker: Broker) { }
 
   async insert(input: CreateUserDto) {
+    input.id = uuid();
     const transferData = await this.broker.start()
       .add(new CreateUserCommand(input))
       .end<User>();

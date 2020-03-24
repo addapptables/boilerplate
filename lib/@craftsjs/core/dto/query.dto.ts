@@ -1,11 +1,14 @@
 import { Expose } from 'class-transformer';
+import { IsUUID } from 'class-validator';
 
 export class QueryDto {
 
   @Expose()
-  tenantId?: number;
+  @IsUUID('4')
+  tenantId?: string;
 
   @Expose()
-  currentUserId?: number;
+  @IsUUID('4')
+  currentUserId?: string;
 
 }

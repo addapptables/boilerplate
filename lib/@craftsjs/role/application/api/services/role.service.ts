@@ -14,6 +14,7 @@ import { CommandDto } from '@craftsjs/core/dto/command.dto';
 import { DeleteRoleCommand } from '../../commands/delete-role.command';
 import { FindOneRoleQuery } from '../../queries/find-one-role.query';
 import { FindOneDto } from '@craftsjs/core';
+import * as uuid from 'uuid/v4';
 
 @Injectable()
 export class RoleService {
@@ -21,6 +22,7 @@ export class RoleService {
   constructor(private readonly broker: Broker) { }
 
   async insert(input: CreateRoleDto) {
+    input.id = uuid();
     const transferData = await this.broker.start()
       .add(new CreateRoleCommand(input))
       .end<Role>();

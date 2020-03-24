@@ -14,13 +14,14 @@ import { CommandDto } from '@craftsjs/core/dto/command.dto';
 import { DeleteTenantCommand } from '../../commands/delete-tenant.command';
 import { FindOneTenantQuery } from '../../queries/find-one-tenant.query';
 import { FindOneDto } from '@craftsjs/core';
-
+import * as uuid from 'uuid/v4';
 @Injectable()
 export class TenantService {
 
   constructor(private readonly broker: Broker) { }
 
   async insert(input: CreateTenantDto) {
+    input.id = uuid();
     const transferData = await this.broker.start()
       .add(new CreateTenantCommand(input))
       .end<Tenant>();

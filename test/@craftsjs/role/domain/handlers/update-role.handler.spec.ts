@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { UpdateRoleHandler } from '../../../../../lib/@craftsjs/role/domain/handlers/update-role.handler';
 import { RoleDomainService } from '../../../../../lib/@craftsjs/role/domain/services/role.service';
 import { UpdateRoleCommand } from '../../../../../lib/@craftsjs/role/application/commands/update-role.command';
+import * as uuid from 'uuid/v4';
 
 describe('UpdateRoleHandler', () => {
   let handler: UpdateRoleHandler;
@@ -37,12 +38,14 @@ describe('UpdateRoleHandler', () => {
 
   describe('handle', () => {
     it('should return updated role', async () => {
-      const result = await handler.handle(new UpdateRoleCommand({ id: 123456, name: 'test', permissions: [1] }));
+      const permissionId = uuid();
+      const result = await handler.handle(new UpdateRoleCommand({ id: uuid(), name: 'test', permissions: [permissionId] }));
       expect(result).to.be.not.undefined;
       expect(result.name).to.be.equal('test');
       expect(result.permissions).to.be.length(1);
       const creationTime = result.permissions[0].creationTime;
-      expect(result.permissions).deep.contains({ isGranted: true, permissionId: 1, creationTime });
+      const id = result.permissions[0].id;
+      expect(result.permissions).deep.contains({ id, isGranted: true, permissionId, creationTime });
     });
   })
 });

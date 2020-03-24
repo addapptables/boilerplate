@@ -11,7 +11,7 @@ export class OrganizationUnitCodeService {
     private readonly organizationUnitRepository: OrganizationUnitRepository,
   ) { }
 
-  public async getNextChildCodeAsync(parentId?: number) {
+  public async getNextChildCodeAsync(parentId?: string) {
     const lastChild = await this.getLastChildOrNullAsync(parentId);
     if (!lastChild) {
       const parentCode = parentId ? await this.getCodeAsync(parentId) : undefined;
@@ -60,11 +60,11 @@ export class OrganizationUnitCodeService {
     return numbers.map(x => (numberOfZeros + x).slice(-5)).join('.');
   }
 
-  private async getCodeAsync(parentId: number) {
+  private async getCodeAsync(parentId: string) {
     return (await this.organizationUnitRepository.findOne({ where: { id: parentId } }))?.code;
   }
 
-  private async getLastChildOrNullAsync(parentId?: number) {
+  private async getLastChildOrNullAsync(parentId?: string) {
     return await this.organizationUnitRepository.findOne({ where: { parentId }, order: { code: 'DESC' } });
   }
 

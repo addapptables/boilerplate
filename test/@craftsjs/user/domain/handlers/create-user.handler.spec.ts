@@ -4,6 +4,7 @@ import { CreateUserHandler } from '../../../../../lib/@craftsjs/user/domain/hand
 import { UserDomainService } from '../../../../../lib/@craftsjs/user/domain/services/user.service';
 import { CreateUserCommand } from '../../../../../lib/@craftsjs/user/application/commands/create-user.command';
 import { SecurityService } from '../../../../../lib/@craftsjs/security';
+import * as uuid from 'uuid/v4';
 
 describe('CreateUserHandler', () => {
   let handler: CreateUserHandler;
@@ -39,12 +40,13 @@ describe('CreateUserHandler', () => {
 
   describe('handle', () => {
     it('should return created user', async () => {
+      const roleId = uuid();
       const user = {
         name: 'test',
         emailAddress: 'test@test.com',
         userName: 'test',
         surname: 'test',
-        roles: [1],
+        roles: [roleId],
         isStatic: true,
         isDefault: true
       };
@@ -53,8 +55,9 @@ describe('CreateUserHandler', () => {
       expect(result.name).to.be.equal('test');
       expect(result.isStatic).to.be.equal(false);
       expect(result.roles).to.be.length(1);
+      const id = result.roles[0].id;
       const creationTime = result.roles[0].creationTime;
-      expect(result.roles).deep.contains({ roleId: 1, creationTime });
+      expect(result.roles).deep.contains({ id, roleId, creationTime });
     });
   })
 });

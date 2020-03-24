@@ -4,6 +4,7 @@ import { AddRolesToOrganizationUnitHandler } from '../../../../../lib/@craftsjs/
 import { OrganizationUnitDomainService } from '../../../../../lib/@craftsjs/organization/domain/services/organization-unit.service';
 import { AddRolesToOrganizationUnitCommand } from '../../../../../lib/@craftsjs/organization/application/commands/add-roles-to-organization-unit.command';
 import { OrganizationUnitRole } from '../../../../../lib/@craftsjs/organization/infrastructure/database/entities/organization-unit-role.entity';
+import * as uuid from 'uuid/v4';
 
 describe('AddRolesToOrganizationUnitHandler', () => {
   let handler: AddRolesToOrganizationUnitHandler;
@@ -38,13 +39,17 @@ describe('AddRolesToOrganizationUnitHandler', () => {
 
   describe('handle', () => {
     it('should return created organization unit roles', async () => {
-      const result = await handler.handle(new AddRolesToOrganizationUnitCommand({ roles: [1], organizationUnitId: 1 }));
+      const roleId = uuid();
+      const organizationUnitId = uuid();
+      const result = await handler.handle(new AddRolesToOrganizationUnitCommand({ roles: [roleId], organizationUnitId }));
       expect(result).to.be.not.undefined;
       expect(result).to.be.length(1);
+      const id = result[0].id;
       const organizationUnitRole = new OrganizationUnitRole();
-      organizationUnitRole.roleId = 1;
-      organizationUnitRole.organizationUnitId = 1;
-      expect(result).to.deep.include(organizationUnitRole);
+      organizationUnitRole.id = id;
+      organizationUnitRole.roleId = roleId;
+      organizationUnitRole.organizationUnitId = organizationUnitId;
+      expect(result).to.deep.contains(organizationUnitRole);
     });
   })
 });

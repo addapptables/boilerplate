@@ -31,7 +31,7 @@ export abstract class CrudAppService<T extends CraftsRepository<any>> {
     } as PaginatedResultDto<any>;
   }
 
-  async remove(id: number, currentUserId?: number) {
+  async remove(id: string, currentUserId?: string) {
     const data = await this.repository.findOne({ where: { id } });
     if ((this.repository.target as any) as FullAuditedEntity) {
       data.isDeleted = true;

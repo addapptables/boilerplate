@@ -42,7 +42,7 @@ export class OrganizationUnitDomainService extends CrudAppService<OrganizationUn
     return organizationUnitToUpdate;
   }
 
-  private async validateUnitName(name: string, parentId?: number) {
+  private async validateUnitName(name: string, parentId?: string) {
     const anyOrganizationUnit = await this.organizationUnitRepository.findOne({ where: { parentId, name } });
     if (anyOrganizationUnit) {
       throw new AlreadyExists('organizationUnit.existsName');
@@ -60,25 +60,26 @@ export class OrganizationUnitDomainService extends CrudAppService<OrganizationUn
     return this.organizationUnitRoleRepository.save(input);
   }
 
-  deleteOrganizationUnitRole(organizationUnitRoleId: number) {
+  deleteOrganizationUnitRole(organizationUnitRoleId: string) {
     return this.organizationUnitRoleRepository.createQueryBuilder()
       .where('id = :id', { id: organizationUnitRoleId })
       .delete()
       .execute()
   }
 
-  async getRolesAssociate(organizationUnitId: number) {
+  async getRolesAssociate(organizationUnitId: string) {
     const organizationUnitRoles = await this.organizationUnitRoleRepository.find({ where: { organizationUnitId }, relations: ['role'] });
     return organizationUnitRoles.map(y => y.role);
   }
 
-  getRoles(organizationUnitId: number, tenantId: number) {
+  getRoles(organizationUnitId: string, tenantId: string) {
     const subQuery = this.organizationUnitRoleRepository.createQueryBuilder('organizationUnitRole')
       .where('organizationUnitRole.organizationUnitId = :organizationUnitId')
       .select('organizationUnitRole.roleId');
 
     return this.roleRepository.createQueryBuilder('role')
       .where('role.tenantId = :tenantId', { tenantId })
+      .andWhere('role.isDeleted = false')
       .andWhere(`NOT EXISTS(${subQuery.andWhere('organizationUnitRole.roleId=role.id').getQuery()})`)
       .setParameter('organizationUnitId', organizationUnitId)
       .getMany();

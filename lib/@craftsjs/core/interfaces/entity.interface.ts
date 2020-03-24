@@ -1,6 +1,6 @@
 
 export interface IEntity {
 
-  id: number;
+  id: string;
 
 }

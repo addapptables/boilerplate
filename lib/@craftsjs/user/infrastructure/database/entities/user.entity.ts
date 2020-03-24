@@ -12,7 +12,7 @@ export class User extends FullAuditedEntity implements IMayHaveTenant {
 
   @Column({ nullable: true })
   @Expose()
-  tenantId?: number;
+  tenantId?: string;
 
   @Column({ nullable: false, length: MAX_NAME_LENGTH })
   @Expose()

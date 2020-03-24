@@ -1,5 +1,5 @@
-import { Expose, Transform } from 'class-transformer';
-import { MaxLength, IsEmail, IsNumber } from 'class-validator';
+import { Expose } from 'class-transformer';
+import { MaxLength, IsUUID } from 'class-validator';
 import { QueryDto } from '@craftsjs/core/dto/query.dto';
 import { MAX_NAME_LENGTH } from '@craftsjs/config';
 import { ApiProperty } from '@nestjs/swagger';
@@ -7,23 +7,21 @@ import { ApiProperty } from '@nestjs/swagger';
 export class FindOneUserDto extends QueryDto {
 
   @Expose()
-  @ApiProperty()
-  @Transform(value => parseInt(value, 10), { toClassOnly: true })
-  @IsNumber({ allowNaN: false, allowInfinity: false })
-  id?: number;
+  @ApiProperty({ required: false })
+  @IsUUID('4')
+  id?: string;
 
   @Expose()
-  @ApiProperty()
+  @ApiProperty({ required: false })
   @MaxLength(MAX_NAME_LENGTH)
   name?: string;
 
   @Expose()
-  @ApiProperty()
-  @IsEmail()
+  @ApiProperty({ required: false })
   emailAddress?: string;
 
   @Expose()
-  @ApiProperty()
+  @ApiProperty({ required: false })
   userName?: string;
 
 }

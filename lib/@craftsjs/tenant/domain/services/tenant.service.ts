@@ -11,6 +11,7 @@ import { Tenant } from '../../infrastructure/database/entities/tenant.entity';
 import { mergeAndRemoveEmpty } from '../../../utils';
 import { SecurityService } from '../../../security/services/security.service';
 import { DefaultGenerator } from './default-generator-tenant';
+import * as uuid from 'uuid/v4';
 
 @Injectable()
 export class TenantDomainService extends CrudAppService<TenantRepository> {
@@ -35,6 +36,7 @@ export class TenantDomainService extends CrudAppService<TenantRepository> {
       const roleDb = await entityManager.save(role);
       const rolesPermission = permissions.map(permission => {
         const rolePermission = new RolePermission();
+        rolePermission.id = uuid()
         rolePermission.roleId = roleDb.id;
         rolePermission.isGranted = true;
         rolePermission.permissionId = permission.id;

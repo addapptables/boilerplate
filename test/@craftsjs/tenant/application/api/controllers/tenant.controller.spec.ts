@@ -9,6 +9,7 @@ import { TenantController } from '../../../../../../lib/@craftsjs/tenant/applica
 import { createMockBrokerWithTransferData } from '../../../../../mock/broker.mock';
 import { AuthenticatedGuard } from '../../../../../../lib/@craftsjs/auth/guard/authentication.guard';
 import { TenantService } from '../../../../../../lib/@craftsjs/tenant/application/api/services/tenant.service';
+import * as uuid from 'uuid/v4';
 
 describe('TenantController', () => {
 
@@ -17,7 +18,7 @@ describe('TenantController', () => {
   let server: Server;
   let sandbox: sinon.SinonSandbox;
   const tenant = {
-    id: 1235489,
+    id: uuid(),
     isActive: true,
     name: 'test',
     subDomain: 'test'
@@ -97,7 +98,7 @@ describe('TenantController', () => {
     it('should return found tenant', async () => {
       sandbox.stub((controller as any).tenantService, 'find').returns(Promise.resolve(tenant));
       return request(server)
-        .get('/tenants/1232568')
+        .get('/tenants/' + tenant.id)
         .expect(200)
         .expect((response) => {
           const result = response.body;
@@ -127,7 +128,7 @@ describe('TenantController', () => {
     it('should return removed tenant id', async () => {
       sandbox.stub((controller as any).tenantService, 'remove').returns(Promise.resolve(1));
       return request(server)
-        .delete('/tenants/1')
+        .delete('/tenants/' + tenant.id)
         .expect(200)
         .expect((response) => {
           const result = response.body;

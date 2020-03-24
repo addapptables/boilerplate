@@ -5,7 +5,7 @@ import { AuditedEntity } from './audited';
 export abstract class FullAuditedEntity extends AuditedEntity implements IFullAudited {
 
   @Column({ nullable: true })
-  deleterUserId?: number;
+  deleterUserId?: string;
 
   @Column({ nullable: true })
   deletionTime?: Date;

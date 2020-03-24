@@ -2,11 +2,13 @@ import { Role } from '@craftsjs/role/infrastructure/database/entities/role.entit
 import { SecurityService } from '@craftsjs/security/services/security.service';
 import { User } from '@craftsjs/user/infrastructure/database/entities/user.entity';
 import { UserRole } from '@craftsjs/user/infrastructure/database/entities/user-role.entity';
+import * as uuid from 'uuid/v4';
 
 export class DefaultGenerator {
 
-  static generateRole(tenantId: number) {
+  static generateRole(tenantId: string) {
     const role = new Role();
+    role.id = uuid();
     role.name = 'Admin';
     role.isStatic = true;
     role.creationTime = new Date();
@@ -15,8 +17,9 @@ export class DefaultGenerator {
     return role;
   }
 
-  static generateUser(tenantId: number, securityService: SecurityService) {
+  static generateUser(tenantId: string, securityService: SecurityService) {
     const user = new User();
+    user.id = uuid();
     user.userName = 'admin';
     user.tenantId = tenantId;
     user.password = securityService.convertStringToMd5(process.env.DEFAULT_PASSWORD);
@@ -29,8 +32,9 @@ export class DefaultGenerator {
     return user;
   }
 
-  static generateUserRole(userId: number, roleId: number) {
+  static generateUserRole(userId: string, roleId: string) {
     const userRole = new UserRole();
+    userRole.id = uuid();
     userRole.roleId = roleId;
     userRole.userId = userId;
     return userRole;

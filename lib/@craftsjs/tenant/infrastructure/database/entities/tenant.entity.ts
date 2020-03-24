@@ -31,7 +31,7 @@ export class Tenant extends FullAuditedEntity {
 
   @Column({ nullable: true })
   @Expose()
-  editionId?: number;
+  editionId?: string;
 
   @ManyToOne(() => Edition, edition => edition.tenants)
   @JoinColumn({ name: 'editionId' })

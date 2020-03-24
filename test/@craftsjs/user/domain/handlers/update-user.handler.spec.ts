@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { UpdateUserHandler } from '../../../../../lib/@craftsjs/user/domain/handlers/update-user.handler';
 import { UserDomainService } from '../../../../../lib/@craftsjs/user/domain/services/user.service';
 import { UpdateUserCommand } from '../../../../../lib/@craftsjs/user/application/commands/update-user.command';
+import * as uuid from 'uuid/v4';
 
 describe('UpdateUserHandler', () => {
   let handler: UpdateUserHandler;
@@ -37,12 +38,13 @@ describe('UpdateUserHandler', () => {
 
   describe('handle', () => {
     it('should return updated user', async () => {
+      const roleId = uuid();
       const user = {
         name: 'test',
         emailAddress: 'test@test.com',
         userName: 'test',
         surname: 'test',
-        roles: [1],
+        roles: [roleId],
         isStatic: true,
         isDefault: true
       };
@@ -50,8 +52,9 @@ describe('UpdateUserHandler', () => {
       expect(result).to.be.not.undefined;
       expect(result.name).to.be.equal('test');
       expect(result.roles).to.be.length(1);
+      const id = result.roles[0].id;
       const creationTime = result.roles[0].creationTime;
-      expect(result.roles).deep.contains({ roleId: 1, creationTime });
+      expect(result.roles).deep.contains({ id, roleId, creationTime });
     });
   })
 });

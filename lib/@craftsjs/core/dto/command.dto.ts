@@ -1,14 +1,18 @@
 import { Expose } from 'class-transformer';
+import { IsUUID } from 'class-validator';
 
 export class CommandDto {
 
   @Expose()
-  id: number;
+  @IsUUID('4')
+  id: string;
 
   @Expose()
-  tenantId?: number;
+  @IsUUID('4')
+  tenantId?: string;
 
   @Expose()
-  currentUserId?: number;
+  @IsUUID('4')
+  currentUserId?: string;
 
 }

@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { Broker } from '@addapptables/microservice';
 import { OrganizationUnitService } from '../../../../../../lib/@craftsjs/organization';
 import { createMockBrokerWithTransferData } from '../../../../../mock/broker.mock';
+import * as uuid from 'uuid/v4';
 
 describe('OrganizationUnitService', () => {
   let service: OrganizationUnitService;
@@ -59,7 +60,7 @@ describe('OrganizationUnitService', () => {
 
     it('should return updated organization unit', async () => {
       const result = await service.Update({
-        id: 123456,
+        id: uuid(),
         name: 'testFree',
       });
       expect(result).to.be.not.undefined;
@@ -69,7 +70,7 @@ describe('OrganizationUnitService', () => {
     it('should return an error', async () => {
       try {
         await service.Update({
-          id: 123456,
+          id: uuid(),
           isFree: true,
           name: 'testFree',
           error: 'test-error'
@@ -85,9 +86,10 @@ describe('OrganizationUnitService', () => {
   describe('find', () => {
 
     it('should return an organization unit', async () => {
-      const result = await service.find({ id: 12345689 });
+      const id = uuid();
+      const result = await service.find({ id });
       expect(result).to.be.not.undefined;
-      expect(result.id).to.be.equal(12345689);
+      expect(result.id).to.be.equal(id);
     });
 
     it('should return an error', async () => {

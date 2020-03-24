@@ -8,10 +8,10 @@ import { Role } from './role.entity';
 export class RolePermission extends CreationAuditedEntity {
 
   @Column()
-  permissionId!: number;
+  permissionId!: string;
 
   @Column()
-  roleId!: number;
+  roleId!: string;
 
   @Column({ nullable: false })
   isGranted!: boolean;

@@ -5,7 +5,7 @@ export class TenantDto {
 
   @Expose()
   @ApiProperty()
-  id: number;
+  id: string;
 
   @Expose()
   @ApiProperty()

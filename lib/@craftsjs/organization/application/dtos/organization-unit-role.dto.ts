@@ -5,14 +5,14 @@ export class OrganizationUnitRoleDto {
 
   @Expose()
   @ApiProperty()
-  id: number;
+  id: string;
 
   @Expose()
   @ApiProperty()
-  roleId: number;
+  roleId: string;
 
   @Expose()
   @ApiProperty()
-  organizationUnitId: number;
+  organizationUnitId: string;
 
 }

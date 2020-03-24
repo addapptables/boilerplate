@@ -8,10 +8,10 @@ import { User } from './user.entity';
 export class UserRole extends CreationAuditedEntity {
 
   @Column()
-  userId !: number;
+  userId !: string;
 
   @Column()
-  roleId !: number;
+  roleId !: string;
 
   @ManyToOne(() => Role, role => role.users)
   role!: Role;

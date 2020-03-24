@@ -6,7 +6,7 @@ export class EditionDto {
 
   @Expose()
   @ApiProperty()
-  id: number;
+  id: string;
 
   @Expose()
   @ApiProperty()

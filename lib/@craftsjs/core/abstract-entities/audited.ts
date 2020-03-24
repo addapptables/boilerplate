@@ -5,7 +5,7 @@ import { IAudited } from '../interfaces/audited.interface';
 export abstract class AuditedEntity extends CreationAuditedEntity implements IAudited {
 
   @Column({ nullable: true })
-  lastModifierUserId?: number;
+  lastModifierUserId?: string;
 
   @Column({ nullable: true })
   lastModificationTime?: Date;

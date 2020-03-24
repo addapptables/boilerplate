@@ -7,10 +7,10 @@ import { OrganizationUnit } from './organization-unit.entity';
 export class OrganizationUnitRole extends CreationAuditedEntity {
 
   @Column()
-  roleId!: number;
+  roleId!: string;
 
   @Column()
-  organizationUnitId!: number;
+  organizationUnitId!: string;
 
   @ManyToOne(() => Role, role => role.organizationUnitRoles)
   role!: Role;

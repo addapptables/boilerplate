@@ -1,5 +1,5 @@
 import { Expose, Transform } from 'class-transformer';
-import { Length, IsDefined, IsNumber, IsString } from 'class-validator';
+import { Length, IsDefined, IsString, IsUUID } from 'class-validator';
 import { MAX_CODE_LENGTH } from '@craftsjs/config';
 import { ApiProperty } from '@nestjs/swagger';
 import { CommandDto } from '@craftsjs/core/dto/command.dto';
@@ -16,7 +16,7 @@ export class CreateOrganizationUnitDto extends CommandDto {
 
   @Expose()
   @ApiProperty({ required: false })
-  @IsNumber()
-  parentId?: number;
+  @IsUUID('4')
+  parentId?: string;
 
 }

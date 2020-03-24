@@ -1,12 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { expect } from 'chai';
 import { AuthService } from '../../../../lib/@craftsjs/auth';
-import { User } from '../../../../lib/@craftsjs/user/infrastructure/database/entities/user.entity';
 import { Broker } from '@addapptables/microservice';
 import { createMockBrokerService } from '../../../mock/broker.mock';
 import { JwtModule } from '@nestjs/jwt';
 import { SessionService } from '../../../../lib/@craftsjs/auth/services/session.service';
 import { SecurityModule } from '../../../../lib/@craftsjs/security';
+import * as uuid from 'uuid/v4';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -57,7 +57,7 @@ describe('AuthService', () => {
 
   describe('Login function', () => {
     it('should return access_token', async () => {
-      const accessToken = await service.login({ id: 1, userName: 'admin', tenantId: 1 } as User);
+      const accessToken = await service.login({ id: uuid(), userName: 'admin', tenantId: 1 } as any);
       expect(accessToken).to.be.not.undefined;
     });
   });

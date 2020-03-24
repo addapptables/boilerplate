@@ -5,7 +5,7 @@ export class PermissionDto {
 
   @Expose()
   @ApiProperty()
-  id!: number;
+  id!: string;
 
   @Expose()
   @ApiProperty()

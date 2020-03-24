@@ -5,7 +5,7 @@ import { ICreationAudited } from '../interfaces/creation-audited.interface';
 export abstract class CreationAuditedEntity extends Entity implements ICreationAudited {
 
   @Column({ nullable: true })
-  creatorUserId?: number;
+  creatorUserId?: string;
 
   @Column({ nullable: true })
   creationTime?: Date;

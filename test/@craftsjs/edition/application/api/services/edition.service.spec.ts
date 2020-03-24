@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { Broker } from '@addapptables/microservice';
 import { EditionService } from '../../../../../../lib/@craftsjs/edition';
 import { createMockBrokerWithTransferData } from '../../../../../mock/broker.mock';
+import * as uuid from 'uuid/v4';
 
 describe('EditionService', () => {
   let service: EditionService;
@@ -62,7 +63,7 @@ describe('EditionService', () => {
 
     it('should return updated edition', async () => {
       const edition = await service.Update({
-        id: 123456,
+        id: uuid(),
         isFree: true,
         name: 'testFreeEdition',
       });

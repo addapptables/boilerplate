@@ -5,7 +5,7 @@ export class OrganizationUnitDto {
 
   @Expose()
   @ApiProperty()
-  id: number;
+  id: string;
 
   @Expose()
   @ApiProperty()
@@ -13,6 +13,6 @@ export class OrganizationUnitDto {
 
   @Expose()
   @ApiProperty({ required: false })
-  parentId?: number;
+  parentId?: string;
 
 }

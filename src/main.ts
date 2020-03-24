@@ -26,6 +26,7 @@ async function bootstrap() {
   app.use(passport.session());
   app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe({ skipMissingProperties: true, transformOptions: { excludeExtraneousValues: true } }));
+  app.setGlobalPrefix('api');
 
   const options = new DocumentBuilder()
     .addBearerAuth()
@@ -36,7 +37,6 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
-
   await app.listen(process.env.PORT || 3000);
 }
 bootstrap();

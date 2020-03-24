@@ -1,14 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { CreateUserDto } from './create-user.dto';
-import { IsDefined, IsNumber } from 'class-validator';
+import { IsDefined, IsUUID } from 'class-validator';
 import { Expose } from 'class-transformer';
 
 export class UpdateUserDto extends CreateUserDto {
 
   @IsDefined()
-  @IsNumber()
+  @IsUUID('4')
   @Expose()
   @ApiProperty()
-  id: number;
+  id: string;
 
 }

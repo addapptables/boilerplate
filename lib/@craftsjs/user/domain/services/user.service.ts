@@ -81,7 +81,7 @@ export class UserDomainService extends CrudAppService<UserRepository> {
     } as PaginatedResultDto<any>;
   }
 
-  async getUserPermissions(id: number) {
+  async getUserPermissions(id: string) {
     const user = await this.userRepository.findOne({
       where: { id }, relations: ['permissions', 'permissions.permission', 'roles', 'roles.role', 'roles.role.permissions', 'roles.role.permissions.permission'],
     });

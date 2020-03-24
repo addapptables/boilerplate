@@ -8,8 +8,8 @@ export class TenantHeaderContributor implements ITenantResolve {
   resolveTenant(request: any) {
     const result = request.get(TENANT_ID);
     if (result) {
-      request.session.tenantId = +result;
-      return +result;
+      request.session.tenantId = result;
+      return result;
     }
     return this.next.resolveTenant(request);
   }

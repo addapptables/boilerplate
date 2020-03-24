@@ -15,7 +15,7 @@ export class Permission extends CreationAuditedEntity {
   isHost!: boolean;
 
   @Column({ nullable: true })
-  parentId?: number;
+  parentId?: string;
 
   @ManyToOne(() => Permission, permission => permission.children)
   parent!: Permission;

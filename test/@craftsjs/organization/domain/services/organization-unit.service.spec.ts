@@ -6,6 +6,7 @@ import { OrganizationUnitRepository } from '../../../../../lib/@craftsjs/organiz
 import { OrganizationUnitRoleRepository } from '../../../../../lib/@craftsjs/organization/infrastructure/database/repositories/organization-unit-role.repository';
 import { RoleRepository } from '../../../../../lib/@craftsjs/role/infrastructure/database/repositories/role.repository';
 import { afterEach } from 'mocha';
+import * as uuid from 'uuid/v4';
 
 describe('OrganizationUnitDomainService', () => {
   let service: OrganizationUnitDomainService;
@@ -137,7 +138,7 @@ describe('OrganizationUnitDomainService', () => {
 
   describe('deleteOrganizationUnitRole', () => {
     it('should return deleted id organizationUnitRole', async () => {
-      const organizationUnitRole = await service.deleteOrganizationUnitRole(1);
+      const organizationUnitRole = await service.deleteOrganizationUnitRole(uuid());
       expect(organizationUnitRole).to.be.not.undefined;
       expect(organizationUnitRole.id).to.be.equal(1);
     });
@@ -146,7 +147,7 @@ describe('OrganizationUnitDomainService', () => {
   describe('getRolesAssociate', () => {
     it('should return associated role to organizationUnit', async () => {
       sandbox.stub((service as any).organizationUnitRoleRepository, 'find').returns([{ role: { name: 'role' } }])
-      const roles = await service.getRolesAssociate(1);
+      const roles = await service.getRolesAssociate(uuid());
       expect(roles).to.be.not.undefined;
       expect(roles).to.be.length(1);
     });

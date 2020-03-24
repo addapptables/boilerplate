@@ -23,6 +23,7 @@ import { Role } from '../../../../role/infrastructure/database/entities/role.ent
 import { RoleDto } from '../../../../role/application/dtos/role.dto';
 import { DeleteOrganizationUnitRoleCommand } from '../../commands/delete-organization-unit-role.command';
 import { GetRolesAssociateToOrganizationUnitQuery } from '../../queries/get-roles-associate-to-organization-unit.query';
+import * as uuid from 'uuid/v4';
 
 @Injectable()
 export class OrganizationUnitService {
@@ -30,6 +31,7 @@ export class OrganizationUnitService {
   constructor(private readonly broker: Broker) { }
 
   async insert(input: CreateOrganizationUnitDto) {
+    input.id = uuid();
     const transferData = await this.broker.start()
       .add(new CreateOrganizationUnitCommand(input))
       .end<OrganizationUnit>();
@@ -81,6 +83,7 @@ export class OrganizationUnitService {
   }
 
   async addRolesToOrganizationUnit(input: AddRolesToOrganizationUnitDto) {
+    input.id = uuid();
     const transferData = await this.broker.start()
       .add(new AddRolesToOrganizationUnitCommand(input))
       .end<OrganizationUnitRole[]>();

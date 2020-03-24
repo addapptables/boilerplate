@@ -6,7 +6,7 @@ export class UserDto {
 
   @Expose()
   @ApiProperty()
-  id: number;
+  id: string;
 
   @Expose()
   @ApiProperty()
@@ -37,5 +37,8 @@ export class UserDto {
   @Type(() => UserRoleDto)
   @Transform(value => value.map(userRole => userRole.roleId))
   roles: number[];
+
+  @ApiProperty({ type: 'array', items: { type: 'string' } })
+  permissions: string[];
 
 }

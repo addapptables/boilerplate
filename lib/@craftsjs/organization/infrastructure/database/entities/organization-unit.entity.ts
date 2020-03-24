@@ -14,11 +14,11 @@ export class OrganizationUnit extends FullAuditedEntity implements IMayHaveTenan
 
   @Column({ nullable: true })
   @Expose()
-  tenantId?: number;
+  tenantId?: string;
 
   @Column({ nullable: true })
   @Expose()
-  parentId?: number;
+  parentId?: string;
 
   @Column({ length: MAX_CODE_LENGTH })
   code: string;

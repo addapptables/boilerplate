@@ -8,6 +8,7 @@ import { RoleController } from '../../../../../../lib/@craftsjs/role/application
 import { createMockBrokerWithTransferData } from '../../../../../mock/broker.mock';
 import { AuthenticatedGuard } from '../../../../../../lib/@craftsjs/auth/guard/authentication.guard';
 import { RoleService } from '../../../../../../lib/@craftsjs/role/application/api/services/role.service';
+import * as uuid from 'uuid/v4';
 
 describe('RoleController', () => {
 
@@ -67,7 +68,7 @@ describe('RoleController', () => {
       return request(server)
         .put('/roles')
         .send({
-          id: 123456,
+          id: uuid(),
           name: 'test',
           permissions: []
         })
@@ -82,13 +83,14 @@ describe('RoleController', () => {
 
   describe('find', () => {
     it('should return a role', async () => {
+      const id = uuid();
       return request(server)
-        .get('/roles/12345689')
+        .get('/roles/' + id)
         .expect(200)
         .expect((response) => {
           const result = response.body;
           expect(result).to.be.not.undefined;
-          expect(result.id).to.be.equal(12345689);
+          expect(result.id).to.be.equal(id);
         });
     });
   })
@@ -110,7 +112,7 @@ describe('RoleController', () => {
   describe('remove', () => {
     it('should return removed id role', async () => {
       return request(server)
-        .delete('/roles/1')
+        .delete('/roles/' + uuid())
         .expect(200)
         .expect((response) => {
           const result = response.body;

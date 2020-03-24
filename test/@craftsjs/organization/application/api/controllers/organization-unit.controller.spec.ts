@@ -8,6 +8,7 @@ import { OrganizationUnitService } from '../../../../../../lib/@craftsjs/organiz
 import { OrganizationUnitController } from '../../../../../../lib/@craftsjs/organization/application/api/controllers/organization-unit.controller';
 import { createMockBrokerWithTransferData } from '../../../../../mock/broker.mock';
 import { AuthenticatedGuard } from '../../../../../../lib/@craftsjs/auth/guard/authentication.guard';
+import * as uuid from 'uuid/v4';
 
 describe('OrganizationUnitController', () => {
 
@@ -64,31 +65,33 @@ describe('OrganizationUnitController', () => {
 
   describe('update', () => {
     it(`should return updated organization unit`, () => {
+      const id = uuid();
       return request(server)
         .put('/organization-units')
         .send({
-          id: 123456,
+          id,
           name: 'testFree',
         })
         .expect(200)
         .expect((response) => {
           const result = response.body;
           expect(result).to.be.not.undefined;
-          expect(result.id).to.be.equal(123456);
+          expect(result.id).to.be.equal(id);
           expect(result.name).to.be.equal('testFree');
         });
     });
   });
 
   describe('find', () => {
+    const id = uuid();
     it('should return an organization unit', async () => {
       return request(server)
-        .get('/organization-units/12345689')
+        .get('/organization-units/' + id)
         .expect(200)
         .expect((response) => {
           const result = response.body;
           expect(result).to.be.not.undefined;
-          expect(result.id).to.be.equal(12345689);
+          expect(result.id).to.be.equal(id);
         });
     });
   })
@@ -108,9 +111,10 @@ describe('OrganizationUnitController', () => {
   })
 
   describe('remove', () => {
+    const id = uuid();
     it('should return removed id organization unit', async () => {
       return request(server)
-        .delete('/organization-units/1')
+        .delete('/organization-units/' + id)
         .expect(200)
         .expect((response) => {
           const result = response.body;

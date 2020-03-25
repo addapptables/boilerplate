@@ -72,7 +72,7 @@ export class UserDomainService extends CrudAppService<UserRepository> {
     });
   }
 
-  async getAll(input: PaginatedDto) {
+  async findAll(input: PaginatedDto) {
     const query = R.omit(['skip', 'take', 'currentUserId'], R.reject(R.isNil, input));
     const data = await this.repository.findAndCount({ skip: input.skip, take: input.take, where: query, relations: ['roles'] });
     return {

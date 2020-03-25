@@ -1,14 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@addapptables/microservice';
 import { UserDomainService } from '../services/user.service';
-import { GetAllUserQuery } from '../../application/queries/get-all-user.query';
+import { findAllUserQuery } from '../../application/queries/get-all-user.query';
 
-@QueryHandler(GetAllUserQuery)
-export class GetAllUserHandler implements IQueryHandler<GetAllUserQuery> {
+@QueryHandler(findAllUserQuery)
+export class findAllUserHandler implements IQueryHandler<findAllUserQuery> {
 
   constructor(private readonly userService: UserDomainService) { }
 
-  handle(event: GetAllUserQuery): any {
-    return this.userService.getAll(event.data);
+  handle(event: findAllUserQuery): any {
+    return this.userService.findAll(event.data);
   }
 
 }

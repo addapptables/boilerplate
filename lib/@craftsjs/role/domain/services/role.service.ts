@@ -64,7 +64,7 @@ export class RoleDomainService extends CrudAppService<RoleRepository> {
     });
   }
 
-  async getAll(input: PaginatedDto) {
+  async findAll(input: PaginatedDto) {
     const query = R.omit(['skip', 'take', 'currentUserId'], R.reject(R.isNil, input));
     const data = await this.roleRepository.findAndCount({ skip: input.skip, take: input.take, where: query, relations: ['permissions'] });
     return {

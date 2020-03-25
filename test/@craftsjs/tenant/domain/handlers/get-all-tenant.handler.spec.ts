@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { expect } from 'chai';
-import { GetAllTenantHandler } from '../../../../../lib/@craftsjs/tenant/domain/handlers/get-all-tenant.handler';
+import { findAllTenantHandler } from '../../../../../lib/@craftsjs/tenant/domain/handlers/get-all-tenant.handler';
 import { TenantDomainService } from '../../../../../lib/@craftsjs/tenant/domain/services/tenant.service';
-import { GetAllTenantQuery } from '../../../../../lib/@craftsjs/tenant/application/queries/get-all-tenant.query';
+import { findAllTenantQuery } from '../../../../../lib/@craftsjs/tenant/application/queries/get-all-tenant.query';
 
-describe('GetAllTenantHandler', () => {
-  let handler: GetAllTenantHandler;
+describe('findAllTenantHandler', () => {
+  let handler: findAllTenantHandler;
   let testingModule: TestingModule;
   const tenant = {
     id: 1235489,
@@ -16,21 +16,21 @@ describe('GetAllTenantHandler', () => {
 
   before(async () => {
     const repository = {
-      getAll: () => {
+      findAll: () => {
         return Promise.resolve(tenant);
       }
     };
     testingModule = await Test.createTestingModule({
       providers: [
         TenantDomainService,
-        GetAllTenantHandler,
+        findAllTenantHandler,
       ],
     })
       .overrideProvider(TenantDomainService)
       .useValue(repository)
       .compile();
     await testingModule.init();
-    handler = testingModule.get<GetAllTenantHandler>(GetAllTenantHandler);
+    handler = testingModule.get<findAllTenantHandler>(findAllTenantHandler);
   });
 
   after(async () => {
@@ -43,7 +43,7 @@ describe('GetAllTenantHandler', () => {
 
   describe('handle', () => {
     it('should return all found tenants', async () => {
-      const result = await handler.handle(new GetAllTenantQuery({}));
+      const result = await handler.handle(new findAllTenantQuery({}));
       expect(result).to.be.not.undefined;
       expect(result).to.be.contains(tenant);
     });

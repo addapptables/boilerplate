@@ -145,7 +145,7 @@ describe('UserDomainService', () => {
     });
   })
 
-  describe('getAll', () => {
+  describe('findAll', () => {
     it('should return all users', async () => {
       const user = {
         name: 'test',
@@ -157,7 +157,7 @@ describe('UserDomainService', () => {
         isDefault: true
       };
       sandbox.stub((service as any).userRepository, 'findAndCount').returns([[user], 1])
-      const result = await service.getAll({} as any);
+      const result = await service.findAll({} as any);
       expect(result).to.be.not.undefined;
       expect(result.data).to.be.length(1);
       expect(result.total).to.be.equal(1);

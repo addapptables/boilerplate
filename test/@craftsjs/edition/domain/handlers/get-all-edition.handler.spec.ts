@@ -1,30 +1,30 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { expect } from 'chai';
 import { EditionDomainService } from '../../../../../lib/@craftsjs/edition';
-import { GetAllEditionHandler } from '../../../../../lib/@craftsjs/edition/domain/handlers/get-all-edition.handler';
-import { GetAllEditionQuery } from '../../../../../lib/@craftsjs/edition/application/queries/get-all-edition.query';
+import { findAllEditionHandler } from '../../../../../lib/@craftsjs/edition/domain/handlers/get-all-edition.handler';
+import { findAllEditionQuery } from '../../../../../lib/@craftsjs/edition/application/queries/get-all-edition.query';
 
-describe('GetAllEditionHandler', () => {
-  let handler: GetAllEditionHandler;
+describe('findAllEditionHandler', () => {
+  let handler: findAllEditionHandler;
   let testingModule: TestingModule;
 
   before(async () => {
     const repository = {
-      getAll: () => {
+      findAll: () => {
         return Promise.resolve({ total: 1, data: [{ name: 'test' }] });
       }
     };
     testingModule = await Test.createTestingModule({
       providers: [
         EditionDomainService,
-        GetAllEditionHandler,
+        findAllEditionHandler,
       ],
     })
       .overrideProvider(EditionDomainService)
       .useValue(repository)
       .compile();
     await testingModule.init();
-    handler = testingModule.get<GetAllEditionHandler>(GetAllEditionHandler);
+    handler = testingModule.get<findAllEditionHandler>(findAllEditionHandler);
   });
 
   after(async () => {
@@ -37,7 +37,7 @@ describe('GetAllEditionHandler', () => {
 
   describe('handle', () => {
     it('should return multiple editions', async () => {
-      const edition = await handler.handle(new GetAllEditionQuery({}));
+      const edition = await handler.handle(new findAllEditionQuery({}));
       expect(edition.total).to.be.equal(1);
       expect(edition.data).to.be.length(1);
     });

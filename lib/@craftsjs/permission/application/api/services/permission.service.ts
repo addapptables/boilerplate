@@ -2,7 +2,7 @@ import { InternalServerErrorException, Injectable } from '@nestjs/common';
 import { Broker } from '@addapptables/microservice';
 import { QueryDto } from '../../../../core/dto/query.dto';
 import { Permission } from '../../../infrastructure/database/entities/permission.entity';
-import { GetAllPermissionQuery } from '../../queries/get-all-permission.query';
+import { findAllPermissionQuery } from '../../queries/get-all-permission.query';
 import { PermissionDto } from '../../dtos/permission.dto';
 import { mapper } from '../../../../utils/mapper.util';
 
@@ -13,7 +13,7 @@ export class PermissionService {
 
   async findAll(input: QueryDto) {
     const transferData = await this.broker.start()
-      .add(new GetAllPermissionQuery(input))
+      .add(new findAllPermissionQuery(input))
       .end<Permission[]>();
     if (transferData.error) {
       throw new InternalServerErrorException(transferData.error);

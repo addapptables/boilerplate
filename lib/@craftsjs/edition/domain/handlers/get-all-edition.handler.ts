@@ -1,14 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@addapptables/microservice';
-import { GetAllEditionQuery } from '../../application/queries/get-all-edition.query';
+import { findAllEditionQuery } from '../../application/queries/get-all-edition.query';
 import { EditionDomainService } from '../services/edition.service';
 
-@QueryHandler(GetAllEditionQuery)
-export class GetAllEditionHandler implements IQueryHandler<GetAllEditionQuery> {
+@QueryHandler(findAllEditionQuery)
+export class findAllEditionHandler implements IQueryHandler<findAllEditionQuery> {
 
   constructor(private readonly editionService: EditionDomainService) { }
 
-  handle(event: GetAllEditionQuery): any {
-    return this.editionService.getAll(event.data);
+  handle(event: findAllEditionQuery): any {
+    return this.editionService.findAll(event.data);
   }
 
 }

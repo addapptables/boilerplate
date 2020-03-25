@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { expect } from 'chai';
 import { PermissionDomainService } from '../../../../../lib/@craftsjs/permission/domain/services/permission.service';
-import { GetAllPermissionHandler } from '../../../../../lib/@craftsjs/permission/domain/handlers/get-all-permission.handler';
-import { GetAllPermissionQuery } from '../../../../../lib/@craftsjs/permission/application/queries/get-all-permission.query';
+import { findAllPermissionHandler } from '../../../../../lib/@craftsjs/permission/domain/handlers/get-all-permission.handler';
+import { findAllPermissionQuery } from '../../../../../lib/@craftsjs/permission/application/queries/get-all-permission.query';
 
-describe('GetAllPermissionHandler', () => {
-  let handler: GetAllPermissionHandler;
+describe('findAllPermissionHandler', () => {
+  let handler: findAllPermissionHandler;
   let testingModule: TestingModule;
 
   before(async () => {
@@ -17,14 +17,14 @@ describe('GetAllPermissionHandler', () => {
     testingModule = await Test.createTestingModule({
       providers: [
         PermissionDomainService,
-        GetAllPermissionHandler,
+        findAllPermissionHandler,
       ],
     })
       .overrideProvider(PermissionDomainService)
       .useValue(repository)
       .compile();
     await testingModule.init();
-    handler = testingModule.get<GetAllPermissionHandler>(GetAllPermissionHandler);
+    handler = testingModule.get<findAllPermissionHandler>(findAllPermissionHandler);
   });
 
   after(async () => {
@@ -37,7 +37,7 @@ describe('GetAllPermissionHandler', () => {
 
   describe('handle', () => {
     it('should return all permissions', async () => {
-      const edition = await handler.handle(new GetAllPermissionQuery({}));
+      const edition = await handler.handle(new findAllPermissionQuery({}));
       expect(edition).to.be.length(1);
       expect(edition).deep.contains({ id: 123456, name: 'test' });
     });

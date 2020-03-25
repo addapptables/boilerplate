@@ -4,7 +4,7 @@ import { FullAuditedEntity } from '../abstract-entities';
 export class CraftsRepository<Entity> extends Repository<Entity> {
 
   findOne(optionsOrConditions?: string | number | Date | ObjectID | FindOneOptions<Entity> | FindConditions<Entity>,
-          maybeOptions?: FindOneOptions<Entity>): Promise<Entity | undefined> {
+    maybeOptions?: FindOneOptions<Entity>): Promise<Entity | undefined> {
     let options = optionsOrConditions as FindOneOptions;
     if (maybeOptions) {
       options = maybeOptions;
@@ -14,7 +14,7 @@ export class CraftsRepository<Entity> extends Repository<Entity> {
   }
 
   findOneOrFail(optionsOrConditions?: string | number | Date | ObjectID | FindOneOptions<Entity> | FindConditions<Entity>,
-                maybeOptions?: FindOneOptions<Entity>): Promise<Entity> {
+    maybeOptions?: FindOneOptions<Entity>): Promise<Entity> {
     let options = optionsOrConditions as FindOneOptions;
     if (maybeOptions) {
       options = maybeOptions;
@@ -45,6 +45,15 @@ export class CraftsRepository<Entity> extends Repository<Entity> {
       options.where = where;
     }
     return options;
+  }
+
+  createQueryBuilder(name?: string) {
+    if ((this.target as any) as FullAuditedEntity) {
+      return super.createQueryBuilder(name)
+        .where('role.isDeleted = false');
+    } else {
+      return super.createQueryBuilder(name);
+    }
   }
 
 }

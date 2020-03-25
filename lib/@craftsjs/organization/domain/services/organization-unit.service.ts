@@ -74,12 +74,11 @@ export class OrganizationUnitDomainService extends CrudAppService<OrganizationUn
 
   getRoles(organizationUnitId: string, tenantId: string) {
     const subQuery = this.organizationUnitRoleRepository.createQueryBuilder('organizationUnitRole')
-      .where('organizationUnitRole.organizationUnitId = :organizationUnitId')
+      .andWhere('organizationUnitRole.organizationUnitId = :organizationUnitId')
       .select('organizationUnitRole.roleId');
 
     return this.roleRepository.createQueryBuilder('role')
-      .where('role.tenantId = :tenantId', { tenantId })
-      .andWhere('role.isDeleted = false')
+      .andWhere('role.tenantId = :tenantId', { tenantId })
       .andWhere(`NOT EXISTS(${subQuery.andWhere('organizationUnitRole.roleId=role.id').getQuery()})`)
       .setParameter('organizationUnitId', organizationUnitId)
       .getMany();

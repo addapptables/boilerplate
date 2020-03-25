@@ -125,10 +125,10 @@ describe('RoleDomainService', () => {
     });
   })
 
-  describe('getAll', () => {
+  describe('findAll', () => {
     it('should return all roles', async () => {
       sandbox.stub((service as any).roleRepository, 'findAndCount').returns([[{ id: 123456, name: 'test', permissions: [] }], 1])
-      const result = await service.getAll({});
+      const result = await service.findAll({});
       expect(result).to.be.not.undefined;
       expect(result.data).to.be.length(1);
       expect(result.total).to.be.equal(1);

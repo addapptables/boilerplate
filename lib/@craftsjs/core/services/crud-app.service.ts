@@ -4,6 +4,8 @@ import { PaginatedDto } from '../dto/paginated.dto';
 import { PaginatedResultDto } from '../dto/paginated-result.dto';
 import { FullAuditedEntity } from '../abstract-entities';
 import * as R from 'ramda';
+import { FindOneDto } from '../dto/find-one.dto';
+import { mergeAndRemoveEmpty } from '@craftsjs/utils';
 
 export abstract class CrudAppService<T extends CraftsRepository<any>> {
 
@@ -22,7 +24,7 @@ export abstract class CrudAppService<T extends CraftsRepository<any>> {
     return this.repository.findOne({ where: { id: input.id } });
   }
 
-  async getAll(input: PaginatedDto) {
+  async findAll(input: PaginatedDto) {
     const query = R.omit(['skip', 'take', 'currentUserId'], R.reject(R.isNil, input));
     const data = await this.repository.findAndCount({ skip: input.skip, take: input.take, where: query });
     return {
@@ -41,6 +43,22 @@ export abstract class CrudAppService<T extends CraftsRepository<any>> {
     } else {
       await this.repository.remove(data);
     }
+  }
+
+  createQueryBuilder(name?: string) {
+    if ((this.repository.target as any) as FullAuditedEntity) {
+      return this.repository.createQueryBuilder(name)
+        .where('role.isDeleted = false');
+    } else {
+      return this.repository.createQueryBuilder(name);
+    }
+  }
+
+  findOneByQuery(findQuery: FindOneDto) {
+    const query = mergeAndRemoveEmpty(findQuery)({});
+    return this.repository.findOne({
+      where: query,
+    });
   }
 
 }

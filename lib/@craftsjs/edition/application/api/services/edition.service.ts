@@ -6,7 +6,7 @@ import { Edition } from '../../../infrastructure/database/entities/edition.entit
 import { mapper } from '@craftsjs/utils/mapper.util';
 import { EditionDto } from '../../dtos/edition.dto';
 import { GetEditionDto } from '../../dtos/get-edition.dto';
-import { GetAllEditionQuery } from '../../queries/get-all-edition.query';
+import { findAllEditionQuery } from '../../queries/get-all-edition.query';
 import { PaginatedResultDto } from '@craftsjs/core/dto/paginated-result.dto';
 import { UpdateEditionDto } from '../../dtos/update-edition.dto';
 import { UpdateEditionCommand } from '../../commands/update-edition.command';
@@ -44,7 +44,7 @@ export class EditionService {
 
   async findAll(input: GetEditionDto) {
     const transferData = await this.broker.start()
-      .add(new GetAllEditionQuery(input))
+      .add(new findAllEditionQuery(input))
       .end<PaginatedResultDto<Edition>>();
     if (transferData.error) {
       throw new InternalServerErrorException(transferData.error);

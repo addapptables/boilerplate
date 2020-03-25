@@ -6,3 +6,4 @@ export * from './boilerplate.module';
 export * from './repositories/crafts.repository';
 export * from './dto';
 export * from './exceptions';
+export * from './services/crud-app.service';

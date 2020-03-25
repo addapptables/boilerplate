@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TenantDomainService } from './domain/services/tenant.service';
 import { UpdateTenantHandler } from './domain/handlers/update-tenant.handler';
 import { CreateTenantHandler } from './domain/handlers/create-tenant.handler';
-import { GetAllTenantHandler } from './domain/handlers/get-all-tenant.handler';
+import { findAllTenantHandler } from './domain/handlers/get-all-tenant.handler';
 import { DeleteTenantHandler } from './domain/handlers/delete-tenant.handler';
 import { FindOneTenantHandler } from './domain/handlers/find-one-tenant.handler';
 import { TenantService } from './application/api/services/tenant.service';
@@ -24,7 +24,7 @@ import { PermissionModule } from '@craftsjs/permission/permission.module';
     TenantDomainService,
     UpdateTenantHandler,
     CreateTenantHandler,
-    GetAllTenantHandler,
+    findAllTenantHandler,
     DeleteTenantHandler,
     FindOneTenantHandler,
   ],

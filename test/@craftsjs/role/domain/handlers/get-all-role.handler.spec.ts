@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { expect } from 'chai';
-import { findAllRoleHandler } from '../../../../../lib/@craftsjs/role/domain/handlers/get-all-role.handler';
+import { FindAllRoleHandler } from '../../../../../lib/@craftsjs/role/domain/handlers/find-all-role.handler';
 import { RoleDomainService } from '../../../../../lib/@craftsjs/role/domain/services/role.service';
-import { findAllRoleQuery } from '../../../../../lib/@craftsjs/role/application/queries/get-all-role.query';
+import { FindAllRoleQuery } from '../../../../../lib/@craftsjs/role/application/queries/find-all-role.query';
 
-describe('findAllRoleHandler', () => {
-  let handler: findAllRoleHandler;
+describe('FindAllRoleHandler', () => {
+  let handler: FindAllRoleHandler;
   let testingModule: TestingModule;
 
   before(async () => {
@@ -17,14 +17,14 @@ describe('findAllRoleHandler', () => {
     testingModule = await Test.createTestingModule({
       providers: [
         RoleDomainService,
-        findAllRoleHandler,
+        FindAllRoleHandler,
       ],
     })
       .overrideProvider(RoleDomainService)
       .useValue(repository)
       .compile();
     await testingModule.init();
-    handler = testingModule.get<findAllRoleHandler>(findAllRoleHandler);
+    handler = testingModule.get<FindAllRoleHandler>(FindAllRoleHandler);
   });
 
   after(async () => {
@@ -37,7 +37,7 @@ describe('findAllRoleHandler', () => {
 
   describe('handle', () => {
     it('should return all roles', async () => {
-      const result = await handler.handle(new findAllRoleQuery({}));
+      const result = await handler.handle(new FindAllRoleQuery({}));
       expect(result).to.be.not.undefined;
       expect(result).to.be.length(1);
       expect(result).deep.contains({ id: 123456, name: 'test', permissions: [] })

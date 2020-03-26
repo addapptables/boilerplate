@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { EditionDomainService } from './domain/services/edition.service';
 import { CreateEditionHandler } from './domain/handlers/create-edition.handler';
 import { EditionRepository } from './infrastructure/database/repositories/edition.repository';
-import { findAllEditionHandler } from './domain/handlers/get-all-edition.handler';
+import { FindAllEditionHandler } from './domain/handlers/find-all-edition.handler';
 import { UpdateEditionHandler } from './domain/handlers/update-edition.handler';
 import { DeleteEditionHandler } from './domain/handlers/delete-edition.handler';
 import { EditionController } from './application/api/controllers/edition.controller';
@@ -20,7 +20,7 @@ import { FindOneEditionHandler } from './domain/handlers/find-one-edition.handle
     EditionService,
     UpdateEditionHandler,
     CreateEditionHandler,
-    findAllEditionHandler,
+    FindAllEditionHandler,
     DeleteEditionHandler,
     FindOneEditionHandler,
   ],

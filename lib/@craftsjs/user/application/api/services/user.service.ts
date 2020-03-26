@@ -7,7 +7,7 @@ import { mapper } from '@craftsjs/utils/mapper.util';
 import { UserDto } from '../../dtos/user.dto';
 import { GetUserDto } from '../../dtos/get-user.dto';
 import { FindOneUserQuery } from '../../queries/find-one-user.query';
-import { findAllUserQuery } from '../../queries/get-all-user.query';
+import { FindAllUserQuery } from '../../queries/find-all-user.query';
 import { PaginatedResultDto } from '@craftsjs/core/dto/paginated-result.dto';
 import { UpdateUserDto } from '../../dtos/update-user.dto';
 import { UpdateUserCommand } from '../../commands/update-user.command';
@@ -44,7 +44,7 @@ export class UserService {
 
   async findAll(input: GetUserDto) {
     const transferData = await this.broker.start()
-      .add(new findAllUserQuery(input))
+      .add(new FindAllUserQuery(input))
       .end<PaginatedResultDto<User>>();
     if (transferData.error) {
       throw new InternalServerErrorException(transferData.error);

@@ -1,13 +1,13 @@
 import { IQueryHandler, QueryHandler } from '@addapptables/microservice';
-import { findAllOrganizationUnitQuery } from '../../application/queries/get-all-organization-unit.query';
+import { FindAllOrganizationUnitQuery } from '../../application/queries/find-all-organization-unit.query';
 import { OrganizationUnitDomainService } from '../services/organization-unit.service';
 
-@QueryHandler(findAllOrganizationUnitQuery)
-export class findAllOrganizationUnitHandler implements IQueryHandler<findAllOrganizationUnitQuery> {
+@QueryHandler(FindAllOrganizationUnitQuery)
+export class FindAllOrganizationUnitHandler implements IQueryHandler<FindAllOrganizationUnitQuery> {
 
   constructor(private readonly organizationUnitService: OrganizationUnitDomainService) { }
 
-  handle(event: findAllOrganizationUnitQuery): any {
+  handle(event: FindAllOrganizationUnitQuery): any {
     return this.organizationUnitService.findAll(event.data);
   }
 

@@ -1,13 +1,13 @@
 import { IQueryHandler, QueryHandler } from '@addapptables/microservice';
-import { findAllTenantQuery } from '../../application/queries/get-all-tenant.query';
+import { FindAllTenantQuery } from '../../application/queries/find-all-tenant.query';
 import { TenantDomainService } from '../services/tenant.service';
 
-@QueryHandler(findAllTenantQuery)
-export class findAllTenantHandler implements IQueryHandler<findAllTenantQuery> {
+@QueryHandler(FindAllTenantQuery)
+export class FindAllTenantHandler implements IQueryHandler<FindAllTenantQuery> {
 
   constructor(private readonly tenantService: TenantDomainService) { }
 
-  handle(event: findAllTenantQuery): any {
+  handle(event: FindAllTenantQuery): any {
     return this.tenantService.findAll(event.data);
   }
 

@@ -9,7 +9,7 @@ import { CreateOrganizationUnitCommand } from '../../commands/create-organizatio
 import { OrganizationUnit } from '../../../infrastructure/database/entities/organization-unit.entity';
 import { OrganizationUnitDto } from '../../dtos/organization-unit.dto';
 import { GetOrganizationUnitDto } from '../../dtos/get-organization-unit.dto';
-import { findAllOrganizationUnitQuery } from '../../queries/get-all-organization-unit.query';
+import { FindAllOrganizationUnitQuery } from '../../queries/find-all-organization-unit.query';
 import { UpdateOrganizationUnitDto } from '../../dtos/update-organization-unit.dto';
 import { UpdateOrganizationUnitCommand } from '../../commands/update-organization-unit.command';
 import { DeleteOrganizationUnitCommand } from '../../commands/delete-organization-unit.command';
@@ -53,7 +53,7 @@ export class OrganizationUnitService {
 
   async findAll(input: GetOrganizationUnitDto) {
     const transferData = await this.broker.start()
-      .add(new findAllOrganizationUnitQuery(input))
+      .add(new FindAllOrganizationUnitQuery(input))
       .end<PaginatedResultDto<OrganizationUnit>>();
     if (transferData.error) {
       throw new InternalServerErrorException(transferData.error);

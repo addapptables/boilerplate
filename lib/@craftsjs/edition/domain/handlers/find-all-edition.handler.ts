@@ -3,7 +3,7 @@ import { findAllEditionQuery } from '../../application/queries/get-all-edition.q
 import { EditionDomainService } from '../services/edition.service';
 
 @QueryHandler(findAllEditionQuery)
-export class findAllEditionHandler implements IQueryHandler<findAllEditionQuery> {
+export class FindAllEditionHandler implements IQueryHandler<findAllEditionQuery> {
 
   constructor(private readonly editionService: EditionDomainService) { }
 

@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { expect } from 'chai';
-import { findAllUserHandler } from '../../../../../lib/@craftsjs/user/domain/handlers/get-all-user.handler';
+import { FindAllUserHandler } from '../../../../../lib/@craftsjs/user/domain/handlers/find-all-user.handler';
 import { UserDomainService } from '../../../../../lib/@craftsjs/user/domain/services/user.service';
-import { findAllUserQuery } from '../../../../../lib/@craftsjs/user/application/queries/get-all-user.query';
+import { FindAllUserQuery } from '../../../../../lib/@craftsjs/user/application/queries/find-all-user.query';
 
-describe('findAllUserHandler', () => {
-  let handler: findAllUserHandler;
+describe('FindAllUserHandler', () => {
+  let handler: FindAllUserHandler;
   let testingModule: TestingModule;
   const user = {
     name: 'test',
@@ -26,14 +26,14 @@ describe('findAllUserHandler', () => {
     testingModule = await Test.createTestingModule({
       providers: [
         UserDomainService,
-        findAllUserHandler,
+        FindAllUserHandler,
       ],
     })
       .overrideProvider(UserDomainService)
       .useValue(repository)
       .compile();
     await testingModule.init();
-    handler = testingModule.get<findAllUserHandler>(findAllUserHandler);
+    handler = testingModule.get<FindAllUserHandler>(FindAllUserHandler);
   });
 
   after(async () => {
@@ -46,7 +46,7 @@ describe('findAllUserHandler', () => {
 
   describe('handle', () => {
     it('should return all found users', async () => {
-      const result = await handler.handle(new findAllUserQuery({ skip: 0, take: 10 }));
+      const result = await handler.handle(new FindAllUserQuery({ skip: 0, take: 10 }));
       expect(result).to.be.not.undefined;
       expect(result).to.be.length(1);
       expect(result).deep.contains(user);

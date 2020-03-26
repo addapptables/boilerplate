@@ -6,7 +6,7 @@ import { Tenant } from '../../../infrastructure/database/entities/tenant.entity'
 import { mapper } from '@craftsjs/utils/mapper.util';
 import { TenantDto } from '../../dtos/tenant.dto';
 import { GetTenantDto } from '../../dtos/get-tenant.dto';
-import { findAllTenantQuery } from '../../queries/get-all-tenant.query';
+import { FindAllTenantQuery } from '../../queries/find-all-tenant.query';
 import { PaginatedResultDto } from '@craftsjs/core/dto/paginated-result.dto';
 import { UpdateTenantDto } from '../../dtos/update-tenant.dto';
 import { UpdateTenantCommand } from '../../commands/update-tenant.command';
@@ -43,7 +43,7 @@ export class TenantService {
 
   async findAll(input: GetTenantDto) {
     const transferData = await this.broker.start()
-      .add(new findAllTenantQuery(input))
+      .add(new FindAllTenantQuery(input))
       .end<PaginatedResultDto<Tenant>>();
     if (transferData.error) {
       throw new InternalServerErrorException(transferData.error);

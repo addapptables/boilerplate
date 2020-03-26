@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { expect } from 'chai';
-import { findAllOrganizationUnitHandler } from '../../../../../lib/@craftsjs/organization/domain/handlers/get-all-organization-unit.handler';
+import { FindAllOrganizationUnitHandler } from '../../../../../lib/@craftsjs/organization/domain/handlers/find-all-organization-unit.handler';
 import { OrganizationUnitDomainService } from '../../../../../lib/@craftsjs/organization/domain/services/organization-unit.service';
-import { findAllOrganizationUnitQuery } from '../../../../../lib/@craftsjs/organization/application/queries/get-all-organization-unit.query';
+import { FindAllOrganizationUnitQuery } from '../../../../../lib/@craftsjs/organization/application/queries/find-all-organization-unit.query';
 
-describe('findAllOrganizationUnitHandler', () => {
-  let handler: findAllOrganizationUnitHandler;
+describe('FindAllOrganizationUnitHandler', () => {
+  let handler: FindAllOrganizationUnitHandler;
   let testingModule: TestingModule;
 
   before(async () => {
@@ -17,14 +17,14 @@ describe('findAllOrganizationUnitHandler', () => {
     testingModule = await Test.createTestingModule({
       providers: [
         OrganizationUnitDomainService,
-        findAllOrganizationUnitHandler,
+        FindAllOrganizationUnitHandler,
       ],
     })
       .overrideProvider(OrganizationUnitDomainService)
       .useValue(repository)
       .compile();
     await testingModule.init();
-    handler = testingModule.get<findAllOrganizationUnitHandler>(findAllOrganizationUnitHandler);
+    handler = testingModule.get<FindAllOrganizationUnitHandler>(FindAllOrganizationUnitHandler);
   });
 
   after(async () => {
@@ -37,7 +37,7 @@ describe('findAllOrganizationUnitHandler', () => {
 
   describe('handle', () => {
     it('should must return all organization units', async () => {
-      const result = await handler.handle(new findAllOrganizationUnitQuery({}));
+      const result = await handler.handle(new FindAllOrganizationUnitQuery({}));
       expect(result).to.be.not.undefined;
       expect(result).to.be.length(1);
       expect(result).deep.contains({ id: 135461, name: 'test' });

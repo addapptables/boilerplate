@@ -6,7 +6,7 @@ import { Role } from '@craftsjs/role/infrastructure/database/entities/role.entit
 import { mapper } from '@craftsjs/utils/mapper.util';
 import { RoleDto } from '../../dtos/role.dto';
 import { GetRoleDto } from '../../dtos/get-role.dto';
-import { findAllRoleQuery } from '../../queries/get-all-role.query';
+import { FindAllRoleQuery } from '../../queries/find-all-role.query';
 import { PaginatedResultDto } from '@craftsjs/core/dto/paginated-result.dto';
 import { UpdateRoleDto } from '../../dtos/update-role.dto';
 import { UpdateRoleCommand } from '../../commands/update-role.command';
@@ -44,7 +44,7 @@ export class RoleService {
 
   async findAll(input: GetRoleDto) {
     const transferData = await this.broker.start()
-      .add(new findAllRoleQuery(input))
+      .add(new FindAllRoleQuery(input))
       .end<PaginatedResultDto<Role>>();
     if (transferData.error) {
       throw new InternalServerErrorException(transferData.error);

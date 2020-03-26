@@ -1,13 +1,13 @@
 import { IQueryHandler, QueryHandler } from '@addapptables/microservice';
-import { findAllRoleQuery } from '../../application/queries/get-all-role.query';
+import { FindAllRoleQuery } from '../../application/queries/find-all-role.query';
 import { RoleDomainService } from '../services/role.service';
 
-@QueryHandler(findAllRoleQuery)
-export class findAllRoleHandler implements IQueryHandler<findAllRoleQuery> {
+@QueryHandler(FindAllRoleQuery)
+export class FindAllRoleHandler implements IQueryHandler<FindAllRoleQuery> {
 
   constructor(private readonly roleService: RoleDomainService) { }
 
-  handle(event: findAllRoleQuery): any {
+  handle(event: FindAllRoleQuery): any {
     return this.roleService.findAll(event.data);
   }
 

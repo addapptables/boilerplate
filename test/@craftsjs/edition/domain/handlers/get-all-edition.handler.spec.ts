@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { expect } from 'chai';
 import { EditionDomainService } from '../../../../../lib/@craftsjs/edition';
-import { findAllEditionHandler } from '../../../../../lib/@craftsjs/edition/domain/handlers/get-all-edition.handler';
+import { FindAllEditionHandler } from '../../../../../lib/@craftsjs/edition/domain/handlers/find-all-edition.handler';
 import { findAllEditionQuery } from '../../../../../lib/@craftsjs/edition/application/queries/get-all-edition.query';
 
 describe('findAllEditionHandler', () => {
-  let handler: findAllEditionHandler;
+  let handler: FindAllEditionHandler;
   let testingModule: TestingModule;
 
   before(async () => {
@@ -17,14 +17,14 @@ describe('findAllEditionHandler', () => {
     testingModule = await Test.createTestingModule({
       providers: [
         EditionDomainService,
-        findAllEditionHandler,
+        FindAllEditionHandler,
       ],
     })
       .overrideProvider(EditionDomainService)
       .useValue(repository)
       .compile();
     await testingModule.init();
-    handler = testingModule.get<findAllEditionHandler>(findAllEditionHandler);
+    handler = testingModule.get<FindAllEditionHandler>(FindAllEditionHandler);
   });
 
   after(async () => {

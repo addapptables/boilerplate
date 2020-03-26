@@ -1,13 +1,13 @@
 import { IQueryHandler, QueryHandler } from '@addapptables/microservice';
-import { findAllPermissionQuery } from '../../application/queries/get-all-permission.query';
+import { FindAllPermissionQuery } from '../../application/queries/find-all-permission.query';
 import { PermissionDomainService } from '../services/permission.service';
 
-@QueryHandler(findAllPermissionQuery)
-export class findAllPermissionHandler implements IQueryHandler<findAllPermissionQuery> {
+@QueryHandler(FindAllPermissionQuery)
+export class FindAllPermissionHandler implements IQueryHandler<FindAllPermissionQuery> {
 
   constructor(private readonly permissionService: PermissionDomainService) { }
 
-  handle(event: findAllPermissionQuery): any {
+  handle(event: FindAllPermissionQuery): any {
     return this.permissionService.findAll(event.data);
   }
 

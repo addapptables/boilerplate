@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PermissionDomainService } from './domain/services/permission.service';
 import { PermissionRepository } from './infrastructure/database/repositories/permission.repository';
-import { findAllPermissionHandler } from './domain/handlers/get-all-permission.handler';
+import { FindAllPermissionHandler } from './domain/handlers/find-all-permission.handler';
 import { PermissionController } from './application/api/controllers/permission.controller';
 import { PermissionService } from './application/api/services/permission.service';
 
@@ -14,7 +14,7 @@ import { PermissionService } from './application/api/services/permission.service
   providers: [
     PermissionDomainService,
     PermissionService,
-    findAllPermissionHandler,
+    FindAllPermissionHandler,
   ],
   exports: [
     PermissionService,

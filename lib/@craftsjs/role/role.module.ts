@@ -4,7 +4,7 @@ import { RolePermission } from './infrastructure/database/entities/role-permissi
 import { RoleDomainService } from './domain/services/role.service';
 import { CreateRoleHandler } from './domain/handlers/create-role.handler';
 import { RoleRepository } from './infrastructure/database/repositories/role.repository';
-import { findAllRoleHandler } from './domain/handlers/get-all-role.handler';
+import { FindAllRoleHandler } from './domain/handlers/find-all-role.handler';
 import { UpdateRoleHandler } from './domain/handlers/update-role.handler';
 import { DeleteRoleHandler } from './domain/handlers/delete-role.handler';
 import { RoleController } from './application/api/controllers/role.controller';
@@ -21,7 +21,7 @@ import { FindOneRoleHandler } from './domain/handlers/find-one-role.handler';
     RoleService,
     UpdateRoleHandler,
     CreateRoleHandler,
-    findAllRoleHandler,
+    FindAllRoleHandler,
     DeleteRoleHandler,
     FindOneRoleHandler,
   ],

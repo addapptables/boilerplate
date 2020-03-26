@@ -8,7 +8,7 @@ import { FindOneUserHandler } from './domain/handlers/find-one-user.handler';
 import { GetUserPermissionHandler } from './domain/handlers/get-user-permission.handler';
 import { CreateUserHandler } from './domain/handlers/create-user.handler';
 import { UserRepository } from './infrastructure/database/repositories/user.repository';
-import { findAllUserHandler } from './domain/handlers/get-all-user.handler';
+import { FindAllUserHandler } from './domain/handlers/find-all-user.handler';
 import { UpdateUserHandler } from './domain/handlers/update-user.handler';
 import { DeleteUserHandler } from './domain/handlers/delete-user.handler';
 import { UserController } from './application/api/controllers/user.controller';
@@ -27,7 +27,7 @@ import { UserService } from './application/api/services/user.service';
     GetUserPermissionHandler,
     UpdateUserHandler,
     CreateUserHandler,
-    findAllUserHandler,
+    FindAllUserHandler,
     DeleteUserHandler,
   ],
   exports: [

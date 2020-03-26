@@ -10,7 +10,7 @@ import { TenantService } from './application/api/services/tenant.service';
 import { TenantController } from './application/api/controllers/tenant.controller';
 import { TenantRepository } from './infrastructure/database/repositories/tenant.repository';
 import { SecurityModule } from '../security/security.module';
-import { PermissionModule } from '@craftsjs/permission/permission.module';
+import { PermissionModule } from '../permission/permission.module';
 
 @Module({
   controllers: [TenantController],

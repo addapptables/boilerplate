@@ -1,7 +1,7 @@
 import { ApiBearerAuth, ApiTags, ApiResponse } from '@nestjs/swagger';
 import { Controller, UseGuards, Body, Post, Get, Query, Put, Delete, Param } from '@nestjs/common';
-import { AuthenticatedGuard } from '@craftsjs/auth/guard/authentication.guard';
-import { FindOneDto } from '@craftsjs/core/dto/find-one.dto';
+import { AuthenticatedGuard } from '../../../../auth/guard/authentication.guard';
+import { FindOneDto } from '../../../../core/dto/find-one.dto';
 import { EditionService } from '../services/edition.service';
 import { CreateEditionDto } from '../../dtos/create-edition.dto';
 import { GetEditionDto } from '../../dtos/get-edition.dto';

@@ -1,5 +1,5 @@
 import { ITenantResolve } from '../interfaces';
-import { TENANT_ID } from '@craftsjs/config/constants.config';
+import { TENANT_ID } from '../../config/constants.config';
 
 export class TenantHeaderContributor implements ITenantResolve {
 

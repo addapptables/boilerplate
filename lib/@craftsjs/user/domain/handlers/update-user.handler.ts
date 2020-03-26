@@ -3,7 +3,7 @@ import { UserDomainService } from '../services/user.service';
 import { User } from '../../infrastructure/database/entities/user.entity';
 import { UpdateUserCommand } from '../../application/commands/update-user.command';
 import { mapper } from '../../../utils';
-import { UserRole } from '@craftsjs/user/infrastructure/database/entities/user-role.entity';
+import { UserRole } from '../../../user/infrastructure/database/entities/user-role.entity';
 import * as uuid from 'uuid/v4';
 
 @CommandHandler(UpdateUserCommand)

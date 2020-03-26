@@ -1,6 +1,6 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { PermissionRepository } from '../../infrastructure/database/repositories/permission.repository';
-import { QueryDto } from '@craftsjs/core';
+import { QueryDto } from '../../../core';
 import { isEmpty } from '../../../utils';
 
 export class PermissionDomainService {

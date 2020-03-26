@@ -1,5 +1,5 @@
 import { Query } from '@addapptables/microservice';
-import { FindOneDto } from '@craftsjs/core';
+import { FindOneDto } from '../../../core';
 
 export class FindOneOrganizationUnitQuery extends Query<FindOneDto> {
   public readonly action = 'findOneOrganizationUnit';

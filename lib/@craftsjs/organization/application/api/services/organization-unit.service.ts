@@ -1,9 +1,9 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { Broker } from '@addapptables/microservice';
-import { FindOneDto } from '@craftsjs/core';
-import { mapper } from '@craftsjs/utils/mapper.util';
-import { CommandDto } from '@craftsjs/core/dto/command.dto';
-import { PaginatedResultDto } from '@craftsjs/core/dto/paginated-result.dto';
+import { FindOneDto } from '../../../../core';
+import { mapper } from '../../../../utils/mapper.util';
+import { CommandDto } from '../../../../core/dto/command.dto';
+import { PaginatedResultDto } from '../../../../core/dto/paginated-result.dto';
 import { CreateOrganizationUnitDto } from '../../dtos/create-organization-unit.dto';
 import { CreateOrganizationUnitCommand } from '../../commands/create-organization-unit.command';
 import { OrganizationUnit } from '../../../infrastructure/database/entities/organization-unit.entity';

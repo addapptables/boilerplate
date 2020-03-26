@@ -3,7 +3,7 @@ import { RoleDomainService } from '../services/role.service';
 import { Role } from '../../infrastructure/database/entities/role.entity';
 import { UpdateRoleCommand } from '../../application/commands/update-role.command';
 import { mapper } from '../../../utils';
-import { RolePermission } from '@craftsjs/role/infrastructure/database/entities/role-permission.entity';
+import { RolePermission } from '../../../role/infrastructure/database/entities/role-permission.entity';
 import * as uuid from 'uuid/v4';
 
 @CommandHandler(UpdateRoleCommand)

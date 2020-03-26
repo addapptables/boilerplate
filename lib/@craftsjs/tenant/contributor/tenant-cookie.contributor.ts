@@ -1,5 +1,5 @@
 import { ITenantResolve } from '../interfaces';
-import { TENANT_ID } from '@craftsjs/config';
+import { TENANT_ID } from '../../config';
 
 export class TenantCookieContributor implements ITenantResolve {
 

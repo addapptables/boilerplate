@@ -3,17 +3,17 @@ import { Broker } from '@addapptables/microservice';
 import { CreateEditionDto } from '../../dtos/create-edition.dto';
 import { CreateEditionCommand } from '../../commands/create-edition.command';
 import { Edition } from '../../../infrastructure/database/entities/edition.entity';
-import { mapper } from '@craftsjs/utils/mapper.util';
+import { mapper } from '../../../../utils/mapper.util';
 import { EditionDto } from '../../dtos/edition.dto';
 import { GetEditionDto } from '../../dtos/get-edition.dto';
 import { findAllEditionQuery } from '../../queries/get-all-edition.query';
-import { PaginatedResultDto } from '@craftsjs/core/dto/paginated-result.dto';
+import { PaginatedResultDto } from '../../../../core/dto/paginated-result.dto';
 import { UpdateEditionDto } from '../../dtos/update-edition.dto';
 import { UpdateEditionCommand } from '../../commands/update-edition.command';
-import { CommandDto } from '@craftsjs/core/dto/command.dto';
+import { CommandDto } from '../../../../core/dto/command.dto';
 import { DeleteEditionCommand } from '../../commands/delete-edition.command';
 import { FindOneEditionQuery } from '../../queries/find-one-edition.query';
-import { FindOneDto } from '@craftsjs/core';
+import { FindOneDto } from '../../../../core';
 import * as uuid from 'uuid/v4';
 
 @Injectable()

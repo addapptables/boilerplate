@@ -7,8 +7,8 @@ import { CrudAppService } from '../../../core/services/crud-app.service';
 import { User } from '../../infrastructure/database/entities/user.entity';
 import { UserRepository } from '../../infrastructure/database/repositories/user.repository';
 import { Connection } from 'typeorm';
-import { UserRole } from '@craftsjs/user/infrastructure/database/entities';
-import { FindOneUserDto } from '@craftsjs/user/application/dtos/find-one-user.dto';
+import { UserRole } from '../../../user/infrastructure/database/entities';
+import { FindOneUserDto } from '../../../user/application/dtos/find-one-user.dto';
 
 @Injectable()
 export class UserDomainService extends CrudAppService<UserRepository> {

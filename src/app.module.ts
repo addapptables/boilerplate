@@ -11,7 +11,7 @@ import { resolve } from 'path';
     }),
     BoilerplateModule.forRoot({
       jwt: {
-        secret: 'secret',
+        secret: process.env.SECRET_SESSION,
       },
       typeOrm: {
         type: process.env.DB_TYPE as any,

@@ -65,7 +65,7 @@ describe('RoleDomainService', () => {
       const result = await service.insert({
         name: 'test',
         permissions: []
-      });
+      } as any);
       expect(result).to.be.not.undefined;
       expect(result.name).to.be.equal('test');
     });
@@ -95,7 +95,7 @@ describe('RoleDomainService', () => {
         id: 123546,
         name: 'test',
         permissions: []
-      });
+      } as any);
       expect(update.calledOnce).to.be.true;
       expect(deleteFunction.calledOnce).to.be.true;
       expect(result).to.be.not.undefined;
@@ -119,7 +119,7 @@ describe('RoleDomainService', () => {
   describe('findOneByQuery', () => {
     it('should return a role', async () => {
       sandbox.stub((service as any).roleRepository, 'findOne').returns({ id: 123456, name: 'test', permissions: [] })
-      const result = await service.findOneByQuery({});
+      const result = await service.findOneByQuery({} as any);
       expect(result).to.be.not.undefined;
       expect(result.name).to.be.equal('test');
     });
@@ -128,7 +128,7 @@ describe('RoleDomainService', () => {
   describe('findAll', () => {
     it('should return all roles', async () => {
       sandbox.stub((service as any).roleRepository, 'findAndCount').returns([[{ id: 123456, name: 'test', permissions: [] }], 1])
-      const result = await service.findAll({});
+      const result = await service.findAll({} as any);
       expect(result).to.be.not.undefined;
       expect(result.data).to.be.length(1);
       expect(result.total).to.be.equal(1);

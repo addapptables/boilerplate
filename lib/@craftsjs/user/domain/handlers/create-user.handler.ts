@@ -4,7 +4,7 @@ import { mapper } from '../../../utils';
 import { CreateUserCommand } from '../../application/commands/create-user.command';
 import { User } from '../../infrastructure/database/entities/user.entity';
 import { SecurityService } from '../../../security';
-import { UserRole } from '@craftsjs/user/infrastructure/database/entities';
+import { UserRole } from '../../../user/infrastructure/database/entities';
 import * as uuid from 'uuid/v4';
 
 @CommandHandler(CreateUserCommand)

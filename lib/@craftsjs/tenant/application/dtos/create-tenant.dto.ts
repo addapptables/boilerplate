@@ -1,6 +1,6 @@
 import { Expose } from 'class-transformer';
 import { Length, IsDefined, IsBoolean, IsNumber } from 'class-validator';
-import { MAX_NAME_LENGTH } from '@craftsjs/config/constants.config';
+import { MAX_NAME_LENGTH } from '../../../config/constants.config';
 import { ApiProperty } from '@nestjs/swagger';
 import { CommandDto } from '../../../core/dto/command.dto';
 

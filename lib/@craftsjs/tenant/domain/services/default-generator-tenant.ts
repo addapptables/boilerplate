@@ -1,7 +1,7 @@
-import { Role } from '@craftsjs/role/infrastructure/database/entities/role.entity';
-import { SecurityService } from '@craftsjs/security/services/security.service';
-import { User } from '@craftsjs/user/infrastructure/database/entities/user.entity';
-import { UserRole } from '@craftsjs/user/infrastructure/database/entities/user-role.entity';
+import { Role } from '../../../role/infrastructure/database/entities/role.entity';
+import { SecurityService } from '../../../security/services/security.service';
+import { User } from '../../../user/infrastructure/database/entities/user.entity';
+import { UserRole } from '../../../user/infrastructure/database/entities/user-role.entity';
 import * as uuid from 'uuid/v4';
 
 export class DefaultGenerator {

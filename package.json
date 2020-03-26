@@ -19,6 +19,7 @@
     "coverage": "nyc yarn test"
   },
   "dependencies": {
+    "@addapptables/microservice": "0.0.1-0",
     "@nestjs/common": "^7.0.3",
     "@nestjs/core": "^7.0.3",
     "@nestjs/jwt": "^7.0.0",

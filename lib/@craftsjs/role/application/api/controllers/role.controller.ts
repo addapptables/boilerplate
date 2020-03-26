@@ -1,9 +1,9 @@
 import { ApiBearerAuth, ApiTags, ApiResponse } from '@nestjs/swagger';
 import { Controller, UseGuards, Body, Post, Get, Query, Put, Delete, Param } from '@nestjs/common';
 import { RoleService } from '../services/role.service';
-import { AuthenticatedGuard } from '@craftsjs/auth/guard/authentication.guard';
+import { AuthenticatedGuard } from '../../../../auth/guard/authentication.guard';
 import { CreateRoleDto } from '../../dtos/create-role.dto';
-import { FindOneDto } from '@craftsjs/core/dto/find-one.dto';
+import { FindOneDto } from '../../../../core/dto/find-one.dto';
 import { GetRoleDto } from '../../dtos/get-role.dto';
 import { UpdateRoleDto } from '../../dtos/update-role.dto';
 import { RoleDto } from '../../dtos/role.dto';

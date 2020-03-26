@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { isEmpty } from '@craftsjs/utils';
+import { isEmpty } from '../../../utils';
 import { InjectRepository } from '@nestjs/typeorm';
 import { OrganizationUnitRepository } from '../../infrastructure/database/repositories/organization-unit.repository';
 

@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { mergeAndRemoveEmpty } from '@craftsjs/utils';
-import { AlreadyExists } from '@craftsjs/core';
-import { CrudAppService } from '@craftsjs/core/services/crud-app.service';
-import { FindOneDto } from '@craftsjs/core/dto/find-one.dto';
+import { mergeAndRemoveEmpty } from '../../../utils';
+import { AlreadyExists } from '../../../core';
+import { CrudAppService } from '../../../core/services/crud-app.service';
+import { FindOneDto } from '../../../core/dto/find-one.dto';
 import { OrganizationUnitRepository } from '../../infrastructure/database/repositories/organization-unit.repository';
 import { OrganizationUnit } from '../../infrastructure/database/entities/organization-unit.entity';
 import { OrganizationUnitCodeService } from './organization-unit-code.service';

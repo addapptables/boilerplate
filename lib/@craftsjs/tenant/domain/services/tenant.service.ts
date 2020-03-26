@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CrudAppService } from '@craftsjs/core/services/crud-app.service';
-import { PermissionDomainService } from '@craftsjs/permission/domain/services/permission.service';
-import { FindOneDto } from '@craftsjs/core/dto/find-one.dto';
-import { RolePermission } from '@craftsjs/role/infrastructure/database/entities/role-permission.entity';
-import { AlreadyExists } from '@craftsjs/core/exceptions/already-exists.exception';
+import { CrudAppService } from '../../../core/services/crud-app.service';
+import { PermissionDomainService } from '../../../permission/domain/services/permission.service';
+import { FindOneDto } from '../../../core/dto/find-one.dto';
+import { RolePermission } from '../../../role/infrastructure/database/entities/role-permission.entity';
+import { AlreadyExists } from '../../../core/exceptions/already-exists.exception';
 import { Connection } from 'typeorm';
 import { TenantRepository } from '../../infrastructure/database/repositories/tenant.repository';
 import { Tenant } from '../../infrastructure/database/entities/tenant.entity';

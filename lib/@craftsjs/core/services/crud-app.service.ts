@@ -5,7 +5,7 @@ import { PaginatedResultDto } from '../dto/paginated-result.dto';
 import { FullAuditedEntity } from '../abstract-entities';
 import * as R from 'ramda';
 import { FindOneDto } from '../dto/find-one.dto';
-import { mergeAndRemoveEmpty } from '@craftsjs/utils';
+import { mergeAndRemoveEmpty } from '../../utils';
 
 export abstract class CrudAppService<T extends CraftsRepository<any>> {
 

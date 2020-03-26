@@ -1,5 +1,5 @@
 import { Expose } from 'class-transformer';
-import { EditionType } from '@craftsjs/edition/infrastructure/database/enums/edition-type.enum';
+import { EditionType } from '../../../edition/infrastructure/database/enums/edition-type.enum';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class EditionDto {

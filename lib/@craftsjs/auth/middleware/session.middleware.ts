@@ -3,7 +3,7 @@ import { TenantCacheContributor, TenantHeaderContributor, TenantCookieContributo
 import { SessionService } from '../services/session.service';
 import { Request } from 'express';
 import { JwtService } from '@nestjs/jwt';
-import { TenantDomainService } from '@craftsjs/tenant/domain/services/tenant.service';
+import { TenantDomainService } from '../../tenant/domain/services/tenant.service';
 
 @Injectable()
 export class SessionMiddleware implements NestMiddleware {

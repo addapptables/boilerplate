@@ -1,7 +1,7 @@
 import { ApiBearerAuth, ApiTags, ApiResponse } from '@nestjs/swagger';
 import { Controller, UseGuards, Body, Post, Get, Query, Put, Delete, Param, Req } from '@nestjs/common';
-import { AuthenticatedGuard } from '@craftsjs/auth/guard/authentication.guard';
-import { FindOneDto } from '@craftsjs/core/dto/find-one.dto';
+import { AuthenticatedGuard } from '../../../../auth/guard/authentication.guard';
+import { FindOneDto } from '../../../../core/dto/find-one.dto';
 import { OrganizationUnitService } from '../services/organization-unit.service';
 import { CreateOrganizationUnitDto } from '../../dtos/create-organization-unit.dto';
 import { GetOrganizationUnitDto } from '../../dtos/get-organization-unit.dto';
@@ -9,7 +9,7 @@ import { UpdateOrganizationUnitDto } from '../../dtos/update-organization-unit.d
 import { OrganizationUnitDto } from '../../dtos/organization-unit.dto';
 import { AddRolesToOrganizationUnitDto } from '../../dtos/add-roles-to-organization-unit.dto';
 import { OrganizationUnitRoleDto } from '../../dtos/organization-unit-role.dto';
-import { RoleDto } from '@craftsjs/role/application/dtos/role.dto';
+import { RoleDto } from '../../../../role/application/dtos/role.dto';
 
 @ApiBearerAuth()
 @ApiTags('organization-units')

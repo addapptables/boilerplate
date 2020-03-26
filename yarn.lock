@@ -2,6 +2,14 @@
 # yarn lockfile v1
 
 
+"@addapptables/microservice@0.0.1-0":
+  version "0.0.1-0"
+  resolved "https://registry.yarnpkg.com/@addapptables/microservice/-/microservice-0.0.1-0.tgz#6af1f3b021dcfa85e6d36defa8cb2851619cf4a9"
+  integrity sha512-zt5IXGzIcsGBISdzDRs+5Z23oelYSkGu1iaFdDJxiNANoqD3tvFEc92aXAGmgGyF7hXvupwhhDOUO2MdQzPNKA==
+  dependencies:
+    ramda "^0.26.1"
+    uuid "^3.4.0"
+
 "@angular-devkit/core@9.0.6":
   version "9.0.6"
   resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-9.0.6.tgz#cd4862e54f4dad9b47f515abf24e4d440cf8ba13"
@@ -4357,6 +4365,11 @@ querystring@0.2.0:
   resolved "https://registry.yarnpkg.com/querystring/-/querystring-0.2.0.tgz#b209849203bb25df820da756e747005878521620"
   integrity sha1-sgmEkgO7Jd+CDadW50cAWHhSFiA=
 
+ramda@^0.26.1:
+  version "0.26.1"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"
+  integrity sha512-hLWjpy7EnsDBb0p+Z3B7rPi3GDeRG5ZtiI33kJhTt+ORCd38AbAIjB/9zRIUoeTbE/AVX5ZkU7m6bznsvrf8eQ==
+
 ramda@^0.27.0:
   version "0.27.0"
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.27.0.tgz#915dc29865c0800bf3f69b8fd6c279898b59de43"
@@ -5537,7 +5550,7 @@ uuid@7.0.2, uuid@^7.0.2:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-7.0.2.tgz#7ff5c203467e91f5e0d85cfcbaaf7d2ebbca9be6"
   integrity sha512-vy9V/+pKG+5ZTYKf+VcphF5Oc6EFiu3W8Nv3P3zIh0EqVI80ZxOzuPfe9EHjkFNvf8+xuTHVeei4Drydlx4zjw==
 
-uuid@^3.3.3:
+uuid@^3.3.3, uuid@^3.4.0:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==

@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { AlreadyExists } from '@craftsjs/core/exceptions/already-exists.exception';
-import { removeEmpty, mergeAndRemoveEmpty } from '@craftsjs/utils';
-import { CrudAppService } from '@craftsjs/core/services/crud-app.service';
-import { FindOneDto } from '@craftsjs/core/dto/find-one.dto';
-import { EditionRepository } from '@craftsjs/edition/infrastructure/database/repositories/edition.repository';
-import { Edition } from '@craftsjs/edition/infrastructure/database/entities/edition.entity';
+import { AlreadyExists } from '../../../core/exceptions/already-exists.exception';
+import { removeEmpty, mergeAndRemoveEmpty } from '../../../utils';
+import { CrudAppService } from '../../../core/services/crud-app.service';
+import { FindOneDto } from '../../../core/dto/find-one.dto';
+import { EditionRepository } from '../../../edition/infrastructure/database/repositories/edition.repository';
+import { Edition } from '../../../edition/infrastructure/database/entities/edition.entity';
 
 @Injectable()
 export class EditionDomainService extends CrudAppService<EditionRepository> {

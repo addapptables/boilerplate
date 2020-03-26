@@ -1,9 +1,9 @@
 import { ApiBearerAuth, ApiTags, ApiResponse } from '@nestjs/swagger';
 import { Controller, UseGuards, Body, Post, Get, Query, Put, Delete, Param } from '@nestjs/common';
 import { TenantService } from '../services/tenant.service';
-import { AuthenticatedGuard } from '@craftsjs/auth/guard/authentication.guard';
+import { AuthenticatedGuard } from '../../../../auth/guard/authentication.guard';
 import { CreateTenantDto } from '../../dtos/create-tenant.dto';
-import { FindOneDto } from '@craftsjs/core/dto/find-one.dto';
+import { FindOneDto } from '../../../../core/dto/find-one.dto';
 import { GetTenantDto } from '../../dtos/get-tenant.dto';
 import { UpdateTenantDto } from '../../dtos/update-tenant.dto';
 import { TenantDto } from '../../dtos/tenant.dto';

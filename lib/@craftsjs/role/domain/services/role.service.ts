@@ -2,15 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
 import * as R from 'ramda';
-import { RoleRepository } from '@craftsjs/role/infrastructure/database/repositories/role.repository';
-import { Role } from '@craftsjs/role/infrastructure/database/entities/role.entity';
-import { AlreadyExists } from '@craftsjs/core/exceptions/already-exists.exception';
-import { removeEmpty, mergeAndRemoveEmpty } from '@craftsjs/utils';
-import { CrudAppService } from '@craftsjs/core/services/crud-app.service';
-import { FindOneDto } from '@craftsjs/core/dto/find-one.dto';
-import { PaginatedDto } from '@craftsjs/core/dto/paginated.dto';
-import { PaginatedResultDto } from '@craftsjs/core/dto/paginated-result.dto';
-import { RolePermission } from '@craftsjs/role/infrastructure/database/entities';
+import { RoleRepository } from '../../../role/infrastructure/database/repositories/role.repository';
+import { Role } from '../../../role/infrastructure/database/entities/role.entity';
+import { AlreadyExists } from '../../../core/exceptions/already-exists.exception';
+import { removeEmpty, mergeAndRemoveEmpty } from '../../../utils';
+import { CrudAppService } from '../../../core/services/crud-app.service';
+import { FindOneDto } from '../../../core/dto/find-one.dto';
+import { PaginatedDto } from '../../../core/dto/paginated.dto';
+import { PaginatedResultDto } from '../../../core/dto/paginated-result.dto';
+import { RolePermission } from '../../../role/infrastructure/database/entities';
 
 @Injectable()
 export class RoleDomainService extends CrudAppService<RoleRepository> {

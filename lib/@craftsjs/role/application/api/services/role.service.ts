@@ -2,18 +2,18 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { Broker } from '@addapptables/microservice';
 import { CreateRoleDto } from '../../dtos/create-role.dto';
 import { CreateRoleCommand } from '../../commands/create-role.command';
-import { Role } from '@craftsjs/role/infrastructure/database/entities/role.entity';
-import { mapper } from '@craftsjs/utils/mapper.util';
+import { Role } from '../../../../role/infrastructure/database/entities/role.entity';
+import { mapper } from '../../../../utils/mapper.util';
 import { RoleDto } from '../../dtos/role.dto';
 import { GetRoleDto } from '../../dtos/get-role.dto';
 import { FindAllRoleQuery } from '../../queries/find-all-role.query';
-import { PaginatedResultDto } from '@craftsjs/core/dto/paginated-result.dto';
+import { PaginatedResultDto } from '../../../../core/dto/paginated-result.dto';
 import { UpdateRoleDto } from '../../dtos/update-role.dto';
 import { UpdateRoleCommand } from '../../commands/update-role.command';
-import { CommandDto } from '@craftsjs/core/dto/command.dto';
+import { CommandDto } from '../../../../core/dto/command.dto';
 import { DeleteRoleCommand } from '../../commands/delete-role.command';
 import { FindOneRoleQuery } from '../../queries/find-one-role.query';
-import { FindOneDto } from '@craftsjs/core';
+import { FindOneDto } from '../../../../core';
 import * as uuid from 'uuid/v4';
 
 @Injectable()

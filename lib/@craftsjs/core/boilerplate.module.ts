@@ -5,10 +5,10 @@ import { EntitySubscriber } from './subscriber/entity.subscriber';
 import { BoilerplateOptions } from './interfaces/boilerplate-options.interface';
 import { UserModule } from '../user/user.module';
 import { AuthModule } from '../auth/auth.module';
-import { RoleModule } from '@craftsjs/role/role.module';
-import { EditionModule } from '@craftsjs/edition/edition.module';
-import { OrganizationUnitModule } from '@craftsjs/organization/organization-unit.module';
-import { PermissionModule } from '@craftsjs/permission/permission.module';
+import { RoleModule } from '../role/role.module';
+import { EditionModule } from '../edition/edition.module';
+import { OrganizationUnitModule } from '../organization/organization-unit.module';
+import { PermissionModule } from '../permission/permission.module';
 
 @Module({
   imports: [

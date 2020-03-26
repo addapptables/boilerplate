@@ -3,17 +3,17 @@ import { Broker } from '@addapptables/microservice';
 import { CreateTenantDto } from '../../dtos/create-tenant.dto';
 import { CreateTenantCommand } from '../../commands/create-tenant.command';
 import { Tenant } from '../../../infrastructure/database/entities/tenant.entity';
-import { mapper } from '@craftsjs/utils/mapper.util';
+import { mapper } from '../../../../utils/mapper.util';
 import { TenantDto } from '../../dtos/tenant.dto';
 import { GetTenantDto } from '../../dtos/get-tenant.dto';
 import { FindAllTenantQuery } from '../../queries/find-all-tenant.query';
-import { PaginatedResultDto } from '@craftsjs/core/dto/paginated-result.dto';
+import { PaginatedResultDto } from '../../../../core/dto/paginated-result.dto';
 import { UpdateTenantDto } from '../../dtos/update-tenant.dto';
 import { UpdateTenantCommand } from '../../commands/update-tenant.command';
-import { CommandDto } from '@craftsjs/core/dto/command.dto';
+import { CommandDto } from '../../../../core/dto/command.dto';
 import { DeleteTenantCommand } from '../../commands/delete-tenant.command';
 import { FindOneTenantQuery } from '../../queries/find-one-tenant.query';
-import { FindOneDto } from '@craftsjs/core';
+import { FindOneDto } from '../../../../core';
 import * as uuid from 'uuid/v4';
 @Injectable()
 export class TenantService {

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { SecurityModule } from '@craftsjs/security/security.module';
+import { SecurityModule } from '../security/security.module';
 import { UserPermission } from './infrastructure/database/entities/user-permission.entity';
 import { UserRole } from './infrastructure/database/entities/user-role.entity';
 import { UserDomainService } from './domain/services/user.service';

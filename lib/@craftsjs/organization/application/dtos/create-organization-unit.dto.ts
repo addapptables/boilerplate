@@ -1,8 +1,8 @@
 import { Expose, Transform } from 'class-transformer';
 import { Length, IsDefined, IsString, IsUUID } from 'class-validator';
-import { MAX_CODE_LENGTH } from '@craftsjs/config';
+import { MAX_CODE_LENGTH } from '../../../config';
 import { ApiProperty } from '@nestjs/swagger';
-import { CommandDto } from '@craftsjs/core/dto/command.dto';
+import { CommandDto } from '../../../core/dto/command.dto';
 
 export class CreateOrganizationUnitDto extends CommandDto {
 

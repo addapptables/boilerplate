@@ -1,9 +1,9 @@
 import { Expose } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 import { Length, IsDefined, IsBoolean, IsNumber, IsEnum, ValidateIf } from 'class-validator';
-import { CommandDto } from '@craftsjs/core/dto/command.dto';
-import { MAX_NAME_LENGTH } from '@craftsjs/config/constants.config';
-import { EditionType } from '@craftsjs/edition';
+import { CommandDto } from '../../../core/dto/command.dto';
+import { MAX_NAME_LENGTH } from '../../../config/constants.config';
+import { EditionType } from '../../../edition';
 
 export class CreateEditionDto extends CommandDto {
 

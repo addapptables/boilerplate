@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Broker } from '@addapptables/microservice';
-import { mapper } from '@craftsjs/utils';
+import { mapper } from '../../utils';
 import { SecurityService } from '../../security';
 import { LoginResultDto } from '../application/dtos/login-result.dto';
 import { SessionService } from './session.service';
@@ -11,7 +11,7 @@ import { GetUserPermissionsQuery } from '../../user/application/queries/get-user
 import { UserDto } from '../../user/application/dtos/user.dto';
 import { FindOneTenantQuery } from '../../tenant/application/queries/find-one-tenant.query';
 import { Tenant } from '../../tenant/infrastructure/database/entities/tenant.entity';
-import { TenantDto } from '@craftsjs/tenant/application/dtos/tenant.dto';
+import { TenantDto } from '../../tenant/application/dtos/tenant.dto';
 import { LoginInformationDto } from '../application/dtos/login-information.dto';
 
 @Injectable()

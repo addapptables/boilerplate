@@ -1,7 +1,7 @@
 import { Expose } from 'class-transformer';
 import { MaxLength, IsUUID } from 'class-validator';
-import { QueryDto } from '@craftsjs/core/dto/query.dto';
-import { MAX_NAME_LENGTH } from '@craftsjs/config';
+import { QueryDto } from '../../../core/dto/query.dto';
+import { MAX_NAME_LENGTH } from '../../../config';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class FindOneUserDto extends QueryDto {

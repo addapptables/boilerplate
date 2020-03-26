@@ -12,10 +12,11 @@
     "lib/**/entities/*.entity.ts"
   ],
   "migrations": [
-    "db/migration/**/*.ts"
+    "lib/db/migrations/**/*.ts",
+    "src/infrastructure/migrations/**/*.ts"
   ],
   "cli": {
     "entitiesDir": "src/entity",
-    "migrationsDir": "db/migration"
+    "migrationsDir": "lib/db/migration"
   }
 }

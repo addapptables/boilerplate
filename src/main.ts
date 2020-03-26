@@ -27,6 +27,7 @@ async function bootstrap() {
   app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe({ skipMissingProperties: true, transformOptions: { excludeExtraneousValues: true } }));
   app.setGlobalPrefix('api');
+  app.enableCors({ credentials: true, origin: 'http://localhost:4200/' })
 
   const options = new DocumentBuilder()
     .addBearerAuth()

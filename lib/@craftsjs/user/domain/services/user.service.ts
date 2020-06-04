@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as R from 'ramda';
-import { mergeAndRemoveEmpty } from '../../../utils';
+import { removeEmpty } from '../../../utils';
 import { AlreadyExists, PaginatedDto, PaginatedResultDto } from '../../../core';
 import { CrudAppService } from '../../../core/services/crud-app.service';
 import { User } from '../../infrastructure/database/entities/user.entity';
@@ -9,6 +9,8 @@ import { UserRepository } from '../../infrastructure/database/repositories/user.
 import { Connection } from 'typeorm';
 import { UserRole } from '../../../user/infrastructure/database/entities';
 import { FindOneUserDto } from '../../../user/application/dtos/find-one-user.dto';
+import { ChangePasswordDto } from '../../application/dtos/change-password.dto';
+import { SecurityService } from '../../../security';
 
 @Injectable()
 export class UserDomainService extends CrudAppService<UserRepository> {
@@ -17,6 +19,7 @@ export class UserDomainService extends CrudAppService<UserRepository> {
     @InjectRepository(UserRepository)
     private readonly userRepository: UserRepository,
     private readonly connection: Connection,
+    private readonly securityService: SecurityService
   ) {
     super(userRepository);
   }
@@ -30,6 +33,29 @@ export class UserDomainService extends CrudAppService<UserRepository> {
       await entityManager.save(userDb.roles);
       return userDb;
     });
+  }
+
+  async changePassword(changePassword: ChangePasswordDto) {
+    const currentPassword = this.securityService.convertStringToMd5(changePassword.currentPassword);
+    const user = await this.userRepository.findOne({ where: { id: changePassword.id } });
+    if (user.password !== currentPassword) {
+      throw new Error('user.passwordDotNotMatch');
+    }
+    const newPassword = this.securityService.convertStringToMd5(changePassword.newPassword);
+    user.password = newPassword;
+    return super.update(user);
+  }
+
+  async updateProfile(user: User): Promise<User> {
+    const userDb = await this.userRepository.findOne({ where: { id: user.id } });
+    if (user.userName !== userDb.userName) {
+      await this.validateUserName(user);
+    }
+    if (user.emailAddress !== userDb.emailAddress) {
+      await this.validateEmail(user);
+    }
+    const userToUpdate = R.omit(['roles'], Object.assign({}, userDb, user));
+    return super.update(userToUpdate);
   }
 
   async update(user: User): Promise<User> {
@@ -65,7 +91,7 @@ export class UserDomainService extends CrudAppService<UserRepository> {
   }
 
   findOneByQuery(userQuery: FindOneUserDto) {
-    const query = mergeAndRemoveEmpty(userQuery)({});
+    const query = removeEmpty(userQuery);
     return this.userRepository.findOne({
       where: query,
       relations: ['roles'],
@@ -73,7 +99,7 @@ export class UserDomainService extends CrudAppService<UserRepository> {
   }
 
   async findAll(input: PaginatedDto) {
-    const query = R.omit(['skip', 'take', 'currentUserId'], R.reject(R.isNil, input));
+    const query = R.omit(['skip', 'take', 'currentUserId'], removeEmpty(input));
     const data = await this.repository.findAndCount({ skip: input.skip, take: input.take, where: query, relations: ['roles'] });
     return {
       data: data[0],

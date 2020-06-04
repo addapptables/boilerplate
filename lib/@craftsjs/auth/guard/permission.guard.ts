@@ -1,6 +1,7 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AuthService } from '../services/auth.service';
+import { SessionService } from '../services/session.service';
 
 @Injectable()
 export class PermissionGuard implements CanActivate {
@@ -8,6 +9,7 @@ export class PermissionGuard implements CanActivate {
   constructor(
     private readonly reflector: Reflector,
     private readonly authService: AuthService,
+    private readonly sessionService: SessionService,
   ) { }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -15,8 +17,7 @@ export class PermissionGuard implements CanActivate {
     if (!permissions) {
       return true;
     }
-    const request = context.switchToHttp().getRequest();
-    const user = request.session.user;
+    const user = this.sessionService.user;
     if (!user) {
       return false;
     }

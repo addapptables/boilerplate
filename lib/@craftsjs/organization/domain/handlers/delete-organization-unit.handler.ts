@@ -10,7 +10,7 @@ export class DeleteOrganizationUnitHandler implements ICommandHandler<DeleteOrga
   ) { }
 
   handle(event: DeleteOrganizationUnitCommand): any {
-    return this.organizationUnitService.remove(event.data.id, event.data.currentUserId);
+    return this.organizationUnitService.deleteOrganizationUnit(event.data.id, event.data.currentUserId);
   }
 
 }

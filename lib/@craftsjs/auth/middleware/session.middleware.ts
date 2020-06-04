@@ -1,5 +1,5 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
-import { TenantCacheContributor, TenantHeaderContributor, TenantCookieContributor, TenantSubdomainContributor } from '../../tenant';
+import { TenantHeaderContributor, TenantCookieContributor, TenantSubdomainContributor } from '../../tenant';
 import { SessionService } from '../services/session.service';
 import { Request } from 'express';
 import { JwtService } from '@nestjs/jwt';
@@ -26,24 +26,23 @@ export class SessionMiddleware implements NestMiddleware {
 
   private async resolveUser(req: Request) {
     const bearer = req.get('authorization');
-    if (!req.session?.user && bearer) {
+    if (bearer) {
       const user = this.jwtService.decode(bearer.replace('Bearer ', ''));
-      req.session.user = user;
+      this.sessionService.user = user as any;
+    } else {
+      this.sessionService.user = undefined;
     }
-    this.sessionService.user = req.session?.user;
-    if (!req.session.tenantId) {
-      req.session.tenantId = this.sessionService.user?.tenantId;
+    if (!this.sessionService.tenantId) {
+      this.sessionService.tenantId = this.sessionService.user?.tenantId;
     }
   }
 
   private async resolveTenant(req: Request) {
-    const tenantCache = new TenantCacheContributor();
     const tenantHeader = new TenantHeaderContributor();
     const tenantCookie = new TenantCookieContributor();
     const tenantSubdomain = new TenantSubdomainContributor(this.tenantService);
-    tenantCache.registerNext(tenantHeader);
     tenantHeader.registerNext(tenantCookie);
     tenantCookie.registerNext(tenantSubdomain);
-    return await tenantCache.resolveTenant(req);
+    return await tenantHeader.resolveTenant(req);
   }
 }

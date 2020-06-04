@@ -28,7 +28,7 @@ export class AuthService {
     const loginInformation = new LoginInformationDto();
     if (this.sessionService.user) {
       const userData = await this.broker.start()
-        .add(new FindOneUserQuery({ id: this.sessionService.user?.id }))
+        .add(new FindOneUserQuery({ id: this.sessionService.user?.id, tenantId: this.sessionService.tenantId }))
         .end<User>();
       const permissionData = await this.broker.start()
         .add(new GetUserPermissionsQuery({ id: this.sessionService.user?.id, tenantId: this.sessionService.tenantId }))
@@ -56,7 +56,7 @@ export class AuthService {
     if (user && user.password === hash) {
       return user;
     } else {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('user.credentialsError');
     }
   }
 

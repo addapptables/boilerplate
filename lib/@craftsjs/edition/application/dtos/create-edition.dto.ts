@@ -29,14 +29,12 @@ export class CreateEditionDto extends CommandDto {
   @Expose()
   @ApiProperty({ required: false })
   @ValidateIf(x => x.isFree === false)
-  @IsDefined()
   @IsNumber()
   numberOfUsers?: number;
 
   @Expose()
   @ApiProperty({ required: false })
   @ValidateIf(x => x.isFree === false)
-  @IsDefined()
   @IsNumber()
   trialDayCount?: number;
 

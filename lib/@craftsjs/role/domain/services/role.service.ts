@@ -5,7 +5,7 @@ import * as R from 'ramda';
 import { RoleRepository } from '../../../role/infrastructure/database/repositories/role.repository';
 import { Role } from '../../../role/infrastructure/database/entities/role.entity';
 import { AlreadyExists } from '../../../core/exceptions/already-exists.exception';
-import { removeEmpty, mergeAndRemoveEmpty } from '../../../utils';
+import { removeEmpty } from '../../../utils';
 import { CrudAppService } from '../../../core/services/crud-app.service';
 import { FindOneDto } from '../../../core/dto/find-one.dto';
 import { PaginatedDto } from '../../../core/dto/paginated.dto';
@@ -57,7 +57,7 @@ export class RoleDomainService extends CrudAppService<RoleRepository> {
   }
 
   findOneByQuery(roleQuery: FindOneDto) {
-    const query = mergeAndRemoveEmpty(roleQuery)({});
+    const query = removeEmpty(roleQuery);
     return this.roleRepository.findOne({
       where: query,
       relations: ['permissions'],
@@ -65,7 +65,7 @@ export class RoleDomainService extends CrudAppService<RoleRepository> {
   }
 
   async findAll(input: PaginatedDto) {
-    const query = R.omit(['skip', 'take', 'currentUserId'], R.reject(R.isNil, input));
+    const query = R.omit(['skip', 'take', 'currentUserId'], removeEmpty(input));
     const data = await this.roleRepository.findAndCount({ skip: input.skip, take: input.take, where: query, relations: ['permissions'] });
     return {
       data: data[0],

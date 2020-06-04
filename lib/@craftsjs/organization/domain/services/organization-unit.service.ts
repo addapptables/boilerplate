@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { mergeAndRemoveEmpty } from '../../../utils';
+import { removeEmpty } from '../../../utils';
 import { AlreadyExists } from '../../../core';
 import { CrudAppService } from '../../../core/services/crud-app.service';
 import { FindOneDto } from '../../../core/dto/find-one.dto';
@@ -50,7 +50,7 @@ export class OrganizationUnitDomainService extends CrudAppService<OrganizationUn
   }
 
   findOneByQuery(organizationUnitQuery: FindOneDto) {
-    const query = mergeAndRemoveEmpty(organizationUnitQuery)({});
+    const query = removeEmpty(organizationUnitQuery);
     return this.organizationUnitRepository.findOne({
       where: query,
     });
@@ -58,6 +58,16 @@ export class OrganizationUnitDomainService extends CrudAppService<OrganizationUn
 
   addRolesToOrganizationUnit(input: OrganizationUnitRole[]) {
     return this.organizationUnitRoleRepository.save(input);
+  }
+
+  deleteOrganizationUnit(organizationUnit: string, currentUserId: string) {
+    return this.organizationUnitRepository.createQueryBuilder()
+      .update(OrganizationUnit)
+      .set({ isDeleted: true, deleterUserId: currentUserId })
+      .andWhere('id = :id')
+      .orWhere('parentId = :id')
+      .setParameter('id', organizationUnit)
+      .execute()
   }
 
   deleteOrganizationUnitRole(organizationUnitRoleId: string) {
@@ -69,7 +79,7 @@ export class OrganizationUnitDomainService extends CrudAppService<OrganizationUn
 
   async getRolesAssociate(organizationUnitId: string) {
     const organizationUnitRoles = await this.organizationUnitRoleRepository.find({ where: { organizationUnitId }, relations: ['role'] });
-    return organizationUnitRoles.map(y => y.role);
+    return organizationUnitRoles.map(y => ({ ...y.role, id: y.id }));
   }
 
   getRoles(organizationUnitId: string, tenantId: string) {

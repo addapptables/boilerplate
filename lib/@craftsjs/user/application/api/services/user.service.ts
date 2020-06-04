@@ -15,6 +15,9 @@ import { DeleteUserCommand } from '../../commands/delete-user.command';
 import { FindOneDto } from '../../../../core/dto/find-one.dto';
 import { FindOneUserDto } from '../../dtos/find-one-user.dto';
 import * as uuid from 'uuid/v4';
+import { UpdateProfileCommand } from '../../commands/update-profile.command';
+import { ChangePasswordDto } from '../../dtos/change-password.dto';
+import { ChangePasswordCommand } from '../../commands/change-password.command';
 
 @Injectable()
 export class UserService {
@@ -63,6 +66,26 @@ export class UserService {
     return mapper(UserDto, transferData.data);
   }
 
+  async updateProfile(input: UpdateUserDto) {
+    const transferData = await this.broker.start()
+      .add(new UpdateProfileCommand(input))
+      .end<User>();
+    if (transferData.error) {
+      throw new InternalServerErrorException(transferData.error);
+    }
+    return mapper(UserDto, transferData.data);
+  }
+
+  async changePassword(input: ChangePasswordDto) {
+    const transferData = await this.broker.start()
+      .add(new ChangePasswordCommand(input))
+      .end<User>();
+    if (transferData.error) {
+      throw new InternalServerErrorException(transferData.error);
+    }
+    return mapper(UserDto, transferData.data);
+  }
+
   async remove(input: FindOneDto) {
     const transferData = await this.broker.start()
       .add(new DeleteUserCommand(input))
@@ -70,7 +93,7 @@ export class UserService {
     if (transferData.error) {
       throw new InternalServerErrorException(transferData.error);
     }
-    return input.id;
+    return { id: input.id };
   }
 
 }

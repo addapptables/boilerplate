@@ -13,6 +13,8 @@ import { UpdateUserHandler } from './domain/handlers/update-user.handler';
 import { DeleteUserHandler } from './domain/handlers/delete-user.handler';
 import { UserController } from './application/api/controllers/user.controller';
 import { UserService } from './application/api/services/user.service';
+import { UpdateProfileHandler } from './domain/handlers/update-profile.handler';
+import { ChangePasswordHandler } from './domain/handlers/change-password.handler';
 
 @Module({
   controllers: [UserController],
@@ -29,6 +31,8 @@ import { UserService } from './application/api/services/user.service';
     CreateUserHandler,
     FindAllUserHandler,
     DeleteUserHandler,
+    UpdateProfileHandler,
+    ChangePasswordHandler
   ],
   exports: [
     UserService,

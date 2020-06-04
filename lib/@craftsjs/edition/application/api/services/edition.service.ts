@@ -49,7 +49,7 @@ export class EditionService {
     if (transferData.error) {
       throw new InternalServerErrorException(transferData.error);
     }
-    const editions = mapper(EditionDto, transferData.data.data);
+    const editions = mapper(EditionDto, transferData.data.data, { enableImplicitConversion: true });
     return { total: transferData.data.total, data: editions };
   }
 
@@ -70,7 +70,7 @@ export class EditionService {
     if (transferData.error) {
       throw new InternalServerErrorException(transferData.error);
     }
-    return command.id;
+    return { id: command.id };
   }
 
 }

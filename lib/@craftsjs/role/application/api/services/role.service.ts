@@ -70,7 +70,7 @@ export class RoleService {
     if (transferData.error) {
       throw new InternalServerErrorException(transferData.error);
     }
-    return command.id;
+    return { id: command.id };
   }
 
 }

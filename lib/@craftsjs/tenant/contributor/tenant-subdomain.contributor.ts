@@ -16,7 +16,6 @@ export class TenantSubdomainContributor implements ITenantResolve {
       .getCurrentTenancyNameOrNull(process.env.ROOT_ADDRESS, process.env.TENANCY_NAME_PLACE_HOLDER_IN_URL, fullUrl);
     if (subdomain) {
       const tenant = await this.tenantService.getTenantBySubdomain(subdomain);
-      request.session.tenantId = +tenant?.id;
       return tenant?.id;
     }
     return undefined;

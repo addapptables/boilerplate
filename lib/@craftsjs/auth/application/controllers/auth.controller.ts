@@ -23,7 +23,6 @@ export class AuthController {
   @ApiBody({ type: LoginDto })
   async login(@Request() req): Promise<LoginResultDto> {
     const result = await this.authService.login(req.user);
-    req.session.user = req.user;
     return result;
   }
 

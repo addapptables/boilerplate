@@ -1,5 +1,5 @@
 import { Expose } from 'class-transformer';
-import { Length, IsDefined, IsBoolean, IsNumber } from 'class-validator';
+import { Length, IsDefined, IsBoolean, IsUUID } from 'class-validator';
 import { MAX_NAME_LENGTH } from '../../../config/constants.config';
 import { ApiProperty } from '@nestjs/swagger';
 import { CommandDto } from '../../../core/dto/command.dto';
@@ -26,7 +26,7 @@ export class CreateTenantDto extends CommandDto {
 
   @Expose()
   @ApiProperty({ required: false })
-  @IsNumber()
-  editionId?: number;
+  @IsUUID('4')
+  editionId?: string;
 
 }

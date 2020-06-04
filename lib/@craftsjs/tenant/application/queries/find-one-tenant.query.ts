@@ -1,7 +1,7 @@
 import { Query } from '@addapptables/microservice';
-import { FindOneDto } from '../../../core';
+import { FindOneTenantDto } from '../dtos/find-one-tenant.dto';
 
-export class FindOneTenantQuery extends Query<FindOneDto> {
+export class FindOneTenantQuery extends Query<FindOneTenantDto> {
   public readonly action = 'findOneTenant';
   public readonly context = 'tenant';
 }

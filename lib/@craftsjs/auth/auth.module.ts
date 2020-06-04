@@ -8,7 +8,6 @@ import { AuthService } from './services/auth.service';
 import { LocalStrategy } from './strategy/local.strategy';
 import { JwtStrategy } from './strategy/jwt.strategy';
 import { SessionSerializer } from './services/session-serializer.service';
-import { AuthenticatedGuard } from './guard/authentication.guard';
 import { LoginGuard } from './guard/login.guard';
 import { AuthController } from './application/controllers/auth.controller';
 import { SessionService } from './services/session.service';
@@ -38,7 +37,6 @@ import { TenantModule } from '../tenant/tenant.module';
     LocalStrategy,
     JwtStrategy,
     SessionSerializer,
-    AuthenticatedGuard,
     LoginGuard,
     SessionService,
     {
@@ -48,7 +46,6 @@ import { TenantModule } from '../tenant/tenant.module';
   ],
   exports: [
     AuthService,
-    AuthenticatedGuard,
     LoginGuard,
     SessionService,
   ],

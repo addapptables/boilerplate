@@ -1,8 +1,8 @@
+import * as uuid from 'uuid/v4';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CrudAppService } from '../../../core/services/crud-app.service';
 import { PermissionDomainService } from '../../../permission/domain/services/permission.service';
-import { FindOneDto } from '../../../core/dto/find-one.dto';
 import { RolePermission } from '../../../role/infrastructure/database/entities/role-permission.entity';
 import { AlreadyExists } from '../../../core/exceptions/already-exists.exception';
 import { Connection } from 'typeorm';
@@ -11,7 +11,7 @@ import { Tenant } from '../../infrastructure/database/entities/tenant.entity';
 import { mergeAndRemoveEmpty } from '../../../utils';
 import { SecurityService } from '../../../security/services/security.service';
 import { DefaultGenerator } from './default-generator-tenant';
-import * as uuid from 'uuid/v4';
+import { FindOneTenantDto } from '../../application/dtos/find-one-tenant.dto';
 
 @Injectable()
 export class TenantDomainService extends CrudAppService<TenantRepository> {
@@ -78,7 +78,7 @@ export class TenantDomainService extends CrudAppService<TenantRepository> {
     }
   }
 
-  findOneByQuery(tenantQuery: FindOneDto) {
+  findOneByQuery(tenantQuery: FindOneTenantDto) {
     const query = mergeAndRemoveEmpty(tenantQuery)({});
     return this.tenantRepository.findOne({
       where: query,

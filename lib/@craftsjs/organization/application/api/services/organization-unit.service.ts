@@ -79,7 +79,7 @@ export class OrganizationUnitService {
     if (transferData.error) {
       throw new InternalServerErrorException(transferData.error);
     }
-    return command.id;
+    return { id: command.id };
   }
 
   async addRolesToOrganizationUnit(input: AddRolesToOrganizationUnitDto) {
@@ -110,7 +110,7 @@ export class OrganizationUnitService {
     if (transferData.error) {
       throw new InternalServerErrorException(transferData.error);
     }
-    return input.id;
+    return { id: input.id };
   }
 
   async getRolesAssociate(input: FindOneDto) {

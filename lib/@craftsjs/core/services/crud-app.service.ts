@@ -48,7 +48,7 @@ export abstract class CrudAppService<T extends CraftsRepository<any>> {
   createQueryBuilder(name?: string) {
     if ((this.repository.target as any) as FullAuditedEntity) {
       return this.repository.createQueryBuilder(name)
-        .where('role.isDeleted = false');
+        .where(`${name}.isDeleted = false`);
     } else {
       return this.repository.createQueryBuilder(name);
     }

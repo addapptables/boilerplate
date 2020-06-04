@@ -48,9 +48,14 @@ export class CraftsRepository<Entity> extends Repository<Entity> {
   }
 
   createQueryBuilder(name?: string) {
-    if ((this.target as any) as FullAuditedEntity) {
-      return super.createQueryBuilder(name)
-        .where('role.isDeleted = false');
+    if ((this.target as any).prototype instanceof FullAuditedEntity) {
+      if (name) {
+        return super.createQueryBuilder(name)
+          .where(`"${name}"."isDeleted" = false`);
+      } else {
+        return super.createQueryBuilder()
+          .where(`"isDeleted" = false`);
+      }
     } else {
       return super.createQueryBuilder(name);
     }

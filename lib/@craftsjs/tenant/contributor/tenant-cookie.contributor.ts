@@ -8,7 +8,6 @@ export class TenantCookieContributor implements ITenantResolve {
   resolveTenant(request: any) {
     const result = request?.cookies[TENANT_ID];
     if (result) {
-      request.session.tenantId = result;
       return result;
     }
     return this.next.resolveTenant(request);

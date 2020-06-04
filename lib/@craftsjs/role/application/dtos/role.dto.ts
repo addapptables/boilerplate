@@ -13,6 +13,10 @@ export class RoleDto {
   name: string;
 
   @Expose()
+  @ApiProperty()
+  isStatic: boolean;
+
+  @Expose()
   @ApiProperty({ type: 'array', items: { type: 'number' } })
   @Type(() => RolePermissionDto)
   @Transform(value => value?.map(rolePermission => rolePermission?.permissionId))

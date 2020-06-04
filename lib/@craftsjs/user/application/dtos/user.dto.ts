@@ -25,6 +25,10 @@ export class UserDto {
   surname: string;
 
   @Expose()
+  @ApiProperty()
+  isStatic: boolean;
+
+  @Expose()
   @ApiProperty({ required: false })
   phoneNumber?: string;
 
@@ -35,8 +39,8 @@ export class UserDto {
   @Expose()
   @ApiProperty({ type: 'array', items: { type: 'number' } })
   @Type(() => UserRoleDto)
-  @Transform(value => value.map(userRole => userRole.roleId))
-  roles: number[];
+  @Transform(value => value?.map(userRole => userRole.roleId))
+  roles: string[];
 
   @ApiProperty({ type: 'array', items: { type: 'string' } })
   permissions: string[];

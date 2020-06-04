@@ -13,8 +13,8 @@ import { UpdateTenantCommand } from '../../commands/update-tenant.command';
 import { CommandDto } from '../../../../core/dto/command.dto';
 import { DeleteTenantCommand } from '../../commands/delete-tenant.command';
 import { FindOneTenantQuery } from '../../queries/find-one-tenant.query';
-import { FindOneDto } from '../../../../core';
 import * as uuid from 'uuid/v4';
+import { FindOneTenantDto } from '../../dtos/find-one-tenant.dto';
 @Injectable()
 export class TenantService {
 
@@ -31,14 +31,19 @@ export class TenantService {
     return mapper(TenantDto, transferData.data);
   }
 
-  async find(input: FindOneDto) {
+  async isTenantAvailable(input: FindOneTenantDto) {
+    input.isActive = true;
+    return this.find(input);
+  }
+
+  async find(input: FindOneTenantDto) {
     const transferData = await this.broker.start()
       .add(new FindOneTenantQuery(input))
       .end<Tenant>();
     if (transferData.error) {
       throw new InternalServerErrorException(transferData.error);
     }
-    return mapper(TenantDto, transferData.data);
+    return mapper(TenantDto, transferData.data) || {};
   }
 
   async findAll(input: GetTenantDto) {
@@ -69,7 +74,7 @@ export class TenantService {
     if (transferData.error) {
       throw new InternalServerErrorException(transferData.error);
     }
-    return command.id;
+    return { id: command.id };
   }
 
 }

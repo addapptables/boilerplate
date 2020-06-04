@@ -7,6 +7,7 @@ import { FindOneDto } from '../../../../core/dto/find-one.dto';
 import { GetTenantDto } from '../../dtos/get-tenant.dto';
 import { UpdateTenantDto } from '../../dtos/update-tenant.dto';
 import { TenantDto } from '../../dtos/tenant.dto';
+import { TenantAvailableDto } from '../../dtos/tenant-available.dto';
 
 @ApiBearerAuth()
 @ApiTags('tenants')
@@ -27,6 +28,12 @@ export class TenantController {
   @UseGuards(AuthenticatedGuard)
   find(@Param() input: FindOneDto) {
     return this.tenantService.find(input);
+  }
+
+  @Get('/findOne/isTenantAvailable')
+  @ApiResponse({ type: TenantDto })
+  findOne(@Query() input: TenantAvailableDto) {
+    return this.tenantService.isTenantAvailable(input);
   }
 
   @Get()

@@ -13,7 +13,7 @@
   ],
   "migrations": [
     "lib/db/migrations/**/*.ts",
-    "src/infrastructure/migrations/**/*.ts"
+    "src/infrastructure/database/migrations/**/*.ts"
   ],
   "cli": {
     "entitiesDir": "src/entity",

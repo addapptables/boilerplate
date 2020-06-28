@@ -6,7 +6,7 @@ import { OrganizationUnitRepository } from '../../../../../lib/@craftsjs/organiz
 import { OrganizationUnitRoleRepository } from '../../../../../lib/@craftsjs/organization/infrastructure/database/repositories/organization-unit-role.repository';
 import { RoleRepository } from '../../../../../lib/@craftsjs/role/infrastructure/database/repositories/role.repository';
 import { afterEach } from 'mocha';
-import * as uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 
 describe('OrganizationUnitDomainService', () => {
   let service: OrganizationUnitDomainService;

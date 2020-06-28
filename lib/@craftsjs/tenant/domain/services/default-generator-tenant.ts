@@ -2,7 +2,7 @@ import { Role } from '../../../role/infrastructure/database/entities/role.entity
 import { SecurityService } from '../../../security/services/security.service';
 import { User } from '../../../user/infrastructure/database/entities/user.entity';
 import { UserRole } from '../../../user/infrastructure/database/entities/user-role.entity';
-import * as uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 
 export class DefaultGenerator {
 

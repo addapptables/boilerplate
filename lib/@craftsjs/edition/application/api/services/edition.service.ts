@@ -14,7 +14,7 @@ import { CommandDto } from '../../../../core/dto/command.dto';
 import { DeleteEditionCommand } from '../../commands/delete-edition.command';
 import { FindOneEditionQuery } from '../../queries/find-one-edition.query';
 import { FindOneDto } from '../../../../core';
-import * as uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 
 @Injectable()
 export class EditionService {

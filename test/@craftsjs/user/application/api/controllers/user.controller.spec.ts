@@ -9,7 +9,7 @@ import { UserController } from '../../../../../../lib/@craftsjs/user/application
 import { createMockBrokerWithTransferData } from '../../../../../mock/broker.mock';
 import { AuthenticatedGuard } from '../../../../../../lib/@craftsjs/auth/guard/authentication.guard';
 import { UserService } from '../../../../../../lib/@craftsjs/user/application/api/services/user.service';
-import * as uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 
 describe('UserController', () => {
 

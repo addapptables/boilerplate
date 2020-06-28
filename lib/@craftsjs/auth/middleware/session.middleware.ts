@@ -17,9 +17,9 @@ export class SessionMiddleware implements NestMiddleware {
   async use(req: Request, _: Response, next: any) {
     this.resolveUser(req);
     this.sessionService.tenantId = await this.resolveTenant(req);
-    req.body.tenantId = this.sessionService.tenantId;
+    req.body.tenantId = req.body.tenantId || this.sessionService.tenantId;
     req.body.currentUserId = this.sessionService.user?.id;
-    req.query.tenantId = this.sessionService.tenantId;
+    req.query.tenantId = req.query.tenantId || this.sessionService.tenantId;
     req.query.currentUserId = this.sessionService.user?.id;
     next();
   }
@@ -27,8 +27,9 @@ export class SessionMiddleware implements NestMiddleware {
   private async resolveUser(req: Request) {
     const bearer = req.get('authorization');
     if (bearer) {
-      const user = this.jwtService.decode(bearer.replace('Bearer ', ''));
+      const user = this.jwtService.decode(bearer.replace('Bearer ', '')) as any;
       this.sessionService.user = user as any;
+      this.sessionService.impersonatorUserId = user?.bearer;
     } else {
       this.sessionService.user = undefined;
     }

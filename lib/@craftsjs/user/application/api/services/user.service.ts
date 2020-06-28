@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Broker } from '@addapptables/microservice';
 import { CreateUserDto } from '../../dtos/create-user.dto';
 import { CreateUserCommand } from '../../commands/create-user.command';
@@ -14,7 +14,7 @@ import { UpdateUserCommand } from '../../commands/update-user.command';
 import { DeleteUserCommand } from '../../commands/delete-user.command';
 import { FindOneDto } from '../../../../core/dto/find-one.dto';
 import { FindOneUserDto } from '../../dtos/find-one-user.dto';
-import * as uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 import { UpdateProfileCommand } from '../../commands/update-profile.command';
 import { ChangePasswordDto } from '../../dtos/change-password.dto';
 import { ChangePasswordCommand } from '../../commands/change-password.command';
@@ -29,9 +29,6 @@ export class UserService {
     const transferData = await this.broker.start()
       .add(new CreateUserCommand(input))
       .end<User>();
-    if (transferData.error) {
-      throw new InternalServerErrorException(transferData.error);
-    }
     return mapper(UserDto, transferData.data);
   }
 
@@ -39,9 +36,6 @@ export class UserService {
     const transferData = await this.broker.start()
       .add(new FindOneUserQuery(input))
       .end<User>();
-    if (transferData.error) {
-      throw new InternalServerErrorException(transferData.error);
-    }
     return mapper(UserDto, transferData.data);
   }
 
@@ -49,9 +43,6 @@ export class UserService {
     const transferData = await this.broker.start()
       .add(new FindAllUserQuery(input))
       .end<PaginatedResultDto<User>>();
-    if (transferData.error) {
-      throw new InternalServerErrorException(transferData.error);
-    }
     const users = mapper(UserDto, transferData.data.data);
     return { total: transferData.data.total, data: users };
   }
@@ -60,19 +51,14 @@ export class UserService {
     const transferData = await this.broker.start()
       .add(new UpdateUserCommand(input))
       .end<User>();
-    if (transferData.error) {
-      throw new InternalServerErrorException(transferData.error);
-    }
     return mapper(UserDto, transferData.data);
+
   }
 
   async updateProfile(input: UpdateUserDto) {
     const transferData = await this.broker.start()
       .add(new UpdateProfileCommand(input))
       .end<User>();
-    if (transferData.error) {
-      throw new InternalServerErrorException(transferData.error);
-    }
     return mapper(UserDto, transferData.data);
   }
 
@@ -80,19 +66,13 @@ export class UserService {
     const transferData = await this.broker.start()
       .add(new ChangePasswordCommand(input))
       .end<User>();
-    if (transferData.error) {
-      throw new InternalServerErrorException(transferData.error);
-    }
     return mapper(UserDto, transferData.data);
   }
 
   async remove(input: FindOneDto) {
-    const transferData = await this.broker.start()
+    await this.broker.start()
       .add(new DeleteUserCommand(input))
       .end<void>();
-    if (transferData.error) {
-      throw new InternalServerErrorException(transferData.error);
-    }
     return { id: input.id };
   }
 

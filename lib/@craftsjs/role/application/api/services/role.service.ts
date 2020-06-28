@@ -14,7 +14,7 @@ import { CommandDto } from '../../../../core/dto/command.dto';
 import { DeleteRoleCommand } from '../../commands/delete-role.command';
 import { FindOneRoleQuery } from '../../queries/find-one-role.query';
 import { FindOneDto } from '../../../../core';
-import * as uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 
 @Injectable()
 export class RoleService {

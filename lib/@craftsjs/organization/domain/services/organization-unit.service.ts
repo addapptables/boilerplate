@@ -64,9 +64,8 @@ export class OrganizationUnitDomainService extends CrudAppService<OrganizationUn
     return this.organizationUnitRepository.createQueryBuilder()
       .update(OrganizationUnit)
       .set({ isDeleted: true, deleterUserId: currentUserId })
-      .andWhere('id = :id')
-      .orWhere('parentId = :id')
-      .setParameter('id', organizationUnit)
+      .andWhere('id = :id', { id: organizationUnit })
+      .orWhere('parentId = :id', { id: organizationUnit })
       .execute()
   }
 

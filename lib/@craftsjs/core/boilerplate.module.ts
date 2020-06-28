@@ -9,6 +9,8 @@ import { RoleModule } from '../role/role.module';
 import { EditionModule } from '../edition/edition.module';
 import { OrganizationUnitModule } from '../organization/organization-unit.module';
 import { PermissionModule } from '../permission/permission.module';
+import { APP_FILTER } from '@nestjs/core';
+import { HttpExceptionFilter } from './exception-filter';
 
 @Module({
   imports: [
@@ -26,6 +28,10 @@ import { PermissionModule } from '../permission/permission.module';
   ],
   providers: [
     EntitySubscriber,
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter,
+    },
   ],
 })
 export class BoilerplateModule {

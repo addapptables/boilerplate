@@ -23,7 +23,7 @@ import { Role } from '../../../../role/infrastructure/database/entities/role.ent
 import { RoleDto } from '../../../../role/application/dtos/role.dto';
 import { DeleteOrganizationUnitRoleCommand } from '../../commands/delete-organization-unit-role.command';
 import { GetRolesAssociateToOrganizationUnitQuery } from '../../queries/get-roles-associate-to-organization-unit.query';
-import * as uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 
 @Injectable()
 export class OrganizationUnitService {

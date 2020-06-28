@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { Broker } from '@addapptables/microservice';
 import { RoleService } from '../../../../../../lib/@craftsjs/role/application/api/services/role.service';
 import { createMockBrokerWithTransferData } from '../../../../../mock/broker.mock';
-import * as uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 
 describe('RoleService', () => {
   let service: RoleService;

@@ -4,7 +4,7 @@ import { CreateUserHandler } from '../../../../../lib/@craftsjs/user/domain/hand
 import { UserDomainService } from '../../../../../lib/@craftsjs/user/domain/services/user.service';
 import { CreateUserCommand } from '../../../../../lib/@craftsjs/user/application/commands/create-user.command';
 import { SecurityService } from '../../../../../lib/@craftsjs/security';
-import * as uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 
 describe('CreateUserHandler', () => {
   let handler: CreateUserHandler;

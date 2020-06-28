@@ -8,7 +8,7 @@ import { RoleController } from '../../../../../../lib/@craftsjs/role/application
 import { createMockBrokerWithTransferData } from '../../../../../mock/broker.mock';
 import { AuthenticatedGuard } from '../../../../../../lib/@craftsjs/auth/guard/authentication.guard';
 import { RoleService } from '../../../../../../lib/@craftsjs/role/application/api/services/role.service';
-import * as uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 
 describe('RoleController', () => {
 

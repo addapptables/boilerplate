@@ -19,7 +19,7 @@ export class UserDomainService extends CrudAppService<UserRepository> {
     @InjectRepository(UserRepository)
     private readonly userRepository: UserRepository,
     private readonly connection: Connection,
-    private readonly securityService: SecurityService
+    private readonly securityService: SecurityService,
   ) {
     super(userRepository);
   }

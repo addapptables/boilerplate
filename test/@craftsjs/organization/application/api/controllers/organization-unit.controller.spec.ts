@@ -8,7 +8,7 @@ import { OrganizationUnitService } from '../../../../../../lib/@craftsjs/organiz
 import { OrganizationUnitController } from '../../../../../../lib/@craftsjs/organization/application/api/controllers/organization-unit.controller';
 import { createMockBrokerWithTransferData } from '../../../../../mock/broker.mock';
 import { AuthenticatedGuard } from '../../../../../../lib/@craftsjs/auth/guard/authentication.guard';
-import * as uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 
 describe('OrganizationUnitController', () => {
 

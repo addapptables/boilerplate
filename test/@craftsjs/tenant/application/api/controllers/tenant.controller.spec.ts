@@ -9,7 +9,7 @@ import { TenantController } from '../../../../../../lib/@craftsjs/tenant/applica
 import { createMockBrokerWithTransferData } from '../../../../../mock/broker.mock';
 import { AuthenticatedGuard } from '../../../../../../lib/@craftsjs/auth/guard/authentication.guard';
 import { TenantService } from '../../../../../../lib/@craftsjs/tenant/application/api/services/tenant.service';
-import * as uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 
 describe('TenantController', () => {
 

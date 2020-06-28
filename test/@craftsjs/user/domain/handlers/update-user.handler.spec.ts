@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { UpdateUserHandler } from '../../../../../lib/@craftsjs/user/domain/handlers/update-user.handler';
 import { UserDomainService } from '../../../../../lib/@craftsjs/user/domain/services/user.service';
 import { UpdateUserCommand } from '../../../../../lib/@craftsjs/user/application/commands/update-user.command';
-import * as uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 
 describe('UpdateUserHandler', () => {
   let handler: UpdateUserHandler;

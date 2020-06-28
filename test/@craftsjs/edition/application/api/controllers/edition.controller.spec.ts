@@ -8,7 +8,7 @@ import { EditionService } from '../../../../../../lib/@craftsjs/edition';
 import { EditionController } from '../../../../../../lib/@craftsjs/edition/application/api/controllers/edition.controller';
 import { createMockBrokerWithTransferData } from '../../../../../mock/broker.mock';
 import { AuthenticatedGuard } from '../../../../../../lib/@craftsjs/auth/guard/authentication.guard';
-import * as uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 
 describe('EditionController', () => {
 

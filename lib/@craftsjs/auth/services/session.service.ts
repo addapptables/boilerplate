@@ -7,4 +7,6 @@ export class SessionService {
 
   tenantId?: string;
 
+  impersonatorUserId?: string;
+
 }

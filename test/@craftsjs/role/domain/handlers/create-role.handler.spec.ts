@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { CreateRoleHandler } from '../../../../../lib/@craftsjs/role/domain/handlers/create-role.handler';
 import { RoleDomainService } from '../../../../../lib/@craftsjs/role/domain/services/role.service';
 import { CreateRoleCommand } from '../../../../../lib/@craftsjs/role/application/commands/create-Role.command';
-import * as uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 
 describe('CreateRoleHandler', () => {
   let handler: CreateRoleHandler;

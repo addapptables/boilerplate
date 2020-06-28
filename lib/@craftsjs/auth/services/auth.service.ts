@@ -13,6 +13,7 @@ import { FindOneTenantQuery } from '../../tenant/application/queries/find-one-te
 import { Tenant } from '../../tenant/infrastructure/database/entities/tenant.entity';
 import { TenantDto } from '../../tenant/application/dtos/tenant.dto';
 import { LoginInformationDto } from '../application/dtos/login-information.dto';
+import { ImpersonateInput } from '../application/dtos/login-impersonate-input';
 
 @Injectable()
 export class AuthService {
@@ -34,7 +35,9 @@ export class AuthService {
         .add(new GetUserPermissionsQuery({ id: this.sessionService.user?.id, tenantId: this.sessionService.tenantId }))
         .end<string[]>();
       const user = mapper(UserDto, userData.data);
-      user.permissions = permissionData.data;
+      if(user){
+        user.permissions = permissionData.data;
+      }
       loginInformation.user = user;
     }
     if (this.sessionService.tenantId) {
@@ -44,6 +47,7 @@ export class AuthService {
       const tenant = mapper(TenantDto, tenantData.data);
       loginInformation.tenant = tenant;
     }
+    loginInformation.impersonatorUserId = this.sessionService.impersonatorUserId;
     return loginInformation;
   }
 
@@ -73,6 +77,26 @@ export class AuthService {
     const accessToken = await this.jwtService.signAsync(payload, { expiresIn: '7d' });
     return {
       accessToken,
+    };
+  }
+
+  async impersonate(impersonateInput: ImpersonateInput, bearer: string): Promise<LoginResultDto> {
+    const userData = await this.broker.start()
+        .add(new FindOneUserQuery({ id: impersonateInput.userId, tenantId: impersonateInput.tenantImpersonationId }))
+        .end<User>();
+    const payload = { id: userData.data?.id, userName: userData.data?.userName, tenantId: impersonateInput.tenantImpersonationId, bearer };
+    const impersonationToken = await this.jwtService.signAsync(payload, { expiresIn: '1d' });
+    this.sessionService.impersonatorUserId = impersonateInput.userId;
+    return {
+      accessToken: impersonationToken,
+    };
+  }
+
+  async backToImpersonate(bearer: string): Promise<LoginResultDto> {
+    this.sessionService.impersonatorUserId = undefined;
+    var decode = this.jwtService.decode(bearer) as any;
+    return {
+      accessToken: decode.bearer,
     };
   }
 

@@ -13,7 +13,7 @@ import { UpdateTenantCommand } from '../../commands/update-tenant.command';
 import { CommandDto } from '../../../../core/dto/command.dto';
 import { DeleteTenantCommand } from '../../commands/delete-tenant.command';
 import { FindOneTenantQuery } from '../../queries/find-one-tenant.query';
-import * as uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 import { FindOneTenantDto } from '../../dtos/find-one-tenant.dto';
 @Injectable()
 export class TenantService {

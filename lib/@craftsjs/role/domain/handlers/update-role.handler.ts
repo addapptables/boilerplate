@@ -4,7 +4,7 @@ import { Role } from '../../infrastructure/database/entities/role.entity';
 import { UpdateRoleCommand } from '../../application/commands/update-role.command';
 import { mapper } from '../../../utils';
 import { RolePermission } from '../../../role/infrastructure/database/entities/role-permission.entity';
-import * as uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 
 @CommandHandler(UpdateRoleCommand)
 export class UpdateRoleHandler implements ICommandHandler<UpdateRoleCommand> {

@@ -4,7 +4,7 @@ import { User } from '../../infrastructure/database/entities/user.entity';
 import { UpdateUserCommand } from '../../application/commands/update-user.command';
 import { mapper } from '../../../utils';
 import { UserRole } from '../../../user/infrastructure/database/entities/user-role.entity';
-import * as uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 
 @CommandHandler(UpdateUserCommand)
 export class UpdateUserHandler implements ICommandHandler<UpdateUserCommand> {

@@ -6,7 +6,7 @@ import { createMockBrokerService } from '../../../mock/broker.mock';
 import { JwtModule } from '@nestjs/jwt';
 import { SessionService } from '../../../../lib/@craftsjs/auth/services/session.service';
 import { SecurityModule } from '../../../../lib/@craftsjs/security';
-import * as uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 
 describe('AuthService', () => {
   let service: AuthService;

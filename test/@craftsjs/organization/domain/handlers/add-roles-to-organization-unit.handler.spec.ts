@@ -4,7 +4,7 @@ import { AddRolesToOrganizationUnitHandler } from '../../../../../lib/@craftsjs/
 import { OrganizationUnitDomainService } from '../../../../../lib/@craftsjs/organization/domain/services/organization-unit.service';
 import { AddRolesToOrganizationUnitCommand } from '../../../../../lib/@craftsjs/organization/application/commands/add-roles-to-organization-unit.command';
 import { OrganizationUnitRole } from '../../../../../lib/@craftsjs/organization/infrastructure/database/entities/organization-unit-role.entity';
-import * as uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 
 describe('AddRolesToOrganizationUnitHandler', () => {
   let handler: AddRolesToOrganizationUnitHandler;

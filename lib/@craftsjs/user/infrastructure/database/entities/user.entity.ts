@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany, TableInheritance } from 'typeorm';
 import { Expose } from 'class-transformer';
-import { FullAuditedEntity, IMayHaveTenant } from '../../../../core';
+import { FullAuditedWithTenant, IMayHaveTenant } from '../../../../core';
 import { MAX_NAME_LENGTH, MAX_EMAIL_LENGTH, MAX_PASSWORD_LENGTH, MAX_CODE_LENGTH, MAX_PHONE_NUMBER_LENGTH } from '../../../../config';
 import { UserRole } from './user-role.entity';
 import { UserPermission } from './user-permission.entity';
@@ -8,7 +8,7 @@ import { OrganizationUnitUser } from '../../../../organization/infrastructure/da
 
 @Entity('users')
 @TableInheritance({ column: { type: 'varchar', name: 'type' } })
-export class User extends FullAuditedEntity implements IMayHaveTenant {
+export class User extends FullAuditedWithTenant implements IMayHaveTenant {
 
   @Column({ nullable: true })
   @Expose()

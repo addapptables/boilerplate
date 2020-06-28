@@ -5,7 +5,7 @@ import { CreateUserCommand } from '../../application/commands/create-user.comman
 import { User } from '../../infrastructure/database/entities/user.entity';
 import { SecurityService } from '../../../security';
 import { UserRole } from '../../../user/infrastructure/database/entities';
-import * as uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 
 @CommandHandler(CreateUserCommand)
 export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {

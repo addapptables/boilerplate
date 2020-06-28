@@ -13,4 +13,6 @@ export class LoginInformationDto {
   @ApiProperty({ required: false })
   tenant?: TenantDto;
 
+  impersonatorUserId?: string;
+
 }

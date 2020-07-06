@@ -18,6 +18,8 @@ import { v4 as uuid } from 'uuid';
 import { UpdateProfileCommand } from '../../commands/update-profile.command';
 import { ChangePasswordDto } from '../../dtos/change-password.dto';
 import { ChangePasswordCommand } from '../../commands/change-password.command';
+import { UpdateUserOrganizationUnitDto } from '../../dtos/update-user-organization-unit.dto';
+import { UpdateUserOrganizationUnitCommand } from '../../commands/update-user-organization-unit.command';
 
 @Injectable()
 export class UserService {
@@ -52,7 +54,13 @@ export class UserService {
       .add(new UpdateUserCommand(input))
       .end<User>();
     return mapper(UserDto, transferData.data);
+  }
 
+  async updateUserOrganizationUnit(input: UpdateUserOrganizationUnitDto) {
+    const transferData = await this.broker.start()
+      .add(new UpdateUserOrganizationUnitCommand(input))
+      .end<User>();
+    return mapper(UserDto, transferData.data);
   }
 
   async updateProfile(input: UpdateUserDto) {

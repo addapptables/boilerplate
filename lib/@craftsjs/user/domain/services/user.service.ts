@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { InjectRepository } from '@craftsjs/typeorm';
 import * as R from 'ramda';
 import { removeEmpty } from '../../../utils';
 import { AlreadyExists, PaginatedDto, PaginatedResultDto } from '../../../core';
@@ -11,6 +11,7 @@ import { UserRole } from '../../../user/infrastructure/database/entities';
 import { FindOneUserDto } from '../../../user/application/dtos/find-one-user.dto';
 import { ChangePasswordDto } from '../../application/dtos/change-password.dto';
 import { SecurityService } from '../../../security';
+import { SessionService } from '@craftsjs/auth/services/session.service';
 
 @Injectable()
 export class UserDomainService extends CrudAppService<UserRepository> {
@@ -20,6 +21,7 @@ export class UserDomainService extends CrudAppService<UserRepository> {
     private readonly userRepository: UserRepository,
     private readonly connection: Connection,
     private readonly securityService: SecurityService,
+    private readonly sessionService: SessionService
   ) {
     super(userRepository);
   }
@@ -90,6 +92,12 @@ export class UserDomainService extends CrudAppService<UserRepository> {
     }
   }
 
+  async updateUserOrganizationUnit(organizationUnitId: string) {
+    const userDb = await this.userRepository.findOne({ where: { id: this.repository.sessionService.user?.id } });
+    userDb.lastOrganizationUnitId = organizationUnitId;
+    return super.update(userDb);
+  }
+
   findOneByQuery(userQuery: FindOneUserDto) {
     const query = removeEmpty(userQuery);
     return this.userRepository.findOne({
@@ -100,6 +108,7 @@ export class UserDomainService extends CrudAppService<UserRepository> {
 
   async findAll(input: PaginatedDto) {
     const query = R.omit(['skip', 'take', 'currentUserId'], removeEmpty(input));
+    this.sessionService.tenantId = input.tenantId || null;
     const data = await this.repository.findAndCount({ skip: input.skip, take: input.take, where: query, relations: ['roles'] });
     return {
       data: data[0],

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { InjectRepository } from '@craftsjs/typeorm';
 import { removeEmpty } from '../../../utils';
 import { AlreadyExists } from '../../../core';
 import { CrudAppService } from '../../../core/services/crud-app.service';
@@ -81,13 +81,12 @@ export class OrganizationUnitDomainService extends CrudAppService<OrganizationUn
     return organizationUnitRoles.map(y => ({ ...y.role, id: y.id }));
   }
 
-  getRoles(organizationUnitId: string, tenantId: string) {
+  getRoles(organizationUnitId: string) {
     const subQuery = this.organizationUnitRoleRepository.createQueryBuilder('organizationUnitRole')
       .andWhere('organizationUnitRole.organizationUnitId = :organizationUnitId')
       .select('organizationUnitRole.roleId');
 
     return this.roleRepository.createQueryBuilder('role')
-      .andWhere('role.tenantId = :tenantId', { tenantId })
       .andWhere(`NOT EXISTS(${subQuery.andWhere('organizationUnitRole.roleId=role.id').getQuery()})`)
       .setParameter('organizationUnitId', organizationUnitId)
       .getMany();

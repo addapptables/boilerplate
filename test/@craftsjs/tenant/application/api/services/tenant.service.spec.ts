@@ -8,7 +8,7 @@ describe('TenantService', () => {
   let service: TenantService;
   let testingModule: TestingModule;
   const tenant = {
-    id: 1235489,
+    id: "1235489",
     isActive: true,
     name: 'test',
     subDomain: 'test'
@@ -40,7 +40,7 @@ describe('TenantService', () => {
   describe('insert', () => {
 
     it('should return created tenant', async () => {
-      const result = await service.insert(tenant);
+      const result = await service.insert(tenant as any);
       expect(result).to.be.not.undefined;
       expect(result).deep.contains(tenant);
     });
@@ -61,9 +61,9 @@ describe('TenantService', () => {
   describe('update', () => {
 
     it('should return updated tenant', async () => {
-      const result = await service.update({ id: 123456, ...tenant });
+      const result = await service.update({ id: "123456", ...tenant } as any);
       expect(result).to.be.not.undefined;
-      expect(result).deep.contains({ id: 123456, ...tenant });
+      expect(result).deep.contains({ id: "123456", ...tenant });
     });
 
     it('should return an error', async () => {
@@ -82,14 +82,14 @@ describe('TenantService', () => {
   describe('find', () => {
 
     it('should return found tenant', async () => {
-      const result = await service.find({ id: 12345689 });
+      const result = await service.find({ id: "12345689" });
       expect(result).to.be.not.undefined;
-      expect(result.id).to.be.equal(12345689);
+      expect(result.id).to.be.equal("12345689");
     });
 
     it('should return an error', async () => {
       try {
-        await service.find({ error: 'test-error' });
+        await service.find({ error: 'test-error' } as any);
         expect('error').to.be.equal('test-error');
       } catch (error) {
         expect(error.message).to.be.equal('test-error');
@@ -120,9 +120,9 @@ describe('TenantService', () => {
   describe('remove', () => {
 
     it('should return removed tenant id', async () => {
-      const result = await service.remove({ id: 1 });
+      const result = await service.remove({ id: "1" });
       expect(result).to.be.not.undefined;
-      expect(result).to.be.equal(1);
+      expect(result).to.deep.equal({ id: "1" });
     });
 
     it('should return an error', async () => {

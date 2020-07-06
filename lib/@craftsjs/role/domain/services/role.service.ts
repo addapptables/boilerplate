@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { InjectRepository } from '@craftsjs/typeorm';
 import { Connection } from 'typeorm';
 import * as R from 'ramda';
 import { RoleRepository } from '../../../role/infrastructure/database/repositories/role.repository';

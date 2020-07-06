@@ -24,7 +24,7 @@ import { TenantModule } from '../tenant/tenant.module';
   ],
   imports: [
     PassportModule.register({
-      session: true,
+      session: false,
       defaultStrategy: 'jwt',
     }),
     SecurityModule,

@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmModule } from '../typeorm/typeorm.module';
 import { EditionDomainService } from './domain/services/edition.service';
 import { CreateEditionHandler } from './domain/handlers/create-edition.handler';
 import { EditionRepository } from './infrastructure/database/repositories/edition.repository';
@@ -26,6 +26,7 @@ import { FindOneEditionHandler } from './domain/handlers/find-one-edition.handle
   ],
   exports: [
     EditionService,
+    TypeOrmModule.forFeature([EditionRepository])
   ],
 })
 export class EditionModule { }

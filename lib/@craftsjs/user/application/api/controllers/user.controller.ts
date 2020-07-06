@@ -13,6 +13,7 @@ import { FindOneUserDto } from '../../dtos/find-one-user.dto';
 import { SessionService } from '../../../../auth/services/session.service';
 import { UpdateProfileDto } from '../../dtos/update-profile.dto';
 import { ChangePasswordDto } from '../../dtos/change-password.dto';
+import { UpdateUserOrganizationUnitDto } from '../../dtos/update-user-organization-unit.dto';
 
 @ApiBearerAuth()
 @ApiTags('users')
@@ -53,6 +54,13 @@ export class UserController {
   @UseGuards(AuthenticatedGuard)
   getProfile() {
     return this.userService.find({ id: this.sessionService.user.id, tenantId: this.sessionService.user.tenantId });
+  }
+
+  @Put('update/last-organization-unit')
+  @ApiResponse({ type: UserDto })
+  @UseGuards(AuthenticatedGuard)
+  updateUserOrganizationUnit(@Body() updateUserDto: UpdateUserOrganizationUnitDto) {
+    return this.userService.updateUserOrganizationUnit(updateUserDto);
   }
 
   @Put('profile/update')

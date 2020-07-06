@@ -18,7 +18,7 @@ export class TenantSubdomainContributor implements ITenantResolve {
       const tenant = await this.tenantService.getTenantBySubdomain(subdomain);
       return tenant?.id;
     }
-    return undefined;
+    return null;
   }
 
   registerNext(_: ITenantResolve) {

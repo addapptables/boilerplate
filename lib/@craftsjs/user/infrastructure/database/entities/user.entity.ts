@@ -1,14 +1,15 @@
-import { Column, Entity, OneToMany, TableInheritance } from 'typeorm';
+import { Column, Entity, OneToMany, TableInheritance, ManyToOne } from 'typeorm';
 import { Expose } from 'class-transformer';
-import { FullAuditedWithTenant, IMayHaveTenant } from '../../../../core';
+import { IMayHaveTenant, FullAuditedEntity } from '../../../../core';
 import { MAX_NAME_LENGTH, MAX_EMAIL_LENGTH, MAX_PASSWORD_LENGTH, MAX_CODE_LENGTH, MAX_PHONE_NUMBER_LENGTH } from '../../../../config';
 import { UserRole } from './user-role.entity';
 import { UserPermission } from './user-permission.entity';
 import { OrganizationUnitUser } from '../../../../organization/infrastructure/database/entities/organization-unit-user.entity';
+import { OrganizationUnit } from '../../../../organization/infrastructure/database/entities/organization-unit.entity';
 
 @Entity('users')
 @TableInheritance({ column: { type: 'varchar', name: 'type' } })
-export class User extends FullAuditedWithTenant implements IMayHaveTenant {
+export class User extends FullAuditedEntity implements IMayHaveTenant {
 
   @Column({ nullable: true })
   @Expose()
@@ -58,6 +59,12 @@ export class User extends FullAuditedWithTenant implements IMayHaveTenant {
 
   @Column({ nullable: false })
   isStatic!: boolean;
+
+  @Column({ nullable: true })
+  lastOrganizationUnitId?: string;
+
+  @ManyToOne(() => OrganizationUnit, organizationUnit => organizationUnit.organizationUnitUsers)
+  organizationUnit!: OrganizationUnit;
 
   @OneToMany(() => UserRole, role => role.user)
   roles!: UserRole[];

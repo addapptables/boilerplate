@@ -37,6 +37,10 @@ export class UserDto {
   isActive?: boolean;
 
   @Expose()
+  @ApiProperty({ required: false })
+  lastOrganizationUnitId?: string;
+
+  @Expose()
   @ApiProperty({ type: 'array', items: { type: 'number' } })
   @Type(() => UserRoleDto)
   @Transform(value => value?.map(userRole => userRole.roleId))

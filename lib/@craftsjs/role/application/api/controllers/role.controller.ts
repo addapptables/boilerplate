@@ -7,6 +7,9 @@ import { FindOneDto } from '../../../../core/dto/find-one.dto';
 import { GetRoleDto } from '../../dtos/get-role.dto';
 import { UpdateRoleDto } from '../../dtos/update-role.dto';
 import { RoleDto } from '../../dtos/role.dto';
+import { Permissions } from '../../../../auth/decorators/permission.decorator';
+import { CREATE_ROLE, GET_ROLE, UPDATE_ROLE, DELETE_ROLE } from '../../../permission';
+import { CREATE_USER, UPDATE_USER } from '../../../../user/permission';
 
 @ApiBearerAuth()
 @ApiTags('roles')
@@ -18,6 +21,7 @@ export class RoleController {
   @Post()
   @UseGuards(AuthenticatedGuard)
   @ApiResponse({ type: RoleDto })
+  @Permissions(CREATE_ROLE)
   insert(@Body() createRoleDto: CreateRoleDto) {
     return this.roleService.insert(createRoleDto);
   }
@@ -25,6 +29,7 @@ export class RoleController {
   @Get(':id')
   @UseGuards(AuthenticatedGuard)
   @ApiResponse({ type: RoleDto })
+  @Permissions(GET_ROLE)
   find(@Param() input: FindOneDto) {
     return this.roleService.find(input);
   }
@@ -32,6 +37,7 @@ export class RoleController {
   @Get()
   @UseGuards(AuthenticatedGuard)
   @ApiResponse({ type: RoleDto })
+  @Permissions(GET_ROLE, CREATE_USER, UPDATE_USER)
   findAll(@Query() input: GetRoleDto) {
     return this.roleService.findAll(input);
   }
@@ -39,12 +45,14 @@ export class RoleController {
   @Put()
   @UseGuards(AuthenticatedGuard)
   @ApiResponse({ type: RoleDto })
+  @Permissions(UPDATE_ROLE)
   update(@Body() updateRoleDto: UpdateRoleDto) {
     return this.roleService.Update(updateRoleDto);
   }
 
   @Delete(':id')
   @UseGuards(AuthenticatedGuard)
+  @Permissions(DELETE_ROLE)
   delete(@Param() input: FindOneDto) {
     return this.roleService.remove(input);
   }

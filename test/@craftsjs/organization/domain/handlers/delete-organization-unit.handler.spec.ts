@@ -12,6 +12,9 @@ describe('DeleteOrganizationUnitHandler', () => {
     const repository = {
       remove: (id) => {
         return Promise.resolve({ id });
+      },
+      deleteOrganizationUnit: (id) => {
+        return Promise.resolve({ id });
       }
     };
     testingModule = await Test.createTestingModule({
@@ -37,9 +40,9 @@ describe('DeleteOrganizationUnitHandler', () => {
 
   describe('handle', () => {
     it('should return deleted id organization unit', async () => {
-      const result = await handler.handle(new DeleteOrganizationUnitCommand({ id: 123456 }));
+      const result = await handler.handle(new DeleteOrganizationUnitCommand({ id: "123456" }));
       expect(result).to.be.not.undefined;
-      expect(result.id).to.be.equal(123456);
+      expect(result.id).to.be.equal("123456");
     });
   })
 });

@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmModule } from '../typeorm/typeorm.module';
 import { SecurityModule } from '../security/security.module';
 import { UserPermission } from './infrastructure/database/entities/user-permission.entity';
 import { UserRole } from './infrastructure/database/entities/user-role.entity';
@@ -15,6 +15,7 @@ import { UserController } from './application/api/controllers/user.controller';
 import { UserService } from './application/api/services/user.service';
 import { UpdateProfileHandler } from './domain/handlers/update-profile.handler';
 import { ChangePasswordHandler } from './domain/handlers/change-password.handler';
+import { UpdateUserOrganizationUnitHandler } from './domain/handlers/update-user-organization-unit.handler';
 
 @Module({
   controllers: [UserController],
@@ -32,10 +33,12 @@ import { ChangePasswordHandler } from './domain/handlers/change-password.handler
     FindAllUserHandler,
     DeleteUserHandler,
     UpdateProfileHandler,
-    ChangePasswordHandler
+    ChangePasswordHandler,
+    UpdateUserOrganizationUnitHandler
   ],
   exports: [
     UserService,
+    TypeOrmModule.forFeature([UserPermission, UserRole, UserRepository])
   ],
 })
 export class UserModule { }

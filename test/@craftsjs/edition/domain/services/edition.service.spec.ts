@@ -54,7 +54,7 @@ describe('EditionDomainService', () => {
       const edition = await service.insert({
         isFree: true,
         name: 'testFreeEdition',
-      });
+      } as any);
       expect(edition).to.be.not.undefined;
       expect(edition.isFree).to.be.equal(true);
       expect(edition.name).to.be.equal('testFreeEdition');
@@ -81,7 +81,7 @@ describe('EditionDomainService', () => {
         id: { return: { name: 'name' } },
         isFree: true,
         name: 'name',
-      });
+      } as any);
       expect(edition).to.be.not.undefined;
       expect(edition.isFree).to.be.equal(true);
     });
@@ -104,7 +104,7 @@ describe('EditionDomainService', () => {
   describe('findOneByQuery', () => {
     it('should return an edition', async () => {
       sandbox.stub((service as any).editionRepository, 'findOne').returns({ name: 'testFreeEdition', isFree: true })
-      const edition = await service.findOneByQuery({});
+      const edition = await service.findOneByQuery({} as any);
       expect(edition).to.be.not.undefined;
       expect(edition.isFree).to.be.equal(true);
       expect(edition.name).to.be.equal('testFreeEdition');

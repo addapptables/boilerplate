@@ -4,6 +4,7 @@ import { FullAuditedEntity, IMayHaveTenant } from '../../../../core';
 import { MAX_NAME_LENGTH } from '../../../../config';
 import { OrganizationUnitUser } from './organization-unit-user.entity';
 import { OrganizationUnitRole } from './organization-unit-role.entity';
+import { User } from '../../../../user/infrastructure/database/entities/user.entity';
 
 const MAX_DEPTH = 16;
 const CODE_UNIT_LENGTH = 5;
@@ -38,5 +39,8 @@ export class OrganizationUnit extends FullAuditedEntity implements IMayHaveTenan
 
   @OneToMany(() => OrganizationUnitRole, organizationUnitRole => organizationUnitRole.role)
   organizationUnitRoles: OrganizationUnitRole[];
+
+  @OneToMany(() => User, user => user.organizationUnit)
+  users: User[];
 
 }

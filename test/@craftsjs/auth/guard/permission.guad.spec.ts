@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import { Test } from '@nestjs/testing';
 import { PermissionGuard, AuthService } from '../../../../lib/@craftsjs/auth';
 import { Reflector } from '@nestjs/core';
+import { SessionService } from '../../../../lib/@craftsjs/auth/services/session.service';
 
 describe('PermissionGuard', () => {
 
@@ -19,6 +20,7 @@ describe('PermissionGuard', () => {
         PermissionGuard,
         Reflector,
         AuthService,
+        SessionService
       ]
     })
       .overrideProvider(AuthService)
@@ -40,7 +42,8 @@ describe('PermissionGuard', () => {
       switchToHttp: () => ({
         getRequest: () => ({ session: { user: { id: 1 } } })
       })
-    }
+    };
+    (<any>guard).sessionService.user = { id: 1};
     const result = await guard.canActivate(context as any);
     expect(result).to.be.equal(true);
   });
@@ -51,7 +54,8 @@ describe('PermissionGuard', () => {
       switchToHttp: () => ({
         getRequest: () => ({ session: {} })
       })
-    }
+    };
+    (<any>guard).sessionService.user = undefined;
     const result = await guard.canActivate(context as any);
     expect(result).to.be.equal(false);
   });

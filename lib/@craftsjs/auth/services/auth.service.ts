@@ -74,29 +74,36 @@ export class AuthService {
 
   async login(user: User): Promise<LoginResultDto> {
     const payload = { id: user.id, userName: user.userName, tenantId: this.sessionService.tenantId };
-    const accessToken = await this.jwtService.signAsync(payload, { expiresIn: '7d' });
+    const accessToken = await this.jwtService.signAsync(payload, { expiresIn: '3d' });
+    const verify = await this.jwtService.verifyAsync(accessToken);
     return {
       accessToken,
+      expiresIn:  verify.exp
     };
   }
 
   async impersonate(impersonateInput: ImpersonateInput, bearer: string): Promise<LoginResultDto> {
+    this.sessionService.tenantId = impersonateInput.tenantImpersonationId;
     const userData = await this.broker.start()
         .add(new FindOneUserQuery({ id: impersonateInput.userId, tenantId: impersonateInput.tenantImpersonationId }))
         .end<User>();
     const payload = { id: userData.data?.id, userName: userData.data?.userName, tenantId: impersonateInput.tenantImpersonationId, bearer };
     const impersonationToken = await this.jwtService.signAsync(payload, { expiresIn: '1d' });
     this.sessionService.impersonatorUserId = impersonateInput.userId;
+    const verify = await this.jwtService.verifyAsync(impersonationToken);
     return {
       accessToken: impersonationToken,
+      expiresIn:  verify.exp
     };
   }
 
   async backToImpersonate(bearer: string): Promise<LoginResultDto> {
     this.sessionService.impersonatorUserId = undefined;
     var decode = this.jwtService.decode(bearer) as any;
+    const verify = await this.jwtService.verifyAsync(decode.bearer);
     return {
       accessToken: decode.bearer,
+      expiresIn:  verify.exp
     };
   }
 

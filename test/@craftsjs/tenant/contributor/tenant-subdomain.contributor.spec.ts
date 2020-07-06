@@ -31,7 +31,7 @@ describe('TenantSubdomainContributor', () => {
     expect(result).to.be.equal(tenant.id);
   })
 
-  it('should return undefined', async () => {
+  it('should return null', async () => {
     const request = {
       protocol: 'http',
       hostname: 'localhost',
@@ -40,7 +40,7 @@ describe('TenantSubdomainContributor', () => {
     process.env.ROOT_ADDRESS = 'http://{TENANCY_NAME}.example.com';
     process.env.TENANCY_NAME_PLACE_HOLDER_IN_URL = '{TENANCY_NAME}'
     const result = await contributor.resolveTenant(request as any);
-    expect(result).to.be.undefined;
+    expect(result).to.be.null;
   })
 
   describe('registerNext', () => {

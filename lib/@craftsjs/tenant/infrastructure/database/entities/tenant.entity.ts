@@ -39,13 +39,12 @@ export class Tenant extends FullAuditedEntity {
 
   public get isSubscriptionEnded(): boolean {
     if (!this.subscriptionEndDate) { return false; }
-    const subscriptionEndDate = this.subscriptionEndDate.getUTCDate();
-    const currentDate = new Date().getUTCDate();
-    return subscriptionEndDate < currentDate;
+    const currentDate = new Date();
+    return this.subscriptionEndDate < currentDate;
   }
 
   public get remainingDayCount(): number {
-    if (!this.subscriptionEndDate) { return 0; }
+    if (!this.subscriptionEndDate) { return undefined; }
     const differencePerDay = 1000 * 60 * 60 * 24;
     const subscriptionEndDate = this.subscriptionEndDate.getUTCDate();
     const currentDate = new Date().getUTCDate();

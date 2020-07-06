@@ -1,5 +1,5 @@
 import { Module, DynamicModule } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmModule } from '@craftsjs/typeorm';
 import { TenantModule } from '../tenant';
 import { EntitySubscriber } from './subscriber/entity.subscriber';
 import { BoilerplateOptions } from './interfaces/boilerplate-options.interface';

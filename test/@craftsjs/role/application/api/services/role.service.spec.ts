@@ -38,7 +38,7 @@ describe('RoleService', () => {
       const role = await service.insert({
         name: 'test',
         permissions: []
-      });
+      } as any);
       expect(role).to.be.not.undefined;
       expect(role.name).to.be.equal('test');
     });
@@ -94,7 +94,7 @@ describe('RoleService', () => {
 
     it('should return an error', async () => {
       try {
-        await service.find({ error: 'test-error' });
+        await service.find({ error: 'test-error' } as any);
         expect('error').to.be.equal('test-error');
       } catch (error) {
         expect(error.message).to.be.equal('test-error');
@@ -125,9 +125,9 @@ describe('RoleService', () => {
   describe('remove', () => {
 
     it('should return removed id role', async () => {
-      const result = await service.remove({ id: 1 });
+      const result = await service.remove({ id: "1" });
       expect(result).to.be.not.undefined;
-      expect(result).to.be.equal(1);
+      expect(result).to.deep.equal({ id: "1" });
     });
 
     it('should return an error', async () => {

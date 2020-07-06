@@ -10,7 +10,7 @@ export class GetRolesOrganizationUnitHandler implements ICommandHandler<GetRoles
   ) { }
 
   handle(event: GetRolesOrganizationUnitQuery): any {
-    return this.organizationUnitService.getRoles(event.data.id, event.data.tenantId);
+    return this.organizationUnitService.getRoles(event.data.id);
   }
 
 }

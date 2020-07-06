@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmModule } from '../typeorm/typeorm.module';
 import { PermissionDomainService } from './domain/services/permission.service';
 import { PermissionRepository } from './infrastructure/database/repositories/permission.repository';
 import { FindAllPermissionHandler } from './domain/handlers/find-all-permission.handler';

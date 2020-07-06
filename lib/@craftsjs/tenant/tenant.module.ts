@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmModule } from '../typeorm/typeorm.module';
 import { TenantDomainService } from './domain/services/tenant.service';
 import { UpdateTenantHandler } from './domain/handlers/update-tenant.handler';
 import { CreateTenantHandler } from './domain/handlers/create-tenant.handler';
@@ -11,11 +11,13 @@ import { TenantController } from './application/api/controllers/tenant.controlle
 import { TenantRepository } from './infrastructure/database/repositories/tenant.repository';
 import { SecurityModule } from '../security/security.module';
 import { PermissionModule } from '../permission/permission.module';
+import { EditionModule } from '../edition/edition.module';
 
 @Module({
   controllers: [TenantController],
   imports: [
     TypeOrmModule.forFeature([TenantRepository]),
+    EditionModule,
     SecurityModule,
     PermissionModule,
   ],

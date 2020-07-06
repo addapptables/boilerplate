@@ -37,7 +37,7 @@ describe('OrganizationUnitService', () => {
     it('should return created organization unit', async () => {
       const result = await service.insert({
         name: 'testFree',
-      });
+      } as any);
       expect(result).to.be.not.undefined;
       expect(result.name).to.be.equal('testFree');
     });
@@ -94,7 +94,7 @@ describe('OrganizationUnitService', () => {
 
     it('should return an error', async () => {
       try {
-        await service.find({ error: 'test-error' });
+        await service.find({ error: 'test-error' } as any);
         expect('error').to.be.equal('test-error');
       } catch (error) {
         expect(error.message).to.be.equal('test-error');
@@ -125,9 +125,9 @@ describe('OrganizationUnitService', () => {
   describe('remove', () => {
 
     it('should return removed id organization unit', async () => {
-      const result = await service.remove({ id: 1 });
+      const result = await service.remove({ id: "1" });
       expect(result).to.be.not.undefined;
-      expect(result).to.be.equal(1);
+      expect(result).to.deep.equal({ id: "1" });
     });
 
     it('should return an error', async () => {

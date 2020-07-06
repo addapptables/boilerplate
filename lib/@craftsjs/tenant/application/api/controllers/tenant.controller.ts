@@ -8,6 +8,8 @@ import { GetTenantDto } from '../../dtos/get-tenant.dto';
 import { UpdateTenantDto } from '../../dtos/update-tenant.dto';
 import { TenantDto } from '../../dtos/tenant.dto';
 import { TenantAvailableDto } from '../../dtos/tenant-available.dto';
+import { CREATE_TENANT, GET_TENANT, UPDATE_TENANT, DELETE_TENANT } from '../../../permission';
+import { Permissions } from '../../../../auth/decorators/permission.decorator';
 
 @ApiBearerAuth()
 @ApiTags('tenants')
@@ -19,6 +21,7 @@ export class TenantController {
   @Post()
   @ApiResponse({ type: TenantDto })
   @UseGuards(AuthenticatedGuard)
+  @Permissions(CREATE_TENANT)
   insert(@Body() createTenantDto: CreateTenantDto) {
     return this.tenantService.insert(createTenantDto);
   }
@@ -26,6 +29,7 @@ export class TenantController {
   @Get(':id')
   @ApiResponse({ type: TenantDto })
   @UseGuards(AuthenticatedGuard)
+  @Permissions(GET_TENANT)
   find(@Param() input: FindOneDto) {
     return this.tenantService.find(input);
   }
@@ -39,6 +43,7 @@ export class TenantController {
   @Get()
   @ApiResponse({ type: TenantDto })
   @UseGuards(AuthenticatedGuard)
+  @Permissions(GET_TENANT)
   findAll(@Query() input: GetTenantDto) {
     return this.tenantService.findAll(input);
   }
@@ -46,12 +51,14 @@ export class TenantController {
   @Put()
   @ApiResponse({ type: TenantDto })
   @UseGuards(AuthenticatedGuard)
+  @Permissions(UPDATE_TENANT)
   update(@Body() updateTenantDto: UpdateTenantDto) {
     return this.tenantService.update(updateTenantDto);
   }
 
   @Delete(':id')
   @UseGuards(AuthenticatedGuard)
+  @Permissions(DELETE_TENANT)
   delete(@Param() input: FindOneDto) {
     return this.tenantService.remove(input);
   }

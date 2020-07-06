@@ -1,3 +1,4 @@
+import { v4 as uuid } from 'uuid';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { Broker } from '@addapptables/microservice';
 import { FindOneDto } from '../../../../core';
@@ -23,7 +24,7 @@ import { Role } from '../../../../role/infrastructure/database/entities/role.ent
 import { RoleDto } from '../../../../role/application/dtos/role.dto';
 import { DeleteOrganizationUnitRoleCommand } from '../../commands/delete-organization-unit-role.command';
 import { GetRolesAssociateToOrganizationUnitQuery } from '../../queries/get-roles-associate-to-organization-unit.query';
-import { v4 as uuid } from 'uuid';
+import { FindOrganizationUnitUserQuery } from '../../queries/find-organization-unit-by-user.query';
 
 @Injectable()
 export class OrganizationUnitService {
@@ -121,6 +122,13 @@ export class OrganizationUnitService {
       throw new InternalServerErrorException(transferData.error);
     }
     return mapper(RoleDto, transferData.data);
+  }
+
+  async getOrganizationUnitUser() {
+    const transferData = await this.broker.start()
+      .add(new FindOrganizationUnitUserQuery({}))
+      .end<OrganizationUnit[]>();
+    return mapper(OrganizationUnitDto, transferData.data);
   }
 
 }

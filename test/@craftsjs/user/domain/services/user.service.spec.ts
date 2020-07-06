@@ -5,6 +5,8 @@ import { UserDomainService } from '../../../../../lib/@craftsjs/user/domain/serv
 import { UserRepository } from '../../../../../lib/@craftsjs/user/infrastructure/database/repositories/user.repository';
 import { afterEach } from 'mocha';
 import { Connection, EntityManager } from 'typeorm';
+import { SecurityModule } from '../../../../../lib/@craftsjs/security';
+import { SessionService } from '../../../../../lib/@craftsjs/auth/services/session.service';
 
 describe('UserDomainService', () => {
   let service: UserDomainService;
@@ -26,10 +28,14 @@ describe('UserDomainService', () => {
       }
     }
     testingModule = await Test.createTestingModule({
+      imports: [
+        SecurityModule,
+      ],
       providers: [
         UserDomainService,
         UserRepository,
         Connection,
+        SessionService
       ],
     })
       .overrideProvider(UserRepository)

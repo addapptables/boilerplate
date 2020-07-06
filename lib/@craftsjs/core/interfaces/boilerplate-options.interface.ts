@@ -1,4 +1,4 @@
-import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { TypeOrmModuleOptions } from '@craftsjs/typeorm';
 import { JwtModuleOptions } from '@nestjs/jwt';
 
 export interface BoilerplateOptions {

@@ -23,4 +23,16 @@ export class TenantDto {
   @ApiProperty({ required: false })
   editionId?: number;
 
+  @Expose()
+  @ApiProperty({ required: false })
+  isSubscriptionEnded?: boolean;
+
+  @Expose()
+  @ApiProperty({ required: false })
+  remainingDayCount?: number;
+
+  @Expose()
+  @ApiProperty({ required: false })
+  subscriptionEndDate?: Date;
+
 }

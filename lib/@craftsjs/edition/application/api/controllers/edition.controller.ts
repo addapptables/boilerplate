@@ -7,6 +7,9 @@ import { CreateEditionDto } from '../../dtos/create-edition.dto';
 import { GetEditionDto } from '../../dtos/get-edition.dto';
 import { UpdateEditionDto } from '../../dtos/update-edition.dto';
 import { EditionDto } from '../../dtos/edition.dto';
+import { Permissions } from '../../../../auth/decorators/permission.decorator';
+import { CREATE_EDITION, GET_EDITION, UPDATE_EDITION, DELETE_EDITION } from '../../../permission';
+import { CREATE_TENANT, UPDATE_TENANT } from '../../../../tenant/permission';
 
 @ApiBearerAuth()
 @ApiTags('editions')
@@ -18,6 +21,7 @@ export class EditionController {
   @Post()
   @ApiResponse({ type: EditionDto })
   @UseGuards(AuthenticatedGuard)
+  @Permissions(CREATE_EDITION)
   insert(@Body() createEditionDto: CreateEditionDto) {
     return this.editionService.insert(createEditionDto);
   }
@@ -25,6 +29,7 @@ export class EditionController {
   @Get(':id')
   @ApiResponse({ type: EditionDto })
   @UseGuards(AuthenticatedGuard)
+  @Permissions(GET_EDITION)
   find(@Param() input: FindOneDto) {
     return this.editionService.find(input);
   }
@@ -32,6 +37,7 @@ export class EditionController {
   @Get()
   @ApiResponse({ type: EditionDto })
   @UseGuards(AuthenticatedGuard)
+  @Permissions(GET_EDITION, CREATE_TENANT, UPDATE_TENANT)
   findAll(@Query() input: GetEditionDto) {
     return this.editionService.findAll(input);
   }
@@ -39,6 +45,7 @@ export class EditionController {
   @Put()
   @ApiResponse({ type: EditionDto })
   @UseGuards(AuthenticatedGuard)
+  @Permissions(UPDATE_EDITION)
   update(@Body() updateEditionDto: UpdateEditionDto) {
     return this.editionService.Update(updateEditionDto);
   }
@@ -46,6 +53,7 @@ export class EditionController {
   @Delete(':id')
   @ApiResponse({ type: EditionDto })
   @UseGuards(AuthenticatedGuard)
+  @Permissions(DELETE_EDITION)
   delete(@Param() input: FindOneDto) {
     return this.editionService.remove(input);
   }

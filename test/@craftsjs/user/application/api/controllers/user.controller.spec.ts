@@ -10,6 +10,7 @@ import { createMockBrokerWithTransferData } from '../../../../../mock/broker.moc
 import { AuthenticatedGuard } from '../../../../../../lib/@craftsjs/auth/guard/authentication.guard';
 import { UserService } from '../../../../../../lib/@craftsjs/user/application/api/services/user.service';
 import { v4 as uuid } from 'uuid';
+import { SessionService } from '../../../../../../lib/@craftsjs/auth/services/session.service';
 
 describe('UserController', () => {
 
@@ -28,7 +29,8 @@ describe('UserController', () => {
       providers: [
         UserService,
         AuthenticatedGuard,
-        Broker
+        Broker,
+        SessionService
       ]
     })
       .overrideProvider(Broker)

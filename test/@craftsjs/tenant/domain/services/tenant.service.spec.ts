@@ -7,6 +7,7 @@ import { TenantRepository } from '../../../../../lib/@craftsjs/tenant/infrastruc
 import { afterEach } from 'mocha';
 import { Connection, EntityManager } from 'typeorm';
 import { SecurityService } from '../../../../../lib/@craftsjs/security';
+import { EditionRepository } from '../../../../../lib/@craftsjs/edition/infrastructure/database/repositories/edition.repository';
 
 describe('TenantDomainService', () => {
   let service: TenantDomainService;
@@ -44,9 +45,12 @@ describe('TenantDomainService', () => {
         Connection,
         SecurityService,
         PermissionDomainService,
+        EditionRepository
       ],
     })
       .overrideProvider(TenantRepository)
+      .useValue(repository)
+      .overrideProvider(EditionRepository)
       .useValue(repository)
       .overrideProvider(Connection)
       .useValue(connection)

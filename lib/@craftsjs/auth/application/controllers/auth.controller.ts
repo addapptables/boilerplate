@@ -7,7 +7,7 @@ import { LoginResultDto } from '../dtos/login-result.dto';
 import { LoginDto } from '../dtos/login.dto';
 import { TENANT_ID } from '../../../config';
 import { ImpersonateInput } from '../dtos/login-impersonate-input';
-import { AuthenticatedGuard } from '@craftsjs/auth';
+import { AuthenticatedGuard } from '../../guard/authentication.guard';
 
 @ApiBearerAuth()
 @ApiHeader({

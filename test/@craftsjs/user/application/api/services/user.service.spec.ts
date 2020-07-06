@@ -50,25 +50,13 @@ describe('UserService', () => {
         roles: [],
       });
     });
-
-    it('should return an error', async () => {
-      try {
-        await service.insert({
-          error: 'test-error'
-        } as any);
-        expect('error').to.be.equal('test-error');
-      } catch (error) {
-        expect(error.message).to.be.equal('test-error');
-      }
-    });
-
   })
 
   describe('update', () => {
 
     it('should return updated user', async () => {
       const user = await service.update({
-        id: 123456,
+        id: "123456",
         name: 'test',
         emailAddress: 'test@test.com',
         userName: 'test',
@@ -77,7 +65,7 @@ describe('UserService', () => {
       });
       expect(user).to.be.not.undefined;
       expect(user).deep.contains({
-        id: 123456,
+        id: "123456",
         name: 'test',
         emailAddress: 'test@test.com',
         userName: 'test',
@@ -85,18 +73,6 @@ describe('UserService', () => {
         roles: [],
       });
     });
-
-    it('should return an error', async () => {
-      try {
-        await service.update({
-          error: 'test-error'
-        } as any);
-        expect('error').to.be.equal('test-error');
-      } catch (error) {
-        expect(error.message).to.be.equal('test-error');
-      }
-    });
-
   })
 
   describe('find', () => {
@@ -106,16 +82,6 @@ describe('UserService', () => {
       expect(result).to.be.not.undefined;
       expect(result.id).to.be.equal(12345689);
     });
-
-    it('should return an error', async () => {
-      try {
-        await service.find({ error: 'test-error' } as any);
-        expect('error').to.be.equal('test-error');
-      } catch (error) {
-        expect(error.message).to.be.equal('test-error');
-      }
-    });
-
   })
 
   describe('findAll', () => {
@@ -125,35 +91,15 @@ describe('UserService', () => {
       expect(result).to.be.not.undefined;
       expect(result.total).to.be.equal(2);
     });
-
-    it('should return an error', async () => {
-      try {
-        await service.findAll({ error: 'test-error' } as any);
-        expect('error').to.be.equal('test-error');
-      } catch (error) {
-        expect(error.message).to.be.equal('test-error');
-      }
-    });
-
   })
 
   describe('remove', () => {
 
     it('should return removed user id', async () => {
-      const result = await service.remove({ id: 1 });
+      const result = await service.remove({ id: "1" });
       expect(result).to.be.not.undefined;
-      expect(result).to.be.equal(1);
+      expect(result).to.deep.equal({ id: "1" });
     });
-
-    it('should return an error', async () => {
-      try {
-        await service.remove({ error: 'test-error' } as any);
-        expect('error').to.be.equal('test-error');
-      } catch (error) {
-        expect(error.message).to.be.equal('test-error');
-      }
-    });
-
   })
 
 });

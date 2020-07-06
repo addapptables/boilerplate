@@ -17,6 +17,7 @@ import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from
       response.status(status).json({
         statusCode: status,
         message,
+        response: exception.response,
         timestamp: new Date().toISOString(),
         path: request.url,
       });

@@ -4,6 +4,7 @@ import { CreationAuditedEntity } from '../abstract-entities/creation-audited';
 import { AuditedEntity } from '../abstract-entities/audited';
 import { FullAuditedEntity } from '../abstract-entities/full-audited';
 import { SessionService } from '../../auth/services/session.service';
+import { IMayHaveTenant } from '../interfaces';
 
 @EventSubscriber()
 export class EntitySubscriber implements EntitySubscriberInterface {
@@ -25,6 +26,10 @@ export class EntitySubscriber implements EntitySubscriberInterface {
       const entity = event.entity as FullAuditedEntity;
       entity.isDeleted = false;
     }
+    if(event.metadata.findColumnWithPropertyName('tenantId') !== undefined) {
+      const entity = event.entity as IMayHaveTenant;
+      !entity.tenantId && (entity.tenantId = this.sessionService.tenantId);
+    };
   }
 
   beforeUpdate(event: UpdateEvent<Entity>) {
@@ -33,5 +38,9 @@ export class EntitySubscriber implements EntitySubscriberInterface {
       entity.lastModificationTime = new Date();
       entity.lastModifierUserId = this.sessionService.user?.id;
     }
+    if(event.metadata.findColumnWithPropertyName('tenantId') !== undefined) {
+      const entity = event.entity as IMayHaveTenant;
+      !entity.tenantId && (entity.tenantId = this.sessionService.tenantId);
+    };
   }
 }

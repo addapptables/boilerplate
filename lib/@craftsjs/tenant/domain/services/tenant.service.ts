@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@craftsjs/typeorm';
+import { InjectRepository } from '../../../typeorm';
 import { CrudAppService } from '../../../core/services/crud-app.service';
 import { PermissionDomainService } from '../../../permission/domain/services/permission.service';
 import { RolePermission } from '../../../role/infrastructure/database/entities/role-permission.entity';

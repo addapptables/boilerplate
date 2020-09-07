@@ -63,8 +63,8 @@ export class User extends FullAuditedEntity implements IMayHaveTenant {
   @Column({ nullable: true })
   lastOrganizationUnitId?: string;
 
-  @ManyToOne(() => OrganizationUnit, organizationUnit => organizationUnit.organizationUnitUsers)
-  organizationUnit!: OrganizationUnit;
+  @ManyToOne(() => OrganizationUnit, organizationUnit => organizationUnit.users)
+  lastOrganizationUnit!: OrganizationUnit;
 
   @OneToMany(() => UserRole, role => role.user)
   roles!: UserRole[];

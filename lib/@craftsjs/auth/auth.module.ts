@@ -10,12 +10,12 @@ import { JwtStrategy } from './strategy/jwt.strategy';
 import { SessionSerializer } from './services/session-serializer.service';
 import { LoginGuard } from './guard/login.guard';
 import { AuthController } from './application/controllers/auth.controller';
-import { SessionService } from './services/session.service';
 import { SecurityModule } from '../security';
 import { UserModule } from '../user/user.module';
 import { PermissionGuard } from './guard/permission.guard';
 import { SessionMiddleware } from './middleware/session.middleware';
 import { TenantModule } from '../tenant/tenant.module';
+import { SessionModule } from './session/session.module';
 
 @Global()
 @Module({
@@ -31,6 +31,7 @@ import { TenantModule } from '../tenant/tenant.module';
     UserModule,
     MicroserviceModule,
     TenantModule,
+    SessionModule
   ],
   providers: [
     AuthService,
@@ -38,16 +39,15 @@ import { TenantModule } from '../tenant/tenant.module';
     JwtStrategy,
     SessionSerializer,
     LoginGuard,
-    SessionService,
     {
       provide: APP_GUARD,
       useClass: PermissionGuard,
     },
+    SessionMiddleware,
   ],
   exports: [
     AuthService,
-    LoginGuard,
-    SessionService,
+    LoginGuard
   ],
 })
 export class AuthModule implements NestModule {

@@ -1,6 +1,6 @@
-import { Expose } from "class-transformer";
-import { ApiProperty } from "@nestjs/swagger";
-import { IsDefined, IsUUID } from "class-validator";
+import { Expose } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsDefined, IsUUID } from 'class-validator';
 
 export class ImpersonateInput {
     

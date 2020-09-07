@@ -29,7 +29,7 @@ export class EntitySubscriber implements EntitySubscriberInterface {
     if(event.metadata.findColumnWithPropertyName('tenantId') !== undefined) {
       const entity = event.entity as IMayHaveTenant;
       !entity.tenantId && (entity.tenantId = this.sessionService.tenantId);
-    };
+    }
   }
 
   beforeUpdate(event: UpdateEvent<Entity>) {
@@ -41,6 +41,6 @@ export class EntitySubscriber implements EntitySubscriberInterface {
     if(event.metadata.findColumnWithPropertyName('tenantId') !== undefined) {
       const entity = event.entity as IMayHaveTenant;
       !entity.tenantId && (entity.tenantId = this.sessionService.tenantId);
-    };
+    }
   }
 }

@@ -36,6 +36,7 @@ export function getRepositoryToken(
     (entity.prototype instanceof Repository ||
       entity.prototype instanceof AbstractRepository)
   ) {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     return `${connectionPrefix}${getCustomRepositoryToken(entity)}`;
   }
 
@@ -52,7 +53,7 @@ export function getRepositoryToken(
  * @param {Function} This parameter can either be an Entity or Repository
  * @returns {string} The Repository injection token
  */
-export function getCustomRepositoryToken(repository: Function) {
+export function getCustomRepositoryToken(repository: any) {
   if (isNullOrUndefined(repository)) {
     throw new CircularDependencyException('@InjectRepository()');
   }
@@ -67,7 +68,7 @@ export function getCustomRepositoryToken(repository: Function) {
  */
 export function getConnectionToken(
   connection: Connection | ConnectionOptions | string = DEFAULT_CONNECTION_NAME,
-): string | Function | Type<Connection> {
+): string | Type<Connection> {
   return DEFAULT_CONNECTION_NAME === connection
     ? Connection
     : 'string' === typeof connection
@@ -106,7 +107,7 @@ export function getConnectionPrefix(
  */
 export function getEntityManagerToken(
   connection: Connection | ConnectionOptions | string = DEFAULT_CONNECTION_NAME,
-): string | Function {
+): string | any {
   return DEFAULT_CONNECTION_NAME === connection
     ? EntityManager
     : 'string' === typeof connection

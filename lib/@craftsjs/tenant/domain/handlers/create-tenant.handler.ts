@@ -1,7 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@addapptables/microservice';
-import { TenantDomainService } from '../services/Tenant.service';
+import { TenantDomainService } from '../services/tenant.service';
 import { mapper } from '../../../utils';
-import { CreateTenantCommand } from '../../application/commands/create-Tenant.command';
+import { CreateTenantCommand } from '../../application/commands/create-tenant.command';
 import { Tenant } from '../../infrastructure/database/entities/tenant.entity';
 
 @CommandHandler(CreateTenantCommand)

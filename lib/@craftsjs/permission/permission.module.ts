@@ -19,6 +19,7 @@ import { PermissionService } from './application/api/services/permission.service
   exports: [
     PermissionService,
     PermissionDomainService,
+    TypeOrmModule.forFeature([PermissionRepository])
   ],
 })
 export class PermissionModule { }

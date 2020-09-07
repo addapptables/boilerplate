@@ -1,5 +1,23 @@
 version: "3.1"
 services:
+    test:
+        build:
+            context: ./.
+            dockerfile: ./test/Dockerfile
+        environment:
+            - DB_URL=postgresql://root:password@0.0.0.0
+            - DB_NAME=boilerplate
+            - DB_TYPE=postgres
+            - PORT=3000
+            - DB_SYNCRONIZE=true
+            - ROOT_ADDRESS=http://localhost:3000
+            - TENANCY_NAME_PLACE_HOLDER_IN_URL={TENANCY_NAME}
+            - SECRET_SESSION=craftsjs
+            - DEFAULT_PASSWORD=123qwe
+            - REDIS_URL= redis://localhost:6379/
+        depends_on:
+            - postgresql
+
     postgresql:
         image: postgres:alpine
         ports:
@@ -7,4 +25,4 @@ services:
         environment:
             POSTGRES_USER: root
             POSTGRES_PASSWORD: password
-            POSTGRES_DB: sae
+            POSTGRES_DB: boilerplate

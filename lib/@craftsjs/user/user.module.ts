@@ -16,12 +16,15 @@ import { UserService } from './application/api/services/user.service';
 import { UpdateProfileHandler } from './domain/handlers/update-profile.handler';
 import { ChangePasswordHandler } from './domain/handlers/change-password.handler';
 import { UpdateUserOrganizationUnitHandler } from './domain/handlers/update-user-organization-unit.handler';
+import { FindByUsernameOrEmailHandler } from './domain/handlers/find-user-by-username-or-email.handler';
+import { SessionModule } from '../auth/session/session.module';
 
 @Module({
   controllers: [UserController],
   imports: [
     TypeOrmModule.forFeature([UserPermission, UserRole, UserRepository]),
     SecurityModule,
+    SessionModule
   ],
   providers: [
     UserDomainService,
@@ -34,7 +37,8 @@ import { UpdateUserOrganizationUnitHandler } from './domain/handlers/update-user
     DeleteUserHandler,
     UpdateProfileHandler,
     ChangePasswordHandler,
-    UpdateUserOrganizationUnitHandler
+    UpdateUserOrganizationUnitHandler,
+    FindByUsernameOrEmailHandler
   ],
   exports: [
     UserService,

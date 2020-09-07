@@ -1,4 +1,4 @@
-import { InjectRepository } from '@craftsjs/typeorm';
+import { InjectRepository } from '../../../typeorm';
 import { PermissionRepository } from '../../infrastructure/database/repositories/permission.repository';
 import { QueryDto } from '../../../core';
 import { isEmpty } from '../../../utils';

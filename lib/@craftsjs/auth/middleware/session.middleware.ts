@@ -28,7 +28,7 @@ export class SessionMiddleware implements NestMiddleware {
       req.query.tenantId = req.query.tenantId || this.sessionService.tenantId;
       req.query.currentUserId = this.sessionService.user?.id;
     } catch (error) {
-      this.logger.error(error);
+      this.logger.error(error.message);
     }
     next();
   }
@@ -39,10 +39,10 @@ export class SessionMiddleware implements NestMiddleware {
       try {
         await this.jwtService.verifyAsync(bearer.replace('Bearer ', ''), {})
         const user = this.jwtService.decode(bearer.replace('Bearer ', '')) as any;
-        this.sessionService.user = user as any;
+        this.sessionService.user = user;
         this.sessionService.impersonatorUserId = user?.bearer;
       } catch (error) {
-        this.logger.error(error);
+        this.logger.error(error.message);
       }
     }
   }

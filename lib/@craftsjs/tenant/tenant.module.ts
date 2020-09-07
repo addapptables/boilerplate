@@ -33,6 +33,7 @@ import { EditionModule } from '../edition/edition.module';
   exports: [
     TenantService,
     TenantDomainService,
+    TypeOrmModule.forFeature([TenantRepository])
   ],
 })
 export class TenantModule { }

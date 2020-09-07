@@ -6,6 +6,7 @@ import {
   OnApplicationShutdown,
   Provider,
   Type,
+  Logger,
 } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { defer } from 'rxjs';
@@ -33,6 +34,9 @@ import { TYPEORM_MODULE_ID, TYPEORM_MODULE_OPTIONS } from './typeorm.constants';
 @Global()
 @Module({})
 export class TypeOrmCoreModule implements OnApplicationShutdown {
+
+  private static readonly logger = new Logger(TypeOrmCoreModule.name);
+
   constructor(
     @Inject(TYPEORM_MODULE_OPTIONS)
     private readonly options: TypeOrmModuleOptions,
@@ -115,7 +119,7 @@ export class TypeOrmCoreModule implements OnApplicationShutdown {
     if (options.useExisting || options.useFactory) {
       return [this.createAsyncOptionsProvider(options)];
     }
-    const useClass = options.useClass as Type<TypeOrmOptionsFactory>;
+    const useClass = options.useClass;
     return [
       this.createAsyncOptionsProvider(options),
       {
@@ -137,7 +141,7 @@ export class TypeOrmCoreModule implements OnApplicationShutdown {
     }
     // `as Type<TypeOrmOptionsFactory>` is a workaround for microsoft/TypeScript#31603
     const inject = [
-      (options.useClass || options.useExisting) as Type<TypeOrmOptionsFactory>,
+      (options.useClass || options.useExisting),
     ];
     return {
       provide: TYPEORM_MODULE_OPTIONS,
@@ -171,7 +175,9 @@ export class TypeOrmCoreModule implements OnApplicationShutdown {
           }
         }
       }
-    } catch {}
+    } catch(error) {
+      this.logger.error(error);
+    }
 
     const connectionToken = getConnectionName(options as ConnectionOptions);
     return await defer(() => {

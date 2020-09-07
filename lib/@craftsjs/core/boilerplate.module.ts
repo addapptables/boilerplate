@@ -1,5 +1,6 @@
-import { Module, DynamicModule } from '@nestjs/common';
-import { TypeOrmModule } from '@craftsjs/typeorm';
+import { Module, DynamicModule, OnModuleInit } from '@nestjs/common';
+import { APP_FILTER } from '@nestjs/core';
+import { TypeOrmModule } from '../typeorm';
 import { TenantModule } from '../tenant';
 import { EntitySubscriber } from './subscriber/entity.subscriber';
 import { BoilerplateOptions } from './interfaces/boilerplate-options.interface';
@@ -9,8 +10,10 @@ import { RoleModule } from '../role/role.module';
 import { EditionModule } from '../edition/edition.module';
 import { OrganizationUnitModule } from '../organization/organization-unit.module';
 import { PermissionModule } from '../permission/permission.module';
-import { APP_FILTER } from '@nestjs/core';
 import { HttpExceptionFilter } from './exception-filter';
+import { DisposableOptionModule } from './disposable/disposable-option.module';
+import { SeedModule } from '../seed/seed.module';
+import { Connection } from 'typeorm';
 
 @Module({
   imports: [
@@ -20,6 +23,8 @@ import { HttpExceptionFilter } from './exception-filter';
     EditionModule,
     OrganizationUnitModule,
     PermissionModule,
+    DisposableOptionModule,
+    SeedModule
   ],
   exports: [
     UserModule,
@@ -31,10 +36,12 @@ import { HttpExceptionFilter } from './exception-filter';
     {
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
-    },
+    }
   ],
 })
-export class BoilerplateModule {
+export class BoilerplateModule implements OnModuleInit {
+
+  constructor(private readonly connection: Connection) {}
 
   static forRoot(options: BoilerplateOptions): DynamicModule {
     return {
@@ -44,5 +51,9 @@ export class BoilerplateModule {
         TypeOrmModule.forRoot(options.typeOrm),
       ],
     };
+  }
+
+  async onModuleInit() {
+    await this.connection.runMigrations();
   }
 }

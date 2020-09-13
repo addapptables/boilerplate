@@ -45,17 +45,6 @@ describe('TenantService', () => {
       expect(result).deep.contains(tenant);
     });
 
-    it('should return an error', async () => {
-      try {
-        await service.insert({
-          error: 'test-error'
-        } as any);
-        expect('error').to.be.equal('test-error');
-      } catch (error) {
-        expect(error.message).to.be.equal('test-error');
-      }
-    });
-
   })
 
   describe('update', () => {
@@ -64,17 +53,6 @@ describe('TenantService', () => {
       const result = await service.update({ id: "123456", ...tenant } as any);
       expect(result).to.be.not.undefined;
       expect(result).deep.contains({ id: "123456", ...tenant });
-    });
-
-    it('should return an error', async () => {
-      try {
-        await service.update({
-          error: 'test-error'
-        } as any);
-        expect('error').to.be.equal('test-error');
-      } catch (error) {
-        expect(error.message).to.be.equal('test-error');
-      }
     });
 
   })
@@ -87,15 +65,6 @@ describe('TenantService', () => {
       expect(result.id).to.be.equal("12345689");
     });
 
-    it('should return an error', async () => {
-      try {
-        await service.find({ error: 'test-error' } as any);
-        expect('error').to.be.equal('test-error');
-      } catch (error) {
-        expect(error.message).to.be.equal('test-error');
-      }
-    });
-
   })
 
   describe('findAll', () => {
@@ -106,15 +75,6 @@ describe('TenantService', () => {
       expect(result.total).to.be.equal(2);
     });
 
-    it('should return an error', async () => {
-      try {
-        await service.findAll({ error: 'test-error' } as any);
-        expect('error').to.be.equal('test-error');
-      } catch (error) {
-        expect(error.message).to.be.equal('test-error');
-      }
-    });
-
   })
 
   describe('remove', () => {
@@ -123,15 +83,6 @@ describe('TenantService', () => {
       const result = await service.remove({ id: "1" });
       expect(result).to.be.not.undefined;
       expect(result).to.deep.equal({ id: "1" });
-    });
-
-    it('should return an error', async () => {
-      try {
-        await service.remove({ error: 'test-error' } as any);
-        expect('error').to.be.equal('test-error');
-      } catch (error) {
-        expect(error.message).to.be.equal('test-error');
-      }
     });
 
   })

@@ -1,7 +1,7 @@
 import {MigrationInterface, QueryRunner} from 'typeorm';
 
-export class initialMigration1598135832494 implements MigrationInterface {
-    name = 'initialMigration1598135832494'
+export class initialMigration1600033652703 implements MigrationInterface {
+    name = 'initialMigration1600033652703'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query('CREATE TABLE "tenants" ("id" uuid NOT NULL, "creatorUserId" character varying, "creationTime" TIMESTAMP, "lastModifierUserId" character varying, "lastModificationTime" TIMESTAMP, "deleterUserId" character varying, "deletionTime" TIMESTAMP, "isDeleted" boolean NOT NULL, "name" character varying(200) NOT NULL, "subDomain" character varying(64) NOT NULL, "isActive" boolean NOT NULL, "connectionString" character varying, "subscriptionEndDate" TIMESTAMP, "isInTrialPeriod" boolean, "editionId" uuid, "type" character varying NOT NULL, CONSTRAINT "PK_53be67a04681c66b87ee27c9321" PRIMARY KEY ("id"))');
@@ -21,8 +21,7 @@ export class initialMigration1598135832494 implements MigrationInterface {
         await queryRunner.query('CREATE INDEX "IDX_1e4730fe84431e5a7ee5e26c90" ON "user_permissions" ("type") ');
         await queryRunner.query('CREATE TABLE "permissions" ("id" uuid NOT NULL, "creatorUserId" character varying, "creationTime" TIMESTAMP, "name" character varying(200) NOT NULL, "isHost" boolean NOT NULL, "parentId" uuid, "type" character varying NOT NULL, CONSTRAINT "PK_920331560282b8bd21bb02290df" PRIMARY KEY ("id"))');
         await queryRunner.query('CREATE INDEX "IDX_f268ae606aacf1dc940820323c" ON "permissions" ("type") ');
-        await queryRunner.query('CREATE TYPE "editions_editiontype_enum" AS ENUM(\'1\', \'2\', \'3\')');
-        await queryRunner.query('CREATE TABLE "editions" ("id" uuid NOT NULL, "creatorUserId" character varying, "creationTime" TIMESTAMP, "lastModifierUserId" character varying, "lastModificationTime" TIMESTAMP, "deleterUserId" character varying, "deletionTime" TIMESTAMP, "isDeleted" boolean NOT NULL, "name" character varying(200) NOT NULL, "isFree" boolean NOT NULL, "price" numeric, "numberOfUsers" integer, "trialDayCount" integer, "editionType" "editions_editiontype_enum", "type" character varying NOT NULL, CONSTRAINT "PK_a04f035dd7a1c3f344481cb6a2e" PRIMARY KEY ("id"))');
+        await queryRunner.query('CREATE TABLE "editions" ("id" uuid NOT NULL, "creatorUserId" character varying, "creationTime" TIMESTAMP, "lastModifierUserId" character varying, "lastModificationTime" TIMESTAMP, "deleterUserId" character varying, "deletionTime" TIMESTAMP, "isDeleted" boolean NOT NULL, "name" character varying(200) NOT NULL, "isFree" boolean NOT NULL, "price" numeric, "numberOfUsers" integer, "trialDayCount" integer, "editionType" character varying, "type" character varying NOT NULL, CONSTRAINT "PK_a04f035dd7a1c3f344481cb6a2e" PRIMARY KEY ("id"))');
         await queryRunner.query('CREATE INDEX "IDX_d716a4c5fd1384cf0ef5c22642" ON "editions" ("type") ');
         await queryRunner.query('ALTER TABLE "tenants" ADD CONSTRAINT "FK_f124cd58c0c3dcbbc64bfb6e788" FOREIGN KEY ("editionId") REFERENCES "editions"("id") ON DELETE NO ACTION ON UPDATE NO ACTION');
         await queryRunner.query('ALTER TABLE "role_permissions" ADD CONSTRAINT "FK_06792d0c62ce6b0203c03643cdd" FOREIGN KEY ("permissionId") REFERENCES "permissions"("id") ON DELETE NO ACTION ON UPDATE NO ACTION');
@@ -57,7 +56,6 @@ export class initialMigration1598135832494 implements MigrationInterface {
         await queryRunner.query('ALTER TABLE "tenants" DROP CONSTRAINT "FK_f124cd58c0c3dcbbc64bfb6e788"');
         await queryRunner.query('DROP INDEX "IDX_d716a4c5fd1384cf0ef5c22642"');
         await queryRunner.query('DROP TABLE "editions"');
-        await queryRunner.query('DROP TYPE "editions_editiontype_enum"');
         await queryRunner.query('DROP INDEX "IDX_f268ae606aacf1dc940820323c"');
         await queryRunner.query('DROP TABLE "permissions"');
         await queryRunner.query('DROP INDEX "IDX_1e4730fe84431e5a7ee5e26c90"');

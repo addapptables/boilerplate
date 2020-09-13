@@ -1,5 +1,5 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
-import { TenantHeaderContributor, TenantCookieContributor, TenantSubdomainContributor } from '../../tenant';
+import { TenantHeaderContributor, TenantCookieContributor, TenantSubdomainContributor, TenantUserContributor } from '../../tenant';
 import { SessionService } from '../services/session.service';
 import { Request } from 'express';
 import { JwtService } from '@nestjs/jwt';
@@ -48,11 +48,13 @@ export class SessionMiddleware implements NestMiddleware {
   }
 
   private async resolveTenant(req: Request) {
+    const tenantUserContributor = new TenantUserContributor(this.sessionService);
     const tenantHeader = new TenantHeaderContributor();
     const tenantCookie = new TenantCookieContributor();
     const tenantSubdomain = new TenantSubdomainContributor(this.tenantService);
+    tenantUserContributor.registerNext(tenantHeader);
     tenantHeader.registerNext(tenantCookie);
     tenantCookie.registerNext(tenantSubdomain);
-    return await tenantHeader.resolveTenant(req);
+    return await tenantUserContributor.resolveTenant(req);
   }
 }

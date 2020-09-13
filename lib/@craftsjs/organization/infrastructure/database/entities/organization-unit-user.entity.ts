@@ -7,15 +7,15 @@ import { User } from '../../../../user/infrastructure/database/entities/user.ent
 export class OrganizationUnitUser extends CreationAuditedEntity {
 
   @Column()
-  userId!: string;
+  userId: string;
 
   @Column()
-  organizationUnitId!: string;
+  organizationUnitId: string;
 
   @ManyToOne(() => User, user => user.organizationUnitUsers)
-  user!: User;
+  user: User;
 
   @ManyToOne(() => OrganizationUnit, organizationUnit => organizationUnit.organizationUnitUsers)
-  organizationUnit!: OrganizationUnit;
+  organizationUnit: OrganizationUnit;
 
 }

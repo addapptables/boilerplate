@@ -4,14 +4,16 @@ import { Photo } from './photo/photo.entity';
 import { PhotoModule } from './photo/photo.module';
 import { DisposableOptionModule } from '../../../../../lib/@craftsjs/core/disposable/disposable-option.module';
 import { SessionModule } from '../../../../../lib/@craftsjs/auth/session/session.module';
+import { FullAuditedTest } from './photo/full-audited.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: process.env.DB_TYPE as any,
-      url: `${process.env.DB_URL}/${process.env.DB_NAME}`,
-      synchronize: Boolean(process.env.DB_SYNCRONIZE),
-      entities: [Photo],
+      type: 'sqlite',
+      database: ':memory:',
+      synchronize: true,
+      dropSchema: true,
+      entities: [Photo, FullAuditedTest],
       autoLoadEntities: false,
       retryAttempts: 2,
       retryDelay: 1000,
@@ -19,10 +21,11 @@ import { SessionModule } from '../../../../../lib/@craftsjs/auth/session/session
     PhotoModule,
     TypeOrmModule.forRoot({
       name: 'connection_2',
-      type: process.env.DB_TYPE as any,
-      url: `${process.env.DB_URL}/${process.env.DB_NAME}`,
-      synchronize: Boolean(process.env.DB_SYNCRONIZE),
-      entities: [Photo],
+      type: 'sqlite',
+      database: ':memory:',
+      synchronize: true,
+      dropSchema: true,
+      entities: [Photo, FullAuditedTest],
       autoLoadEntities: false,
       retryAttempts: 2,
       retryDelay: 1000,

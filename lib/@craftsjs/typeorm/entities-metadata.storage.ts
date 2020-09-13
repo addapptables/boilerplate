@@ -12,9 +12,6 @@ export class EntitiesMetadataStorage {
   ) {
     const connectionToken =
       typeof connection === 'string' ? connection : connection.name;
-    if (!connectionToken) {
-      return;
-    }
 
     let collection = this.storage.get(connectionToken);
     if (!collection) {
@@ -34,10 +31,6 @@ export class EntitiesMetadataStorage {
   ): EntityClassOrSchema[] {
     const connectionToken =
       typeof connection === 'string' ? connection : connection.name;
-
-    if (!connectionToken) {
-      return [];
-    }
     return this.storage.get(connectionToken) || [];
   }
 }

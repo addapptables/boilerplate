@@ -44,19 +44,6 @@ describe('EditionService', () => {
       expect(edition.name).to.be.equal('testFreeEdition');
     });
 
-    it('should return an error', async () => {
-      try {
-        await service.insert({
-          isFree: true,
-          name: 'testFreeEdition',
-          error: 'test-error'
-        } as any);
-        expect('error').to.be.equal('test-error');
-      } catch (error) {
-        expect(error.message).to.be.equal('test-error');
-      }
-    });
-
   })
 
   describe('update', () => {
@@ -71,21 +58,6 @@ describe('EditionService', () => {
       expect(edition.isFree).to.be.equal(true);
       expect(edition.name).to.be.equal('testFreeEdition');
     });
-
-    it('should return an error', async () => {
-      try {
-        await service.Update({
-          id: 123456,
-          isFree: true,
-          name: 'testFreeEdition',
-          error: 'test-error'
-        } as any);
-        expect('error').to.be.equal('test-error');
-      } catch (error) {
-        expect(error.message).to.be.equal('test-error');
-      }
-    });
-
   })
 
   describe('find', () => {
@@ -94,15 +66,6 @@ describe('EditionService', () => {
       const edition = await service.find({ id: "12345689" });
       expect(edition).to.be.not.undefined;
       expect(edition.id).to.be.equal("12345689");
-    });
-
-    it('should return an error', async () => {
-      try {
-        await service.find({ error: 'test-error' } as any);
-        expect('error').to.be.equal('test-error');
-      } catch (error) {
-        expect(error.message).to.be.equal('test-error');
-      }
     });
 
   })
@@ -115,15 +78,6 @@ describe('EditionService', () => {
       expect(edition.total).to.be.equal(2);
     });
 
-    it('should return an error', async () => {
-      try {
-        await service.findAll({ error: 'test-error' } as any);
-        expect('error').to.be.equal('test-error');
-      } catch (error) {
-        expect(error.message).to.be.equal('test-error');
-      }
-    });
-
   })
 
   describe('remove', () => {
@@ -132,15 +86,6 @@ describe('EditionService', () => {
       const edition = await service.remove({ id: "1" });
       expect(edition).to.be.not.undefined;
       expect(edition).to.deep.equal({ id: "1" })
-    });
-
-    it('should return an error', async () => {
-      try {
-        await service.remove({ error: 'test-error' } as any);
-        expect('error').to.be.equal('test-error');
-      } catch (error) {
-        expect(error.message).to.be.equal('test-error');
-      }
     });
 
   })

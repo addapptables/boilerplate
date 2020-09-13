@@ -1,6 +1,6 @@
 
 export enum EditionType {
-  Monthly = 1,
-  Biannual = 2,
-  Annual = 3,
+  Monthly = 'Monthly',
+  Biannual = 'Biannual',
+  Annual = 'Annual',
 }

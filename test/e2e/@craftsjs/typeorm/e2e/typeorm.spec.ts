@@ -19,14 +19,14 @@ describe('TypeOrm', () => {
     new CircularDependencyException('context');
     await app.init();
   });
-
+  
+  afterEach(async () => {
+    await app.close();
+  });
+  
   it(`should return created entity`, () => {
     return request(server)
       .post('/photo')
       .expect(201, { name: 'Nest', description: 'Is great!', views: 6000 });
-  });
-
-  afterEach(async () => {
-    await app.close();
   });
 });

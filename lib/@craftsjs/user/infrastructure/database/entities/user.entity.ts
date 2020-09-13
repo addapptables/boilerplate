@@ -17,22 +17,22 @@ export class User extends FullAuditedEntity implements IMayHaveTenant {
 
   @Column({ nullable: false, length: MAX_NAME_LENGTH })
   @Expose()
-  userName!: string;
+  userName: string;
 
   @Column({ nullable: false, length: MAX_EMAIL_LENGTH })
   @Expose()
-  emailAddress!: string;
+  emailAddress: string;
 
   @Column({ nullable: false, length: MAX_NAME_LENGTH })
   @Expose()
-  name!: string;
+  name: string;
 
   @Column({ nullable: false, length: MAX_NAME_LENGTH })
   @Expose()
-  surname!: string;
+  surname: string;
 
   @Column({ nullable: false, length: MAX_PASSWORD_LENGTH })
-  password!: string;
+  password: string;
 
   @Column({ nullable: true, length: MAX_CODE_LENGTH })
   emailConfirmationCode?: string;
@@ -58,21 +58,21 @@ export class User extends FullAuditedEntity implements IMayHaveTenant {
   isActive?: boolean;
 
   @Column({ nullable: false })
-  isStatic!: boolean;
+  isStatic: boolean;
 
   @Column({ nullable: true })
   lastOrganizationUnitId?: string;
 
   @ManyToOne(() => OrganizationUnit, organizationUnit => organizationUnit.users)
-  lastOrganizationUnit!: OrganizationUnit;
+  lastOrganizationUnit: OrganizationUnit;
 
   @OneToMany(() => UserRole, role => role.user)
-  roles!: UserRole[];
+  roles: UserRole[];
 
   @OneToMany(() => UserPermission, permission => permission.user)
-  permissions!: UserPermission[];
+  permissions: UserPermission[];
 
   @OneToMany(() => OrganizationUnitUser, userOrganizationUnit => userOrganizationUnit.user)
-  organizationUnitUsers!: OrganizationUnitUser[];
+  organizationUnitUsers: OrganizationUnitUser[];
 
 }

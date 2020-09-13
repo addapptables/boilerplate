@@ -3,7 +3,6 @@ import { FullAuditedEntity } from '../abstract-entities';
 import { SessionService } from '../../auth/services/session.service';
 import { Injectable } from '@nestjs/common';
 import { OptionService } from '../disposable/option.service';
-import { isArray } from 'util';
 
 @Injectable()
 export class CraftsRepository<Entity> extends Repository<Entity> {
@@ -16,23 +15,17 @@ export class CraftsRepository<Entity> extends Repository<Entity> {
   }
 
   findOne(optionsOrConditions?: string | number | Date | ObjectID | FindOneOptions<Entity> | FindConditions<Entity>,
-    maybeOptions?: FindOneOptions<Entity>): Promise<Entity | undefined> {
-    let options = optionsOrConditions as FindOneOptions;
-    if (maybeOptions) {
-      options = maybeOptions;
-    }
+    _?: FindOneOptions<Entity>): Promise<Entity | undefined> {
+    const options = optionsOrConditions as FindOneOptions;
     optionsOrConditions = Object.assign({}, this.getDefaultOptions(options));
-    return super.findOne(optionsOrConditions as any, maybeOptions);
+    return super.findOne(optionsOrConditions as any, _);
   }
 
   findOneOrFail(optionsOrConditions?: string | number | Date | ObjectID | FindOneOptions<Entity> | FindConditions<Entity>,
-    maybeOptions?: FindOneOptions<Entity>): Promise<Entity> {
-    let options = optionsOrConditions as FindOneOptions;
-    if (maybeOptions) {
-      options = maybeOptions;
-    }
+    _?: FindOneOptions<Entity>): Promise<Entity> {
+    const options = optionsOrConditions as FindOneOptions;
     optionsOrConditions = Object.assign({}, this.getDefaultOptions(options));
-    return super.findOneOrFail(optionsOrConditions as any, maybeOptions);
+    return super.findOneOrFail(optionsOrConditions as any, _);
   }
 
   findAndCount(optionsOrConditions?: FindManyOptions<Entity> | FindConditions<Entity>): Promise<[Entity[], number]> {
@@ -53,7 +46,7 @@ export class CraftsRepository<Entity> extends Repository<Entity> {
   remove(entities: Entity[], options?: RemoveOptions): Promise<Entity[]>;
   remove(entity: Entity, options?: RemoveOptions): Promise<Entity>;
   async remove(entity: Entity | Entity[], options?: RemoveOptions): Promise<Entity | Entity[]> {
-    if (isArray(entity)) {
+    if (Array.isArray(entity)) {
       const allPromise = entity.map(async x=> this.removeSingleEntity(x, options));
       const entities = await Promise.all(allPromise);
       return entities;

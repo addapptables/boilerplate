@@ -29,7 +29,7 @@ export class Edition extends FullAuditedEntity {
   @Expose()
   trialDayCount?: number;
 
-  @Column({ type: 'enum', enum: EditionType, nullable: true })
+  @Column({ nullable: true, type: 'varchar' })
   @Expose()
   editionType?: EditionType;
 

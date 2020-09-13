@@ -21,6 +21,7 @@ import { resolve } from 'path';
         type: process.env.DB_TYPE as any,
         url: `${process.env.DB_URL}/${process.env.DB_NAME}`,
         synchronize: Boolean(process.env.DB_SYNCRONIZE),
+        dropSchema: Boolean(process.env.DB_DROPSCHEMA),
         entities: [
           resolve(__dirname, '**/*.entity{.ts,.js}'),
           resolve(__dirname, '../lib/**/*.entity{.ts,.js}'),

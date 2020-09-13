@@ -1,49 +1,57 @@
-import { Test } from '@nestjs/testing';
-import { AppModule } from '../../../../src/app.module';
-import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as session from 'express-session';
 import * as passport from 'passport';
-import { Server } from 'http';
+import { INestApplication, ValidationPipe } from '@nestjs/common';
+import { Test } from '@nestjs/testing';
+import { LocalBusAdapter, ManagerAdapterBus, MicroserviceModule } from '@addapptables/microservice';
+import { resolve } from 'path';
+import { BoilerplateModule } from '../../../../lib/@craftsjs/core';
 
-let app: INestApplication;
-let server: Server;
+export function useApplicationServer() {
+    let app: INestApplication;
 
-export default async function (): Promise<{app, server}> {
-    return new Promise(async (resolve, reject) => {
-        try {
-            if(app) return resolve({ app, server });
-            const module = await Test.createTestingModule({
-                imports: [AppModule]
-            }).compile();
-            app = module.createNestApplication();
-            app.use(
-                session({
-                    secret: process.env.SECRET_SESSION,
-                    resave: false,
-                    saveUninitialized: true,
+    before(async () => {
+        const module = await Test.createTestingModule({
+            imports: [
+                MicroserviceModule.withConfig({
+                    adapter: ManagerAdapterBus.getInstance(LocalBusAdapter).build(),
+                    logger: {
+                        debug: false
+                    }
                 }),
-            );
-            app.use(passport.initialize());
-            app.use(passport.session());
-            app.useGlobalPipes(new ValidationPipe({ skipMissingProperties: true, transformOptions: { excludeExtraneousValues: true } }));
-            server = app.getHttpServer();
-            await app.init();
-            setTimeout(() => {
-                resolve({ app, server });
-            }, 100);
-        } catch (error) {
-            reject(error);
-        }
-    })
-}
+                BoilerplateModule.forRoot({
+                    jwt: {
+                        secret: process.env.SECRET_SESSION,
+                    },
+                    typeOrm: {
+                        type: 'sqlite',
+                        database: ':memory:',
+                        synchronize: true,
+                        dropSchema: true,
+                        entities: [
+                            resolve(__dirname, '../../../../src/**/*.entity{.ts,.js}'),
+                            resolve(__dirname, '../../../../lib/**/*.entity{.ts,.js}'),
+                        ],
+                    },
+                }),
+            ]
+        }).compile();
+        app = module.createNestApplication();
+        app.use(
+            session({
+                secret: process.env.SECRET_SESSION,
+                resave: false,
+                saveUninitialized: true,
+            }),
+        );
+        app.use(passport.initialize());
+        app.use(passport.session());
+        app.useGlobalPipes(new ValidationPipe({ skipMissingProperties: true, transformOptions: { excludeExtraneousValues: true } }));
+        await app.init();
+    });
 
-async function close() {
-    await app.close();
-    app = null;
-}
+    after(async () => await app.close());
 
-export {
-    app,
-    server,
-    close
+    return {
+        getApp: () => app,
+    };
 }

@@ -2,7 +2,6 @@ import { CraftsRepository } from '../repositories/crafts.repository';
 import { EntityDto } from '../dto/entity.dto';
 import { PaginatedDto } from '../dto/paginated.dto';
 import { PaginatedResultDto } from '../dto/paginated-result.dto';
-import { FullAuditedEntity } from '../abstract-entities';
 import * as R from 'ramda';
 import { FindOneDto } from '../dto/find-one.dto';
 import { mergeAndRemoveEmpty } from '../../utils';
@@ -33,16 +32,9 @@ export abstract class CrudAppService<T extends CraftsRepository<any>> {
     } as PaginatedResultDto<any>;
   }
 
-  async remove(id: string, currentUserId?: string) {
+  async remove(id: string) {
     const data = await this.repository.findOne({ where: { id } });
-    if ((this.repository.target as any) as FullAuditedEntity) {
-      data.isDeleted = true;
-      data.deletionTime = new Date();
-      data.deleterUserId = currentUserId;
-      await this.repository.update(id, data);
-    } else {
-      await this.repository.remove(data);
-    }
+    return await this.repository.remove(data);
   }
 
   createQueryBuilder(name?: string) {

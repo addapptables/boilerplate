@@ -1,7 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@addapptables/microservice';
-import { EditionDomainService } from '../services/Edition.service';
+import { EditionDomainService } from '../services/edition.service';
 import { mapper } from '../../../utils';
-import { CreateEditionCommand } from '../../application/commands/create-Edition.command';
+import { CreateEditionCommand } from '../../application/commands/create-edition.command';
 import { Edition } from '../../infrastructure/database/entities/edition.entity';
 
 @CommandHandler(CreateEditionCommand)

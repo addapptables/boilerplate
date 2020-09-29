@@ -6,7 +6,7 @@ export class TenantCookieContributor implements ITenantResolve {
   private next: ITenantResolve;
 
   resolveTenant(request: any) {
-    const result = request?.cookies[TENANT_ID];
+    const result = request.cookies ? request.cookies[TENANT_ID] : undefined;
     if (result) {
       return result;
     }

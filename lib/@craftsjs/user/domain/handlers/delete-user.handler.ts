@@ -10,7 +10,7 @@ export class DeleteUserHandler implements ICommandHandler<DeleteUserCommand> {
   ) { }
 
   handle(event: DeleteUserCommand): any {
-    return this.userService.remove(event.data.id, event.data.currentUserId);
+    return this.userService.remove(event.data.id);
   }
 
 }

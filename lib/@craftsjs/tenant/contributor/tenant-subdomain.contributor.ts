@@ -21,6 +21,7 @@ export class TenantSubdomainContributor implements ITenantResolve {
     return null;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   registerNext(_: ITenantResolve) {
     throw new NotImplementedException('End of tenant subdomain must be the end of the chain!');
   }

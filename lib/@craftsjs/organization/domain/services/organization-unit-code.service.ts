@@ -57,6 +57,7 @@ export class OrganizationUnitCodeService {
       return undefined;
     }
     const numberOfZeros = '00000';
+    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     return numbers.map(x => (numberOfZeros + x).slice(-5)).join('.');
   }
 

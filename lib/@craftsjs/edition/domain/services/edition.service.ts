@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@craftsjs/typeorm';
+import { InjectRepository } from '../../../typeorm';
 import { AlreadyExists } from '../../../core/exceptions/already-exists.exception';
 import { removeEmpty, mergeAndRemoveEmpty } from '../../../utils';
 import { CrudAppService } from '../../../core/services/crud-app.service';

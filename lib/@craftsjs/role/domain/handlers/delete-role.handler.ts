@@ -10,7 +10,7 @@ export class DeleteRoleHandler implements ICommandHandler<DeleteRoleCommand> {
   ) { }
 
   handle(event: DeleteRoleCommand): any {
-    return this.roleService.remove(event.data.id, event.data.currentUserId);
+    return this.roleService.remove(event.data.id);
   }
 
 }

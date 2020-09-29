@@ -5,7 +5,9 @@
       "types": [
         "jasmine",
         "node"
-      ]
+      ],
+      "noUnusedLocals": false,
+      "noUnusedParameters": false,
     },
     "include": [
       "src/**/*.spec.ts",

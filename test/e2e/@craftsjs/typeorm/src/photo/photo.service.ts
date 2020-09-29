@@ -2,18 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '../../../../../../lib/@craftsjs/typeorm';
 import { Photo } from './photo.entity';
-import { CustomPhotoRepository } from './photo.repository';
 
 @Injectable()
 export class PhotoService {
   constructor(
-    @InjectRepository(Photo, 'connection_2')
-    private readonly photoRepository2: Repository<Photo>,
     @InjectRepository(Photo)
     private readonly photoRepository: Repository<Photo>,
-    @InjectRepository(CustomPhotoRepository, 'connection_2')
-    private readonly customPhotoRepository2: CustomPhotoRepository,
-    private readonly customPhotoRepository: CustomPhotoRepository,
   ) {}
 
   async findAll(): Promise<Photo[]> {

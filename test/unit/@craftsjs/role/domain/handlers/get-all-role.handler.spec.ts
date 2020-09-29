@@ -10,7 +10,7 @@ describe('FindAllRoleHandler', () => {
 
   before(async () => {
     const repository = {
-      findAll: (input) => {
+      findAll: (_) => {
         return Promise.resolve([{ id: 123456, name: 'test', permissions: [] }]);
       }
     };

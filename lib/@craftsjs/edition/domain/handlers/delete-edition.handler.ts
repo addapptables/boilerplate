@@ -10,7 +10,7 @@ export class DeleteEditionHandler implements ICommandHandler<DeleteEditionComman
   ) { }
 
   handle(event: DeleteEditionCommand): any {
-    return this.editionService.remove(event.data.id, event.data.currentUserId);
+    return this.editionService.remove(event.data.id);
   }
 
 }

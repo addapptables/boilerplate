@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Broker } from '@addapptables/microservice';
 import { CreateEditionDto } from '../../dtos/create-edition.dto';
 import { CreateEditionCommand } from '../../commands/create-edition.command';
@@ -26,9 +26,6 @@ export class EditionService {
     const transferData = await this.broker.start()
       .add(new CreateEditionCommand(input))
       .end<Edition>();
-    if (transferData.error) {
-      throw new InternalServerErrorException(transferData.error);
-    }
     return mapper(EditionDto, transferData.data);
   }
 
@@ -36,9 +33,6 @@ export class EditionService {
     const transferData = await this.broker.start()
       .add(new FindOneEditionQuery(input))
       .end<Edition>();
-    if (transferData.error) {
-      throw new InternalServerErrorException(transferData.error);
-    }
     return mapper(EditionDto, transferData.data);
   }
 
@@ -46,9 +40,6 @@ export class EditionService {
     const transferData = await this.broker.start()
       .add(new findAllEditionQuery(input))
       .end<PaginatedResultDto<Edition>>();
-    if (transferData.error) {
-      throw new InternalServerErrorException(transferData.error);
-    }
     const editions = mapper(EditionDto, transferData.data.data, { enableImplicitConversion: true });
     return { total: transferData.data.total, data: editions };
   }
@@ -57,19 +48,13 @@ export class EditionService {
     const transferData = await this.broker.start()
       .add(new UpdateEditionCommand(input))
       .end<Edition>();
-    if (transferData.error) {
-      throw new InternalServerErrorException(transferData.error);
-    }
     return mapper(EditionDto, transferData.data);
   }
 
   async remove(command: CommandDto) {
-    const transferData = await this.broker.start()
+    await this.broker.start()
       .add(new DeleteEditionCommand(command))
       .end<void>();
-    if (transferData.error) {
-      throw new InternalServerErrorException(transferData.error);
-    }
     return { id: command.id };
   }
 

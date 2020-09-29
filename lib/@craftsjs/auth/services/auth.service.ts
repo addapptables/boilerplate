@@ -14,6 +14,7 @@ import { Tenant } from '../../tenant/infrastructure/database/entities/tenant.ent
 import { TenantDto } from '../../tenant/application/dtos/tenant.dto';
 import { LoginInformationDto } from '../application/dtos/login-information.dto';
 import { ImpersonateInput } from '../application/dtos/login-impersonate-input';
+import { FindByUserNameOrEmailQuery } from '../../user/application/queries/find-by-username-or-email.query';
 
 @Injectable()
 export class AuthService {
@@ -35,7 +36,7 @@ export class AuthService {
         .add(new GetUserPermissionsQuery({ id: this.sessionService.user?.id, tenantId: this.sessionService.tenantId }))
         .end<string[]>();
       const user = mapper(UserDto, userData.data);
-      if(user){
+      if (user) {
         user.permissions = permissionData.data;
       }
       loginInformation.user = user;
@@ -51,59 +52,65 @@ export class AuthService {
     return loginInformation;
   }
 
-  async validateUser(userName: string, password: string): Promise<User> {
+  async validateUser(userName: string, password: string): Promise<UserDto> {
     const transferData = await this.broker.start()
-      .add(new FindOneUserQuery({ userName, tenantId: this.sessionService.tenantId }))
+      .add(new FindByUserNameOrEmailQuery({ userName, tenantId: this.sessionService.tenantId }))
       .end<User>();
     const user = transferData.data;
     const hash = this.securityService.convertStringToMd5(password);
     if (user && user.password === hash) {
-      return user;
+      const permissionData = await this.broker.start()
+        .add(new GetUserPermissionsQuery({ id: user.id, tenantId: this.sessionService.tenantId }))
+        .end<string[]>();
+      const userDto = mapper(UserDto, user);
+      userDto.permissions = permissionData.data;
+      return userDto;
     } else {
       throw new UnauthorizedException('user.credentialsError');
     }
   }
 
-  async validatePermissions(id: string, permissions: string[]) {
-    const transferData = await this.broker.start()
-      .add(new GetUserPermissionsQuery({ id, tenantId: this.sessionService.tenantId }))
-      .end<string[]>();
-    const userPermissions = transferData.data;
+  validatePermissions(jwt: string, permissions: string[]) {
+    const user = this.jwtService.decode(jwt) as any;
+    const userPermissions = user?.permissions || [];
     return userPermissions.some(userPermission => permissions.some(permission => permission === userPermission));
   }
 
   async login(user: User): Promise<LoginResultDto> {
-    const payload = { id: user.id, userName: user.userName, tenantId: this.sessionService.tenantId };
+    const payload = { id: user.id, permissions: user.permissions, userName: user.userName, tenantId: this.sessionService.tenantId };
     const accessToken = await this.jwtService.signAsync(payload, { expiresIn: '3d' });
     const verify = await this.jwtService.verifyAsync(accessToken);
     return {
       accessToken,
-      expiresIn:  verify.exp
+      expiresIn: verify.exp
     };
   }
 
   async impersonate(impersonateInput: ImpersonateInput, bearer: string): Promise<LoginResultDto> {
     this.sessionService.tenantId = impersonateInput.tenantImpersonationId;
     const userData = await this.broker.start()
-        .add(new FindOneUserQuery({ id: impersonateInput.userId, tenantId: impersonateInput.tenantImpersonationId }))
-        .end<User>();
-    const payload = { id: userData.data?.id, userName: userData.data?.userName, tenantId: impersonateInput.tenantImpersonationId, bearer };
+      .add(new FindOneUserQuery({ id: impersonateInput.userId, tenantId: impersonateInput.tenantImpersonationId }))
+      .end<User>();
+    const permissionData = await this.broker.start()
+      .add(new GetUserPermissionsQuery({ id: userData?.data?.id, tenantId: impersonateInput.tenantImpersonationId }))
+      .end<string[]>();
+    const payload = { id: userData.data?.id, userName: userData.data?.userName, permissions: permissionData?.data, tenantId: impersonateInput.tenantImpersonationId, bearer };
     const impersonationToken = await this.jwtService.signAsync(payload, { expiresIn: '1d' });
     this.sessionService.impersonatorUserId = impersonateInput.userId;
     const verify = await this.jwtService.verifyAsync(impersonationToken);
     return {
       accessToken: impersonationToken,
-      expiresIn:  verify.exp
+      expiresIn: verify.exp
     };
   }
 
   async backToImpersonate(bearer: string): Promise<LoginResultDto> {
     this.sessionService.impersonatorUserId = undefined;
-    var decode = this.jwtService.decode(bearer) as any;
+    const decode = this.jwtService.decode(bearer) as any;
     const verify = await this.jwtService.verifyAsync(decode.bearer);
     return {
       accessToken: decode.bearer,
-      expiresIn:  verify.exp
+      expiresIn: verify.exp
     };
   }
 

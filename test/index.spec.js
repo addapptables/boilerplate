@@ -1,4 +1,4 @@
-process.env.TS_NODE_PROJECT = 'tsconfig.json'
+process.env.TS_NODE_PROJECT = './test/tsconfig.spec.json'
 process.env.TS_CONFIG_PATHS = true;
 require('dotenv-safe').config({
   allowEmptyValues: true,

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@craftsjs/typeorm';
+import { InjectRepository } from '../../../typeorm';
 import * as R from 'ramda';
 import { removeEmpty } from '../../../utils';
 import { AlreadyExists, PaginatedDto, PaginatedResultDto } from '../../../core';
@@ -11,7 +11,7 @@ import { UserRole } from '../../../user/infrastructure/database/entities';
 import { FindOneUserDto } from '../../../user/application/dtos/find-one-user.dto';
 import { ChangePasswordDto } from '../../application/dtos/change-password.dto';
 import { SecurityService } from '../../../security';
-import { SessionService } from '@craftsjs/auth/services/session.service';
+import { SessionService } from '../../../auth/services/session.service';
 
 @Injectable()
 export class UserDomainService extends CrudAppService<UserRepository> {
@@ -96,6 +96,14 @@ export class UserDomainService extends CrudAppService<UserRepository> {
     const userDb = await this.userRepository.findOne({ where: { id: this.repository.sessionService.user?.id } });
     userDb.lastOrganizationUnitId = organizationUnitId;
     return super.update(userDb);
+  }
+
+  findByUserNameOrEmail(userNameOrEmail: string) {
+    return this.userRepository
+      .createQueryBuilder('user')
+      .andWhere('"user"."userName" = :userName', { userName: userNameOrEmail })
+      .orWhere('"user"."emailAddress" = :email', { email: userNameOrEmail })
+      .getOne();
   }
 
   findOneByQuery(userQuery: FindOneUserDto) {

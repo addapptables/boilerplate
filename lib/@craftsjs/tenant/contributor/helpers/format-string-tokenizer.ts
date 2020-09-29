@@ -4,7 +4,7 @@ import { FormatStringTokenType } from './format-string-token-type';
 export class FormatStringTokenizer {
   Tokenize(
     format: string,
-    includeBracketsForDynamicValues: boolean = false,
+    includeBracketsForDynamicValues = false,
   ): FormatStringToken[] {
     const tokens: FormatStringToken[] = [];
 
@@ -17,9 +17,7 @@ export class FormatStringTokenizer {
         case '{':
           if (inDynamicValue) {
             throw new Error(
-              'Incorrect syntax at char ' +
-              i +
-              '! format string can not contain nested dynamic value expression!',
+              `Incorrect syntax at char ${i}! format string can not contain nested dynamic value expression!`,
             );
           }
 
@@ -39,9 +37,7 @@ export class FormatStringTokenizer {
         case '}':
           if (!inDynamicValue) {
             throw new Error(
-              'Incorrect syntax at char ' +
-              i +
-              '! These is no opening brackets for the closing bracket }.',
+              `Incorrect syntax at char ${i}! ! These is no opening brackets for the closing bracket }.`
             );
           }
 
@@ -49,12 +45,11 @@ export class FormatStringTokenizer {
 
           if (currentText.length <= 0) {
             throw new Error(
-              'Incorrect syntax at char ' +
-              i +
-              '! Brackets does not containt any chars.',
+              `Incorrect syntax at char ${i}! Brackets does not containt any chars.`,
             );
           }
 
+          // eslint-disable-next-line no-case-declarations
           let dynamicValue = currentText;
           if (includeBracketsForDynamicValues) {
             dynamicValue = '{' + dynamicValue + '}';

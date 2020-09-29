@@ -1,6 +1,5 @@
 import { Controller, Request, Post, UseGuards, Get, Body } from '@nestjs/common';
 import { ApiTags, ApiBody, ApiBearerAuth, ApiHeader } from '@nestjs/swagger';
-import { Request as ExpressRequest } from 'express';
 import { LoginGuard } from '../../guard/login.guard';
 import { AuthService } from '../../services/auth.service';
 import { LoginResultDto } from '../dtos/login-result.dto';
@@ -23,7 +22,7 @@ export class AuthController {
   @UseGuards(LoginGuard)
   @Post('login')
   @ApiBody({ type: LoginDto })
-  async login(@Request() req): Promise<LoginResultDto> {
+  async login(@Request() req) {
     const result = await this.authService.login(req.user);
     return result;
   }
@@ -31,7 +30,7 @@ export class AuthController {
   @UseGuards(AuthenticatedGuard)
   @Post('impersonated')
   @ApiBody({ type: LoginResultDto })
-  async accountImpersonated(@Request() req, @Body() impersonatedInput: ImpersonateInput): Promise<LoginResultDto> {
+  async accountImpersonated(@Request() req, @Body() impersonatedInput: ImpersonateInput) {
     let bearer = req.get('authorization');
     bearer = bearer.replace('Bearer ', '')
     const result = await this.authService.impersonate(impersonatedInput, bearer);
@@ -41,7 +40,7 @@ export class AuthController {
   @UseGuards(AuthenticatedGuard)
   @Get('back-to-impersonate')
   @ApiBody({ type: LoginResultDto })
-  async backToImpersonate(@Request() req): Promise<LoginResultDto> {
+  async backToImpersonate(@Request() req) {
     let bearer = req.get('authorization');
     bearer = bearer.replace('Bearer ', '')
     const result = await this.authService.backToImpersonate(bearer);
@@ -49,7 +48,7 @@ export class AuthController {
   }
 
   @Post('logout')
-  logout(@Request() req: ExpressRequest) {
+  logout(@Request() req: any) {
     req.session.user = null;
     req.session.tenantId = null;
   }

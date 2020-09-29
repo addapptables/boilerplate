@@ -12,7 +12,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(passport.initialize());
   app.use(cookieParser());
-  app.useGlobalPipes(new ValidationPipe({ skipMissingProperties: true, transformOptions: { excludeExtraneousValues: true } }));
+  app.useGlobalPipes(new ValidationPipe({ skipMissingProperties: true, transformOptions: { excludeExtraneousValues: true, enableImplicitConversion: true } }));
   app.setGlobalPrefix('api');
   app.enableCors({ origin: '*' })
 

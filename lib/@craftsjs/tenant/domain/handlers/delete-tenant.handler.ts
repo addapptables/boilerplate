@@ -10,7 +10,7 @@ export class DeleteTenantHandler implements ICommandHandler<DeleteTenantCommand>
   ) { }
 
   handle(event: DeleteTenantCommand): any {
-    return this.tenantService.remove(event.data.id, event.data.currentUserId);
+    return this.tenantService.remove(event.data.id);
   }
 
 }

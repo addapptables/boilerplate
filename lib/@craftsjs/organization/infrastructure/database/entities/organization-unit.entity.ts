@@ -40,7 +40,7 @@ export class OrganizationUnit extends FullAuditedEntity implements IMayHaveTenan
   @OneToMany(() => OrganizationUnitRole, organizationUnitRole => organizationUnitRole.role)
   organizationUnitRoles: OrganizationUnitRole[];
 
-  @OneToMany(() => User, user => user.organizationUnit)
+  @OneToMany(() => User, user => user.lastOrganizationUnit)
   users: User[];
 
 }

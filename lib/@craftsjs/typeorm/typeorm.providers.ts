@@ -28,18 +28,18 @@ export function createTypeOrmProviders(
           return repository.target === (entity instanceof Function ? entity : (entity as any).constructor);
         });
         if (!entityRepositoryMetadataArgs)
-          throw new Error("No metadata found");
+          throw new Error('No metadata found');
 
         const repository = await moduleRef.create(entity as any);
         const entityMetadata = entityRepositoryMetadataArgs.entity ? connection.getMetadata(entityRepositoryMetadataArgs.entity) : undefined;
-        (repository as any).metadata = entityMetadata;
-        (repository as any).manager = entityManager;
+        (repository).metadata = entityMetadata;
+        (repository).manager = entityManager;
         return repository;
       } else if (connection.options.type === 'mongodb') {
         return connection.getMongoRepository(entity);
       } else {
         if (!connection.hasMetadata(entity))
-          throw new Error("Repository not found");
+          throw new Error('Repository not found');
 
         const metadata = connection.getMetadata(entity);
         const repository = (<any>entityManager).repositories.find(repository => repository.metadata === metadata);

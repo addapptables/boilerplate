@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Broker } from '@addapptables/microservice';
 import { CreateTenantDto } from '../../dtos/create-tenant.dto';
 import { CreateTenantCommand } from '../../commands/create-tenant.command';
@@ -25,9 +25,6 @@ export class TenantService {
     const transferData = await this.broker.start()
       .add(new CreateTenantCommand(input))
       .end<Tenant>();
-    if (transferData.error) {
-      throw new InternalServerErrorException(transferData.error);
-    }
     return mapper(TenantDto, transferData.data);
   }
 
@@ -40,9 +37,6 @@ export class TenantService {
     const transferData = await this.broker.start()
       .add(new FindOneTenantQuery(input))
       .end<Tenant>();
-    if (transferData.error) {
-      throw new InternalServerErrorException(transferData.error);
-    }
     return mapper(TenantDto, transferData.data) || {};
   }
 
@@ -50,9 +44,6 @@ export class TenantService {
     const transferData = await this.broker.start()
       .add(new FindAllTenantQuery(input))
       .end<PaginatedResultDto<Tenant>>();
-    if (transferData.error) {
-      throw new InternalServerErrorException(transferData.error);
-    }
     const tenants = mapper(TenantDto, transferData.data.data);
     return { total: transferData.data.total, data: tenants };
   }
@@ -61,19 +52,13 @@ export class TenantService {
     const transferData = await this.broker.start()
       .add(new UpdateTenantCommand(input))
       .end<Tenant>();
-    if (transferData.error) {
-      throw new InternalServerErrorException(transferData.error);
-    }
     return mapper(TenantDto, transferData.data);
   }
 
   async remove(command: CommandDto) {
-    const transferData = await this.broker.start()
+    await this.broker.start()
       .add(new DeleteTenantCommand(command))
       .end<void>();
-    if (transferData.error) {
-      throw new InternalServerErrorException(transferData.error);
-    }
     return { id: command.id };
   }
 
